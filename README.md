@@ -73,7 +73,7 @@ Import the component and model factory and slider CSS:
 
 ```js
 import { GlissandoSlider, GlissandoModel } from 'glissando-mithril'
-import 'glissando-mithril/dist/glissando.css'
+import 'glissando-mithril/dist/glissando.min.css'
 ```
 
 Create a new model instance:
@@ -93,7 +93,7 @@ m(GlissandoSlider, { model }, [
 ])
 ```
 
-The pages can be added and removed dynamically. Each time the GlissandoSlider children change, the model is updated automatically.
+The pages can be added and removed dynamically. Each time the GlissandoSlider's children change, the model is updated automatically.
 
 Control the slider with methods and query its state using selectors:
 
