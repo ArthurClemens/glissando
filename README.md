@@ -11,6 +11,7 @@ Currently for Mithril. React: in progress.
 - Can be controlled with next/previous actions, jump to page action, with or without animation.
 - Can be queried for state, and subscribed to changes.
 - The list of elements can be changed on the fly.
+- Right-to-left language support, using mirrored transitions.
 - Written in TypeScript.
 
 ## Demo
@@ -120,6 +121,11 @@ Control the slider with methods and query its state using selectors:
   }
 }
 ```
+
+## RTL support
+
+Glissando automatically detects the reading direction. Set one of the parent's HTML attribute `direction` to `"rtl"`.
+
 
 ## Supported browsers
 
