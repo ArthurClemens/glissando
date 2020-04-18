@@ -21,6 +21,7 @@ const Slider = () => {
 
   const localState = {
     animate: true,
+    rtl: false,
     index: getState().index,
     selectIndices: createSelectIndices(getState().count),
   };
@@ -35,68 +36,90 @@ const Slider = () => {
       const state = getState();
 
       return m('.demo-container', [
-        m('.demo-controls', [
-          m(
-            'button',
-            {
-              onclick: () => previous({ animate: localState.animate }),
-              disabled: !hasPrevious() || isAnimating(),
-            },
-            'Previous',
-          ),
-          m(
-            'button',
-            {
-              onclick: () => next({ animate: localState.animate }),
-              disabled: !hasNext() || isAnimating(),
-            },
-            'Next',
-          ),
-          m(
-            'select',
-            {
-              disabled: state.isAnimating || state.count < 2,
-              onchange: (e: InputEvent) => {
-                const element = e.target as HTMLInputElement;
-                if (element) {
-                  goTo({
-                    index: parseInt(element.value, 10),
-                    animate: localState.animate,
-                  });
-                }
-              },
-            },
-            localState.selectIndices.map((_index, i) =>
-              m(
-                'option',
-                { key: i, value: i, selected: i === localState.index },
-                `Go to index ${i}`,
-              ),
-            ),
-          ),
+        m('.demo-meta-controls', [
           m('input', {
-            id: 'animate',
+            id: 'rtl',
             type: 'checkbox',
             value: '1',
-            checked: localState.animate,
+            checked: localState.rtl,
             onclick: () => {
-              localState.animate = !localState.animate;
+              localState.rtl = !localState.rtl;
             },
           }),
           m(
             'label',
             {
-              for: 'animate',
+              for: 'rtl',
             },
-            'Animate',
+            'Right to left',
           ),
         ]),
         m(
-          GlissandoSlider,
-          {
-            model,
-          },
-          vnode.children,
+          'div',
+          { dir: localState.rtl ? 'rtl' : '' },
+          m('.demo-controls', [
+            m(
+              'button',
+              {
+                onclick: () => previous({ animate: localState.animate }),
+                disabled: !hasPrevious() || isAnimating(),
+              },
+              'Previous',
+            ),
+            m(
+              'button',
+              {
+                onclick: () => next({ animate: localState.animate }),
+                disabled: !hasNext() || isAnimating(),
+              },
+              'Next',
+            ),
+            m(
+              'select',
+              {
+                disabled: state.isAnimating || state.count < 2,
+                onchange: (e: InputEvent) => {
+                  const element = e.target as HTMLInputElement;
+                  if (element) {
+                    goTo({
+                      index: parseInt(element.value, 10),
+                      animate: localState.animate,
+                    });
+                  }
+                },
+              },
+              localState.selectIndices.map((_index, i) =>
+                m(
+                  'option',
+                  { key: i, value: i, selected: i === localState.index },
+                  `Go to index ${i}`,
+                ),
+              ),
+            ),
+            m('input', {
+              id: 'animate',
+              type: 'checkbox',
+              value: '1',
+              checked: localState.animate,
+              onclick: () => {
+                localState.animate = !localState.animate;
+              },
+            }),
+            m(
+              'label',
+              {
+                for: 'animate',
+              },
+              'Animate',
+            ),
+          ]),
+          m(
+            GlissandoSlider,
+            {
+              model,
+            },
+            vnode.children,
+          ),
         ),
       ]);
     },

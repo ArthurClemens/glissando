@@ -39,14 +39,19 @@ export namespace Glissando {
     isAnimating: boolean;
 
     /**
+     * The number of side views; default: 1.
+     */
+    sideViews: number;
+
+    /**
      * For insternal use: the view slot indices with relative numbers offset to the "current" view.
      */
     slots: number[];
 
     /**
-     * The number of side views; default: 1.
+     * For insternal use: the reading/sliding direction.
      */
-    sideViews: number;
+    direction: Direction;
   };
 
   type Props = {
@@ -55,6 +60,8 @@ export namespace Glissando {
   };
 
   type States = Stream<State>;
+
+  type Direction = 'rtl' | 'ltr';
 
   type Actions = {
     /**
@@ -80,6 +87,11 @@ export namespace Glissando {
      * For internal use. Sets the number of locations (commonly the number of child elements of the slider).
      */
     setCount: (count: number) => void;
+
+    /**
+     * For internal use. Set to 'rtl to change the slider's reading/sliding direction to right-to-left.
+     */
+    setDirection: (direction: Direction) => void;
 
     /**
      * For internal use. Finalizes animated transitions.

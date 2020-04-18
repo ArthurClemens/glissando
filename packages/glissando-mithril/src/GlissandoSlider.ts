@@ -1,4 +1,4 @@
-import { getSliderStyle } from 'glissando';
+import { getSliderStyle, Glissando } from 'glissando';
 // eslint-disable-next-line import/no-unresolved
 import m from 'mithril';
 
@@ -6,7 +6,7 @@ import { GlissandoSlider as TGlissandoSlider } from '../index';
 
 export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   const { model } = initialVnode.attrs;
-  const { getState, finalize, setCount, getViewIndices } = model;
+  const { getState, finalize, setCount, setDirection, getViewIndices } = model;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onTransitionEnd = (evt: Event) => {
@@ -17,10 +17,16 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   getState.map(m.redraw);
 
   return {
-    onupdate: ({ children }) => {
+    onupdate: ({ dom, children }) => {
+      // Children count
       const count = (children as m.ChildArray).length;
       if (count > getState().count) {
         setCount(count);
+      }
+      // RTL
+      const { direction } = getComputedStyle(dom);
+      if (direction !== getState().direction) {
+        setDirection(direction as Glissando.Direction);
       }
     },
     view: ({ children }) => {

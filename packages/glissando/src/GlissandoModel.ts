@@ -31,6 +31,7 @@ export const GlissandoModel = (props: Partial<Glissando.Props> = {}) => {
     targetIndex: props.index || 0,
     isAnimating: false,
     count: 0,
+    direction: 'ltr', // set by libs glissando-mithril etc
     slots,
     sideViews,
   };
@@ -74,6 +75,14 @@ export const GlissandoModel = (props: Partial<Glissando.Props> = {}) => {
               ...state,
               count,
             })({ index: state.index });
+          });
+        },
+        setDirection: (direction: Glissando.Direction) => {
+          update((state: Glissando.State) => {
+            return {
+              ...state,
+              direction,
+            };
           });
         },
       };

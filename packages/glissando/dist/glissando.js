@@ -20,6 +20,7 @@ const GlissandoModel = (props = {}) => {
     targetIndex: props.index || 0,
     isAnimating: false,
     count: 0,
+    direction: 'ltr',
     slots,
     sideViews,
   };
@@ -62,6 +63,14 @@ const GlissandoModel = (props = {}) => {
               ...state,
               count,
             })({ index: state.index });
+          });
+        },
+        setDirection: direction => {
+          update(state => {
+            return {
+              ...state,
+              direction,
+            };
           });
         },
       };
@@ -141,11 +150,12 @@ const GlissandoModel = (props = {}) => {
 const getSliderStyle = state => {
   const slotCount = 2 * state.sideViews + 1;
   const slotWidth = 100 / slotCount;
-  let sliderTransformX = -1 * slotWidth * (state.sideViews + 0);
+  const direction = state.direction === 'rtl' ? 1 : -1;
+  let sliderTransformX = direction * slotWidth * (state.sideViews + 0);
   if (state.targetIndex > state.index) {
-    sliderTransformX = -1 * slotWidth * (state.sideViews + 1);
+    sliderTransformX = direction * slotWidth * (state.sideViews + 1);
   } else if (state.targetIndex < state.index) {
-    sliderTransformX = -1 * slotWidth * (state.sideViews - 1);
+    sliderTransformX = direction * slotWidth * (state.sideViews - 1);
   }
   const style = {
     width: `${slotCount * 100}%`,

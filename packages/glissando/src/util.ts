@@ -3,11 +3,12 @@ import { Glissando } from '../index';
 export const getSliderStyle = (state: Glissando.State) => {
   const slotCount = 2 * state.sideViews + 1;
   const slotWidth = 100 / slotCount;
-  let sliderTransformX: number = -1 * slotWidth * (state.sideViews + 0);
+  const direction = state.direction === 'rtl' ? 1 : -1;
+  let sliderTransformX: number = direction * slotWidth * (state.sideViews + 0);
   if (state.targetIndex > state.index) {
-    sliderTransformX = -1 * slotWidth * (state.sideViews + 1);
+    sliderTransformX = direction * slotWidth * (state.sideViews + 1);
   } else if (state.targetIndex < state.index) {
-    sliderTransformX = -1 * slotWidth * (state.sideViews - 1);
+    sliderTransformX = direction * slotWidth * (state.sideViews - 1);
   }
 
   const style = {
