@@ -12,4 +12,4 @@ declare const GlissandoSlider: ClosureComponent<Attrs>;
 export { GlissandoSlider };
 export as namespace GlissandoSlider;
 
-export { getSliderStyle, GlissandoModel } from 'glissando';
+export { getSliderStyle, GlissandoModel, Glissando } from 'glissando';
