@@ -1,0 +1,37 @@
+{
+  "name": "glissando-mithril",
+  "version": "0.3.0",
+  "description": "A simple content slider for anything that needs to move. Mitril version.",
+  "main": "dist/glissando-mithril",
+  "module": "dist/glissando-mithril.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:rollup && npm run build:css && npm run build:prettier",
+    "build:clean": "rm -rf dist/*.js",
+    "build:rollup": "MODULE=1 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
+    "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
+    "build:prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./dist/*.js\"",
+    "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
+    "test": "react-scripts test --env=jsdom",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{js,jsx,ts,tsx,css}\"",
+    "fix": "yarn run lint --fix && yarn run prettier"
+  },
+  "files": [
+    "dist",
+    "index.d.ts",
+    "README.md"
+  ],
+  "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
+  "homepage": "https://github.com/ArthurClemens/glissando",
+  "license": "MIT",
+  "dependencies": {
+    "glissando": "^0.3.0"
+  },
+  "peerDependencies": {
+    "mithril": ">=2.0.4"
+  },
+  "devDependencies": {
+    "@types/mithril": "^2.0.2"
+  }
+}

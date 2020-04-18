@@ -1,0 +1,34 @@
+{
+  "name": "glissando",
+  "version": "0.3.0",
+  "description": "A simple content slider for anything that needs to move. Base functions to create Glissando components.",
+  "main": "dist/glissando",
+  "module": "dist/glissando.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:rollup && npm run build:css && npm run build:prettier",
+    "build:clean": "rm -rf dist/*.js",
+    "build:rollup": "MODULE=1 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
+    "build:css": "npm run build:css:copy && npm run build:css:minify",
+    "build:css:copy": "cp ./styles/glissando.css dist/",
+    "build:css:minify": "../../node_modules/postcss-cli/bin/postcss ./styles/glissando.css > dist/glissando.min.css",
+    "build:prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./dist/*.js\"",
+    "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
+    "test": "react-scripts test --env=jsdom",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "fix": "yarn run lint --fix && yarn run prettier"
+  },
+  "files": [
+    "dist",
+    "index.d.ts",
+    "README.md"
+  ],
+  "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
+  "homepage": "https://github.com/ArthurClemens/glissando",
+  "license": "MIT",
+  "dependencies": {
+    "@types/mithril": "2.0.2",
+    "mithril": "2.0.4"
+  }
+}
