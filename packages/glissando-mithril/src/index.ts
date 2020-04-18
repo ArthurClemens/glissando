@@ -1,2 +1,2 @@
-export { GlissandoModel } from 'glissando';
-export { GlissandoSlider } from './GlissandoSlider';
+export { GlissandoModel } from 'glissando'; // Re-export
+export { GlissandoSlider } from './GlissandoSlider'; // Mithril specific component

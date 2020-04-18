@@ -1,6 +1,6 @@
-# glissando for Mithril
+# Glissando for Mithril
 
-A simple content slider for anything that needs to go next.
+A simple content slider for anything that needs to move.
 
 [Main documentation](https://github.com/ArthurClemens/glissando)
 

@@ -23,7 +23,7 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
       if (count > getState().count) {
         setCount(count);
       }
-      // RTL
+      // Reading direction
       const { direction } = getComputedStyle(dom);
       if (direction !== getState().direction) {
         setDirection(direction as Glissando.Direction);
@@ -33,8 +33,7 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
       if (!children) {
         return null;
       }
-      const state = getState();
-      const { className, style } = getSliderStyle(state);
+      const { className, style } = getSliderStyle(getState());
 
       return m(
         '.glissando',
