@@ -16,6 +16,8 @@ export const getSliderStyle: (
   className: string;
 };
 
+export { Stream };
+
 export namespace Glissando {
   type State = {
     /**
@@ -121,26 +123,11 @@ export namespace Glissando {
     getViewIndices: () => number[];
   };
 
-  type OnChangeState = {
-    index: number;
-    count: number;
-  };
-
-  type CompareState = State | typeof Stream.SKIP;
-
-  type OnChange<U> = <U>(
-    f: (current: Glissando.OnChangeState) => typeof Stream.SKIP | U,
-  ) => Stream<U>;
-
   type Model = {
     /**
      * State stream.
      */
     getState: States;
-    /**
-     * State stream with elements `index` and `count`. Is only triggered when one of these elements are changed.
-     */
-    onChange: OnChange<OnChangeState>;
   } & Selectors &
     Actions;
 }

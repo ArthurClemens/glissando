@@ -1,6 +1,12 @@
-import { getSliderStyle } from 'glissando';
-export { GlissandoModel } from 'glissando';
+import { GlissandoModel, getSliderStyle } from 'glissando';
 import m from 'mithril';
+
+const useGlissandoModel = () => {
+  const model = GlissandoModel();
+  // Subscribe to changes
+  model.getState.map(m.redraw);
+  return model;
+};
 
 const GlissandoSlider = initialVnode => {
   const { model } = initialVnode.attrs;
@@ -9,8 +15,6 @@ const GlissandoSlider = initialVnode => {
   const onTransitionEnd = evt => {
     finalize(getState().targetIndex);
   };
-  // Subscribe to changes
-  getState.map(m.redraw);
   return {
     onupdate: ({ dom, children }) => {
       // Children count
@@ -18,7 +22,7 @@ const GlissandoSlider = initialVnode => {
       if (count > getState().count) {
         setCount(count);
       }
-      // RTL
+      // Reading direction
       const { direction } = getComputedStyle(dom);
       if (direction !== getState().direction) {
         setDirection(direction);
@@ -28,8 +32,7 @@ const GlissandoSlider = initialVnode => {
       if (!children) {
         return null;
       }
-      const state = getState();
-      const { className, style } = getSliderStyle(state);
+      const { className, style } = getSliderStyle(getState());
       return m(
         '.glissando',
         m(
@@ -53,4 +56,4 @@ const GlissandoSlider = initialVnode => {
   };
 };
 
-export { GlissandoSlider };
+export { GlissandoSlider, useGlissandoModel };

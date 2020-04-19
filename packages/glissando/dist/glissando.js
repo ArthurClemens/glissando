@@ -1,4 +1,5 @@
 import Stream from 'mithril/stream';
+export { default as Stream } from 'mithril/stream';
 
 // eslint-disable-next-line import/no-unresolved
 const setIndex = state => change => {
@@ -118,32 +119,10 @@ const GlissandoModel = (props = {}) => {
   const selectors = {
     ...glissandoState.selectors(states),
   };
-  // onChange listener to provide feedback when the index has changed (with or without animation)
-  const createOnChange = modelState => {
-    const pluck = value => {
-      if (value === Stream.SKIP) {
-        return Stream.SKIP;
-      }
-      return {
-        index: value.index,
-        count: value.count,
-      };
-    };
-    const filter = predicate => (_acc, value) =>
-      predicate(value) ? value : Stream.SKIP;
-    const isDone = s => {
-      return s === Stream.SKIP ? true : s.index === s.targetIndex;
-    };
-    const filtered = Stream.scan(filter(isDone), Stream.SKIP, modelState).map(
-      pluck,
-    );
-    return filtered.map;
-  };
   return {
     getState: states,
     ...actions,
     ...selectors,
-    onChange: createOnChange(states),
   };
 };
 

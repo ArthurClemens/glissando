@@ -1,16 +1,13 @@
 import { Glissando } from 'glissando';
 // eslint-disable-next-line import/no-unresolved
-import { ClosureComponent } from 'mithril';
+import { FunctionComponent } from 'react';
 
-export interface Attrs {
+export interface GlissandoSliderProps {
   model: Glissando.Model;
+  children: React.ReactNode[];
 }
 
-type GlissandoSlider = ClosureComponent<Attrs>;
-declare const GlissandoSlider: ClosureComponent<Attrs>;
-
-export { GlissandoSlider };
-export as namespace GlissandoSlider;
+export const GlissandoSlider: FunctionComponent<GlissandoSliderProps>;
 
 export const useGlissandoModel: () => Glissando.Model;
 

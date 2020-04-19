@@ -13,9 +13,6 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
     finalize(getState().targetIndex);
   };
 
-  // Subscribe to changes
-  getState.map(m.redraw);
-
   return {
     onupdate: ({ dom, children }) => {
       // Children count

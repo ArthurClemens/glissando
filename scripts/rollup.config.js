@@ -6,12 +6,12 @@ import { terser } from 'rollup-plugin-terser';
 const { env } = process;
 const pkg = JSON.parse(fs.readFileSync('./package.json'));
 
-const isModule = !!env.MODULE;
+const isModule = !!parseInt(env.MODULE, 10);
 const format = isModule ? 'es' : 'umd';
 const target = isModule ? 'ESNEXT' : 'es5';
 const file = isModule
   ? `${process.env.DEST || pkg.module}`
-  : `${process.env.DEST || pkg.main}.js`;
+  : `${process.env.DEST || pkg.main}.min.js`;
 
 export default {
   input: 'src/index.ts',

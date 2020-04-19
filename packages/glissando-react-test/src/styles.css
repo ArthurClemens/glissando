@@ -1,0 +1,43 @@
+body,
+html {
+  margin: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.demo-container {
+  width: 375px;
+  margin: 0 auto;
+}
+
+.demo-meta-controls {
+  display: flex;
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.demo-controls {
+  display: flex;
+  padding: 20px 0;
+}
+
+.demo-controls > * + * {
+  margin-left: 5px;
+}
+
+.demo-page {
+  background: #efefef;
+  max-height: 300px; /* demonstrate scrolling */
+  overflow: auto;
+  font-size: 18px;
+}
+
+.demo-page .top {
+  padding: 15px;
+}
+
+.demo-page img {
+  width: 100%;
+}

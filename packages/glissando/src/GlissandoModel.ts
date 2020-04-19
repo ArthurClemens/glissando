@@ -136,44 +136,9 @@ export const GlissandoModel = (props: Partial<Glissando.Props> = {}) => {
     ...glissandoState.selectors(states),
   };
 
-  // onChange listener to provide feedback when the index has changed (with or without animation)
-
-  const createOnChange = (modelState: Glissando.States) => {
-    type Predicate = (compareState: Glissando.CompareState) => boolean;
-
-    type Pluck = (
-      value: Glissando.CompareState,
-    ) => Glissando.OnChangeState | typeof Stream.SKIP;
-
-    const pluck: Pluck = value => {
-      if (value === Stream.SKIP) {
-        return Stream.SKIP;
-      }
-      return {
-        index: value.index,
-        count: value.count,
-      };
-    };
-
-    const filter = (predicate: Predicate) => (
-      _acc: Glissando.CompareState,
-      value: Glissando.CompareState,
-    ) => (predicate(value) ? value : Stream.SKIP);
-
-    const isDone = (s: Glissando.CompareState) => {
-      return s === Stream.SKIP ? true : s.index === s.targetIndex;
-    };
-
-    const filtered = Stream.scan(filter(isDone), Stream.SKIP, modelState).map(
-      pluck,
-    );
-    return filtered.map;
-  };
-
   return {
     getState: states,
     ...actions,
     ...selectors,
-    onChange: createOnChange(states),
   } as Glissando.Model;
 };
