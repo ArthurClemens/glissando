@@ -37,7 +37,7 @@ Use the rendering component. Pass the model as a prop and the pages as children.
 <GlissandoSlider model={model}>
   <Page1 />
   <Page2 />
-  <Page2 />
+  <Page3 />
   {/* ... add as many as needed */}
 </GlissandoSlider>
 ```
