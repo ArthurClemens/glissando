@@ -1,6 +1,6 @@
 {
   "name": "glissando-react",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "A simple content slider for anything that needs to move. React version.",
   "main": "dist/glissando-react",
   "module": "dist/glissando-react.js",
@@ -33,9 +33,9 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "glissando": "^0.4.2",
-    "use-stream": "0.3.2",
-    "@huse/effect-ref": "1.0.1"
+    "@huse/effect-ref": "1.0.1",
+    "glissando": "^0.5.0",
+    "use-stream": "0.3.2"
   },
   "peerDependencies": {
     "react": "16.13.1",
