@@ -4,7 +4,7 @@ export { default as Stream } from 'mithril/stream';
 // eslint-disable-next-line import/no-unresolved
 const setIndex = state => change => {
   const newIndex = Math.min(change.index, state.count - 1);
-  return newIndex < state.count
+  return newIndex >= 0 && newIndex < state.count
     ? {
         ...state,
         ...(change.animate ? undefined : { index: newIndex }),
@@ -119,8 +119,19 @@ const GlissandoModel = (props = {}) => {
   const selectors = {
     ...glissandoState.selectors(states),
   };
+  const changedStates = Stream.scan(
+    (state, value) =>
+      JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+        ? Stream.SKIP
+        : value,
+    {
+      ...glissandoState.initialState,
+    },
+    states,
+  );
   return {
     getState: states,
+    getChanges: changedStates,
     ...actions,
     ...selectors,
   };

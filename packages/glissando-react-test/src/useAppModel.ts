@@ -9,7 +9,7 @@ type TModel = {
   _: TAppStates;
 };
 
-export const useAppModel = initialState => {
+export const useAppModel = (initialState: Partial<TAppState>) => {
   const [appModel] = useState<TAppModel>(AppModel(initialState));
 
   // Subscribe to changes

@@ -10,9 +10,15 @@ export type TAppState = {
 };
 
 type PatchFn = (state: TAppState) => TAppState;
+
+type TChangedAppState = TAppState | typeof Stream.SKIP;
+export type TChangedAppStates = Stream<TChangedAppState>;
+
 export type TAppStates = Stream<TAppState>;
+
 export type TAppModel = {
   getState: TAppStates;
+  getChanges: TChangedAppStates;
   setIsVisible: (value: boolean) => void;
   setIsAnimated: (value: boolean) => void;
   setIsRtl: (value: boolean) => void;
@@ -86,8 +92,20 @@ export const AppModel = (props: Partial<TAppState> = {}) => {
     ...appState.actions(update),
   };
 
+  const changedStates: TChangedAppStates = Stream.scan(
+    (state: TChangedAppState, value) =>
+      JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+        ? Stream.SKIP
+        : value,
+    {
+      ...appState.initialState,
+    },
+    states,
+  );
+
   return {
     getState: states,
+    getChanges: changedStates,
     ...actions,
   };
 };

@@ -6,6 +6,7 @@ import React, {
   useCallback,
   useEffect,
   useState,
+  // eslint-disable-next-line import/no-unresolved
 } from 'react';
 
 import { GlissandoSliderProps } from '../index';

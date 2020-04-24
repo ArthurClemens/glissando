@@ -12,7 +12,7 @@ type IndexChange = {
 
 const setIndex = (state: Glissando.State) => (change: IndexChange) => {
   const newIndex = Math.min(change.index, state.count - 1);
-  return newIndex < state.count
+  return newIndex >= 0 && newIndex < state.count
     ? {
         ...state,
         ...(change.animate ? undefined : { index: newIndex }),
@@ -22,7 +22,9 @@ const setIndex = (state: Glissando.State) => (change: IndexChange) => {
     : state;
 };
 
-export const GlissandoModel = (props: Partial<Glissando.Props> = {}) => {
+export const GlissandoModel = (
+  props: Glissando.InitialState = {} as Glissando.InitialState,
+) => {
   const sideViews = props.sideViews || 1;
   const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
 
@@ -136,8 +138,20 @@ export const GlissandoModel = (props: Partial<Glissando.Props> = {}) => {
     ...glissandoState.selectors(states),
   };
 
+  const changedStates: Glissando.ChangedStates = Stream.scan(
+    (state: Glissando.ChangedState, value) =>
+      JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+        ? Stream.SKIP
+        : value,
+    {
+      ...glissandoState.initialState,
+    },
+    states,
+  );
+
   return {
     getState: states,
+    getChanges: changedStates,
     ...actions,
     ...selectors,
   } as Glissando.Model;

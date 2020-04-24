@@ -56,12 +56,27 @@ export namespace Glissando {
     direction: Direction;
   };
 
+  type InitialState = {
+    index: number;
+    sideViews: number;
+  };
+
   type Props = {
     index: number;
     sideViews: number;
   };
 
   type States = Stream<State>;
+
+  /**
+   * Only returns a changed state.
+   */
+  type ChangedState = Glissando.State | typeof Stream.SKIP;
+
+  /**
+   * Accumulation of changed states only.
+   */
+  type ChangedStates = Stream<ChangedState>;
 
   type Direction = 'rtl' | 'ltr';
 
@@ -128,6 +143,7 @@ export namespace Glissando {
      * State stream.
      */
     getState: States;
+    getChanges: ChangedStates;
   } & Selectors &
     Actions;
 }

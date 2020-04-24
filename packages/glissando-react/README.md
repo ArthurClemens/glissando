@@ -2,7 +2,15 @@
 
 A simple content slider for anything that needs to move.
 
-[Main documentation](https://github.com/ArthurClemens/glissando)
+- [API](#api)
+- [Demo](#demo)
+- [Usage](#usage)
+- [Size](#size)
+
+
+## API
+
+See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 
 ## Demo
@@ -77,12 +85,6 @@ const Slider = () => {
   )
 }
 ```
-
-
-## RTL support
-
-Glissando automatically detects the reading direction. Set one of the parent's HTML attribute `direction` to `"rtl"`.
-
 
 ## Size
 

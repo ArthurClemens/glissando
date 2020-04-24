@@ -7,8 +7,8 @@ type TModel = {
   _: Stream<Glissando.State>;
 };
 
-export const useGlissandoModel = () => {
-  const [model] = useState<Glissando.Model>(GlissandoModel());
+export const useGlissandoModel = (initialState: Glissando.InitialState) => {
+  const [model] = useState<Glissando.Model>(GlissandoModel(initialState));
 
   // Subscribe to changes
   useStream<TModel>({

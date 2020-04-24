@@ -3,8 +3,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useStream } from 'use-stream';
 import { useEffectRef } from '@huse/effect-ref';
 
-const useGlissandoModel = () => {
-  const [model] = useState(GlissandoModel());
+const useGlissandoModel = initialState => {
+  const [model] = useState(GlissandoModel(initialState));
   // Subscribe to changes
   useStream({
     model: () => ({

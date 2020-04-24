@@ -9,7 +9,9 @@ export interface GlissandoSliderProps {
 
 export const GlissandoSlider: FunctionComponent<GlissandoSliderProps>;
 
-export const useGlissandoModel: () => Glissando.Model;
+export const useGlissandoModel: (
+  initialState?: Glissando.InitialState,
+) => Glissando.Model;
 
 // Re-export
 export { getSliderStyle, GlissandoModel, Glissando } from 'glissando';

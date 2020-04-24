@@ -28,10 +28,8 @@ export const App = () => {
     count: 5,
   });
 
-  appModel.getState.map((s: TAppState) => {
-    if (s.count !== appModel.getState().count) {
-      appModel.setCount(s.count);
-    }
+  appModel.getChanges.map((s: TAppState) => {
+    appModel.setCount(s.count);
     return null;
   });
 
