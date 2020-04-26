@@ -5,5 +5,4 @@ npm-debug.log*
 *.lock
 .rpt2_cache
 react-app-env.d.ts
-packages/glissando-mithril-test/dist
-packages/glissando-react-test/dist
+index.js.LICENSE.txt*

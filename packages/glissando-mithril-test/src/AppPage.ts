@@ -150,7 +150,7 @@ const Slider = () => {
               {
                 model,
               },
-              pagesList.map(index => m(Page, { index })),
+              pagesList.map(index => m(Page, { key: index, index })),
             ),
           ),
       ]);
