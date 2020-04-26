@@ -125,4 +125,4 @@ const Slider = () => {
 
 ## Size
 
-877 B with all dependencies, minified and gzipped
+1005 B with all dependencies, minified and gzipped
