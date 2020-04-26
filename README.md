@@ -202,7 +202,7 @@ Subscribe to the state stream. The map function is called when the model is upda
 
 ```typescript
 model.getChanges
-  .map((s: Glissando.State) => {
+  .map((state: Glissando.State) => {
     // ...
   })
 ```
@@ -213,7 +213,7 @@ When calling `getChanges` in the component's render loop (in React's function co
 
 ```typescript
 model.getChanges
-  .map((s: Glissando.State) => {
+  .map((state: Glissando.State) => {
     // ...
   })
   .end(true); // prevent accumulation of stream subscriptions
