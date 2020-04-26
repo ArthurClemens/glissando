@@ -201,12 +201,25 @@ Subscribe to the state stream. The map function is called when the model is upda
 #### getChanges
 
 ```typescript
-model.getChanges.map((s: Glissando.ChangedState) => {
-  // ...
-});
+model.getChanges
+  .map((s: Glissando.State) => {
+    // ...
+  })
 ```
 
 Subscribe to the changed state stream. The map function is called when the model is updated and the new state differs from the previous state.
+
+When calling `getChanges` in the component's render loop (in React's function component and in Mithril's view function, add `end(true)` to stop listening to the stream:
+
+```typescript
+model.getChanges
+  .map((s: Glissando.State) => {
+    // ...
+  })
+  .end(true); // prevent accumulation of stream subscriptions
+```
+
+When calling `getChanges` in Mithril's closure component (outside of `view`), do not end the stream.
 
 
 ### Slider component

@@ -9,16 +9,16 @@ type TModel = {
   _: TAppStates;
 };
 
-export const useAppModel = (initialState: Partial<TAppState>) => {
+export const useAppModel = (initialState: TAppState) => {
   const [appModel] = useState<TAppModel>(AppModel(initialState));
 
   // Subscribe to changes
   useStream<TModel>({
     model: () => ({
-      _: appModel.getState,
+      _: appModel.getChanges,
     }),
     defer: true,
   });
 
-  return { appModel };
+  return appModel;
 };

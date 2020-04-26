@@ -2,7 +2,11 @@
 import './styles.css';
 import 'glissando-react/dist/glissando.min.css';
 
-import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
+import {
+  // Glissando,
+  GlissandoSlider,
+  useGlissandoModel,
+} from 'glissando-react';
 import React from 'react';
 
 import { Page } from './Page';
@@ -13,6 +17,7 @@ export const App = () => {
 
   const {
     getState,
+    // getChanges,
     previous,
     next,
     goTo,
@@ -21,17 +26,26 @@ export const App = () => {
     isAnimating,
   } = model;
 
-  const { appModel } = useAppModel({
+  const appModel = useAppModel({
     isVisible: true,
     isAnimated: true,
     isRtl: false,
     count: 5,
+    selectIndices: [] as number[],
   });
 
-  appModel.getChanges.map((s: TAppState) => {
-    appModel.setCount(s.count);
-    return null;
-  });
+  appModel.getChanges
+    .map((state: TAppState) => {
+      appModel.setCount(state.count);
+      return null;
+    })
+    .end(true); // prevent accumulation of stream subscriptions
+
+  // getChanges
+  //   .map((state: Glissando.State) => {
+  //     return null;
+  //   })
+  //   .end(true); // prevent accumulation of stream subscriptions
 
   // Create a list of pages
   const pageCount = appModel.getState().count;

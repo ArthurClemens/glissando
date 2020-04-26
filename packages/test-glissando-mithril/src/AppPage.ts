@@ -1,10 +1,11 @@
 import {
-  Glissando,
+  // Glissando,
   GlissandoSlider,
   useGlissandoModel,
 } from 'glissando-mithril';
 import m from 'mithril';
 
+import { AppModel, TAppState } from './AppModel';
 import { Page } from './Page';
 
 const Slider = () => {
@@ -17,37 +18,31 @@ const Slider = () => {
     hasPrevious,
     hasNext,
     isAnimating,
+    // getChanges,
   } = model;
 
-  const createSelectIndices = (count: number) =>
-    [...Array(count)].map((_, i) => i);
-
-  const localState = {
-    show: true,
-    animate: true,
-    rtl: false,
-    index: getState().index,
+  const appModel = AppModel({
+    isVisible: true,
+    isAnimated: true,
+    isRtl: false,
     count: 5,
-    initialCount: 5,
     selectIndices: [] as number[],
-  };
+  });
 
-  getState.map((s: Glissando.State) => {
-    if (s.index !== localState.index) {
-      localState.index = s.index;
-    }
-    if (s.count !== localState.count) {
-      localState.count = s.count;
-      localState.selectIndices = createSelectIndices(s.count);
-    }
+  appModel.getChanges.map((state: TAppState) => {
+    appModel.setCount(state.count);
     return null;
   });
 
+  // getChanges.map((state: Glissando.State) => {
+  //   console.log('model.getChanges', state);
+  //   return null;
+  // });
+
   return {
     view: () => {
-      const state = getState();
       // Create a list of pages
-      const pageCount = localState.count || localState.initialCount;
+      const pageCount = appModel.getState().count;
       const pagesList = [...Array(pageCount)].map((_, i) => i);
 
       return m('.demo-container', [
@@ -56,9 +51,9 @@ const Slider = () => {
             id: 'show',
             type: 'checkbox',
             value: '1',
-            checked: localState.show,
-            onclick: () => {
-              localState.show = !localState.show;
+            checked: appModel.getState().isVisible,
+            onclick: (e: Event) => {
+              appModel.setIsVisible((e.target as HTMLInputElement).checked);
             },
           }),
           m(
@@ -72,9 +67,9 @@ const Slider = () => {
             id: 'rtl',
             type: 'checkbox',
             value: '1',
-            checked: localState.rtl,
-            onclick: () => {
-              localState.rtl = !localState.rtl;
+            checked: appModel.getState().isRtl,
+            onclick: (e: Event) => {
+              appModel.setIsRtl((e.target as HTMLInputElement).checked);
             },
           }),
           m(
@@ -88,9 +83,9 @@ const Slider = () => {
             id: 'animate',
             type: 'checkbox',
             value: '1',
-            checked: localState.animate,
-            onclick: () => {
-              localState.animate = !localState.animate;
+            checked: appModel.getState().isAnimated,
+            onclick: (e: Event) => {
+              appModel.setIsAnimated((e.target as HTMLInputElement).checked);
             },
           }),
           m(
@@ -101,15 +96,16 @@ const Slider = () => {
             'Animate',
           ),
         ]),
-        localState.show &&
+        appModel.getState().isVisible &&
           m(
             'div',
-            { dir: localState.rtl ? 'rtl' : '' },
+            { dir: appModel.getState().isRtl ? 'rtl' : '' },
             m('.demo-controls', [
               m(
                 'button',
                 {
-                  onclick: () => previous({ animate: localState.animate }),
+                  onclick: () =>
+                    previous({ animate: appModel.getState().isAnimated }),
                   disabled: !hasPrevious() || isAnimating(),
                 },
                 'Previous',
@@ -117,7 +113,8 @@ const Slider = () => {
               m(
                 'button',
                 {
-                  onclick: () => next({ animate: localState.animate }),
+                  onclick: () =>
+                    next({ animate: appModel.getState().isAnimated }),
                   disabled: !hasNext() || isAnimating(),
                 },
                 'Next',
@@ -125,24 +122,48 @@ const Slider = () => {
               m(
                 'select',
                 {
-                  disabled: state.isAnimating || state.count < 2,
+                  disabled: getState().isAnimating || getState().count < 2,
+                  value: getState().index,
                   onchange: (e: InputEvent) => {
                     const element = e.target as HTMLInputElement;
                     if (element) {
                       goTo({
                         index: parseInt(element.value, 10),
-                        animate: localState.animate,
+                        animate: appModel.getState().isAnimated,
                       });
                     }
                   },
                 },
-                localState.selectIndices.map((_index, i) =>
+                appModel.getState().selectIndices.map((_index, i) =>
                   m(
                     'option',
-                    { key: i, value: i, selected: i === localState.index },
+                    {
+                      key: i,
+                      value: i,
+                    },
                     `Go to page ${i + 1}`,
                   ),
                 ),
+              ),
+              m(
+                'button',
+                {
+                  onclick: () => {
+                    appModel.setCount(appModel.getState().count - 1);
+                  },
+                  disabled: appModel.getState().count === 1 || isAnimating(),
+                },
+                'Remove page',
+              ),
+              m(
+                'button',
+                {
+                  onclick: () => {
+                    appModel.setCount(appModel.getState().count + 1);
+                  },
+                  disabled: appModel.getState().count === 10 || isAnimating(),
+                },
+                'Add page',
               ),
             ]),
             m(

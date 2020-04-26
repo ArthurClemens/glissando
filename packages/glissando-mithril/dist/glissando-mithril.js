@@ -19,7 +19,7 @@ const GlissandoSlider = initialVnode => {
     onupdate: ({ dom, children }) => {
       // Children count
       const count = children.length;
-      if (count > getState().count) {
+      if (count !== getState().count) {
         setCount(count);
       }
       // Reading direction

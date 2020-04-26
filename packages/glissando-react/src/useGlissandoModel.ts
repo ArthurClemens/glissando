@@ -1,10 +1,10 @@
-import { Glissando, GlissandoModel, Stream } from 'glissando';
+import { Glissando, GlissandoModel } from 'glissando';
 // eslint-disable-next-line import/no-unresolved
 import { useState } from 'react';
 import { useStream } from 'use-stream';
 
 type TModel = {
-  _: Stream<Glissando.State>;
+  _: Glissando.States;
 };
 
 export const useGlissandoModel = (initialState: Glissando.InitialState) => {

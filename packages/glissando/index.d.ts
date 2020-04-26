@@ -143,7 +143,7 @@ export namespace Glissando {
      * State stream.
      */
     getState: States;
-    getChanges: ChangedStates;
+    getChanges: States;
   } & Selectors &
     Actions;
 }

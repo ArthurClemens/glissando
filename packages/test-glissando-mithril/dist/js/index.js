@@ -628,7 +628,7 @@ var GlissandoSlider = function GlissandoSlider(initialVnode) {
       // Children count
       var count = children.length;
 
-      if (count > getState().count) {
+      if (count !== getState().count) {
         setCount(count);
       } // Reading direction
 
@@ -717,10 +717,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
  // eslint-disable-next-line import/no-unresolved
 
+var calculateNewIndex = function calculateNewIndex(state, index) {
+  if (index === undefined || Number.isNaN(index)) {
+    return {
+      newIndex: state.index,
+      shouldUpdate: false
+    };
+  }
+
+  var newIndex = Math.min(index, state.count - 1);
+  var isValid = newIndex >= 0 && newIndex < state.count;
+  var shouldUpdate = isValid && newIndex !== state.index;
+  return {
+    newIndex: newIndex,
+    shouldUpdate: shouldUpdate
+  };
+};
+
 var setIndex = function setIndex(state) {
   return function (change) {
-    var newIndex = Math.min(change.index, state.count - 1);
-    return newIndex >= 0 && newIndex < state.count ? _objectSpread({}, state, {}, change.animate ? undefined : {
+    var _calculateNewIndex = calculateNewIndex(state, change.index),
+        newIndex = _calculateNewIndex.newIndex,
+        shouldUpdate = _calculateNewIndex.shouldUpdate;
+
+    return shouldUpdate ? _objectSpread({}, state, {}, change.animate ? undefined : {
       index: newIndex
     }, {
       targetIndex: newIndex,
@@ -849,10 +869,13 @@ var GlissandoModel = function GlissandoModel() {
 
   var changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, value) {
     return JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2) ? mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP : value;
-  }, _objectSpread({}, glissandoState.initialState), states);
+  }, mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP, states);
+  var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) {
+    return value;
+  }, changedStates);
   return _objectSpread({
     getState: states,
-    getChanges: changedStates
+    getChanges: getChanges
   }, actions, {}, selectors);
 };
 
@@ -2928,6 +2951,91 @@ else {}
 
 /***/ }),
 
+/***/ "./AppModel.ts":
+/*!*********************!*\
+  !*** ./AppModel.ts ***!
+  \*********************/
+/*! exports provided: AppModel */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModel", function() { return AppModel; });
+/* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril/stream */ "../node_modules/mithril/stream/stream.js");
+/* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril_stream__WEBPACK_IMPORTED_MODULE_0__);
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+// eslint-disable-next-line import/no-unresolved
+
+var createSelectIndices = function (count) {
+    return __spreadArrays(Array(count)).map(function (_, i) { return i; });
+};
+var AppModel = function (props) {
+    var initialState = {
+        isVisible: props.isVisible,
+        isAnimated: props.isAnimated,
+        isRtl: props.isRtl,
+        count: props.count,
+        selectIndices: createSelectIndices(props.count),
+    };
+    var appState = {
+        initialState: initialState,
+        actions: function (update) {
+            return {
+                setIsVisible: function (isVisible) {
+                    update(function (state) {
+                        return __assign(__assign({}, state), { isVisible: isVisible });
+                    });
+                },
+                setIsAnimated: function (isAnimated) {
+                    update(function (state) {
+                        return __assign(__assign({}, state), { isAnimated: isAnimated });
+                    });
+                },
+                setIsRtl: function (isRtl) {
+                    update(function (state) {
+                        return __assign(__assign({}, state), { isRtl: isRtl });
+                    });
+                },
+                setCount: function (count) {
+                    update(function (state) {
+                        return __assign(__assign({}, state), { count: count, selectIndices: createSelectIndices(count) });
+                    });
+                },
+            };
+        },
+    };
+    var update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
+    var states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, patch) { return patch(state); }, __assign({}, appState.initialState), update);
+    var actions = __assign({}, appState.actions(update));
+    var changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, value) {
+        return JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+            ? mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP
+            : value;
+    }, __assign({}, appState.initialState), states);
+    var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) { return value; }, changedStates);
+    return __assign({ getState: states, getChanges: getChanges }, actions);
+};
+
+
+/***/ }),
+
 /***/ "./AppPage.ts":
 /*!********************!*\
   !*** ./AppPage.ts ***!
@@ -2941,7 +3049,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../../glissando-mithril/dist/glissando-mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Page */ "./Page.ts");
+/* harmony import */ var _AppModel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AppModel */ "./AppModel.ts");
+/* harmony import */ var _Page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Page */ "./Page.ts");
 var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -2952,36 +3061,29 @@ var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
 
 
 
+
 var Slider = function () {
     var model = Object(glissando_mithril__WEBPACK_IMPORTED_MODULE_0__["useGlissandoModel"])();
     var getState = model.getState, previous = model.previous, next = model.next, goTo = model.goTo, hasPrevious = model.hasPrevious, hasNext = model.hasNext, isAnimating = model.isAnimating;
-    var createSelectIndices = function (count) {
-        return __spreadArrays(Array(count)).map(function (_, i) { return i; });
-    };
-    var localState = {
-        show: true,
-        animate: true,
-        rtl: false,
-        index: getState().index,
+    var appModel = Object(_AppModel__WEBPACK_IMPORTED_MODULE_2__["AppModel"])({
+        isVisible: true,
+        isAnimated: true,
+        isRtl: false,
         count: 5,
-        initialCount: 5,
         selectIndices: [],
-    };
-    getState.map(function (s) {
-        if (s.index !== localState.index) {
-            localState.index = s.index;
-        }
-        if (s.count !== localState.count) {
-            localState.count = s.count;
-            localState.selectIndices = createSelectIndices(s.count);
-        }
+    });
+    appModel.getChanges.map(function (state) {
+        appModel.setCount(state.count);
         return null;
     });
+    // getChanges.map((state: Glissando.State) => {
+    //   console.log('model.getChanges', state);
+    //   return null;
+    // });
     return {
         view: function () {
-            var state = getState();
             // Create a list of pages
-            var pageCount = localState.count || localState.initialCount;
+            var pageCount = appModel.getState().count;
             var pagesList = __spreadArrays(Array(pageCount)).map(function (_, i) { return i; });
             return mithril__WEBPACK_IMPORTED_MODULE_1___default()('.demo-container', [
                 mithril__WEBPACK_IMPORTED_MODULE_1___default()('.demo-meta-controls', [
@@ -2989,9 +3091,9 @@ var Slider = function () {
                         id: 'show',
                         type: 'checkbox',
                         value: '1',
-                        checked: localState.show,
-                        onclick: function () {
-                            localState.show = !localState.show;
+                        checked: appModel.getState().isVisible,
+                        onclick: function (e) {
+                            appModel.setIsVisible(e.target.checked);
                         },
                     }),
                     mithril__WEBPACK_IMPORTED_MODULE_1___default()('label', {
@@ -3001,9 +3103,9 @@ var Slider = function () {
                         id: 'rtl',
                         type: 'checkbox',
                         value: '1',
-                        checked: localState.rtl,
-                        onclick: function () {
-                            localState.rtl = !localState.rtl;
+                        checked: appModel.getState().isRtl,
+                        onclick: function (e) {
+                            appModel.setIsRtl(e.target.checked);
                         },
                     }),
                     mithril__WEBPACK_IMPORTED_MODULE_1___default()('label', {
@@ -3013,42 +3115,62 @@ var Slider = function () {
                         id: 'animate',
                         type: 'checkbox',
                         value: '1',
-                        checked: localState.animate,
-                        onclick: function () {
-                            localState.animate = !localState.animate;
+                        checked: appModel.getState().isAnimated,
+                        onclick: function (e) {
+                            appModel.setIsAnimated(e.target.checked);
                         },
                     }),
                     mithril__WEBPACK_IMPORTED_MODULE_1___default()('label', {
                         for: 'animate',
                     }, 'Animate'),
                 ]),
-                localState.show &&
-                    mithril__WEBPACK_IMPORTED_MODULE_1___default()('div', { dir: localState.rtl ? 'rtl' : '' }, mithril__WEBPACK_IMPORTED_MODULE_1___default()('.demo-controls', [
+                appModel.getState().isVisible &&
+                    mithril__WEBPACK_IMPORTED_MODULE_1___default()('div', { dir: appModel.getState().isRtl ? 'rtl' : '' }, mithril__WEBPACK_IMPORTED_MODULE_1___default()('.demo-controls', [
                         mithril__WEBPACK_IMPORTED_MODULE_1___default()('button', {
-                            onclick: function () { return previous({ animate: localState.animate }); },
+                            onclick: function () {
+                                return previous({ animate: appModel.getState().isAnimated });
+                            },
                             disabled: !hasPrevious() || isAnimating(),
                         }, 'Previous'),
                         mithril__WEBPACK_IMPORTED_MODULE_1___default()('button', {
-                            onclick: function () { return next({ animate: localState.animate }); },
+                            onclick: function () {
+                                return next({ animate: appModel.getState().isAnimated });
+                            },
                             disabled: !hasNext() || isAnimating(),
                         }, 'Next'),
                         mithril__WEBPACK_IMPORTED_MODULE_1___default()('select', {
-                            disabled: state.isAnimating || state.count < 2,
+                            disabled: getState().isAnimating || getState().count < 2,
+                            value: getState().index,
                             onchange: function (e) {
                                 var element = e.target;
                                 if (element) {
                                     goTo({
                                         index: parseInt(element.value, 10),
-                                        animate: localState.animate,
+                                        animate: appModel.getState().isAnimated,
                                     });
                                 }
                             },
-                        }, localState.selectIndices.map(function (_index, i) {
-                            return mithril__WEBPACK_IMPORTED_MODULE_1___default()('option', { key: i, value: i, selected: i === localState.index }, "Go to page " + (i + 1));
+                        }, appModel.getState().selectIndices.map(function (_index, i) {
+                            return mithril__WEBPACK_IMPORTED_MODULE_1___default()('option', {
+                                key: i,
+                                value: i,
+                            }, "Go to page " + (i + 1));
                         })),
+                        mithril__WEBPACK_IMPORTED_MODULE_1___default()('button', {
+                            onclick: function () {
+                                appModel.setCount(appModel.getState().count - 1);
+                            },
+                            disabled: appModel.getState().count === 1 || isAnimating(),
+                        }, 'Remove page'),
+                        mithril__WEBPACK_IMPORTED_MODULE_1___default()('button', {
+                            onclick: function () {
+                                appModel.setCount(appModel.getState().count + 1);
+                            },
+                            disabled: appModel.getState().count === 10 || isAnimating(),
+                        }, 'Add page'),
                     ]), mithril__WEBPACK_IMPORTED_MODULE_1___default()(glissando_mithril__WEBPACK_IMPORTED_MODULE_0__["GlissandoSlider"], {
                         model: model,
-                    }, pagesList.map(function (index) { return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_Page__WEBPACK_IMPORTED_MODULE_2__["Page"], { key: index, index: index }); }))),
+                    }, pagesList.map(function (index) { return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_Page__WEBPACK_IMPORTED_MODULE_3__["Page"], { key: index, index: index }); }))),
             ]);
         },
     };

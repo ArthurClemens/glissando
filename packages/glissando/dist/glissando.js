@@ -2,9 +2,24 @@ import Stream from 'mithril/stream';
 export { default as Stream } from 'mithril/stream';
 
 // eslint-disable-next-line import/no-unresolved
+const calculateNewIndex = (state, index) => {
+  if (index === undefined || Number.isNaN(index)) {
+    return {
+      newIndex: state.index,
+      shouldUpdate: false,
+    };
+  }
+  const newIndex = Math.min(index, state.count - 1);
+  const isValid = newIndex >= 0 && newIndex < state.count;
+  const shouldUpdate = isValid && newIndex !== state.index;
+  return {
+    newIndex,
+    shouldUpdate,
+  };
+};
 const setIndex = state => change => {
-  const newIndex = Math.min(change.index, state.count - 1);
-  return newIndex >= 0 && newIndex < state.count
+  const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+  return shouldUpdate
     ? {
         ...state,
         ...(change.animate ? undefined : { index: newIndex }),
@@ -124,14 +139,13 @@ const GlissandoModel = (props = {}) => {
       JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
         ? Stream.SKIP
         : value,
-    {
-      ...glissandoState.initialState,
-    },
+    Stream.SKIP,
     states,
   );
+  const getChanges = Stream.lift(value => value, changedStates);
   return {
     getState: states,
-    getChanges: changedStates,
+    getChanges,
     ...actions,
     ...selectors,
   };

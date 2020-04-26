@@ -162,15 +162,18 @@ export const GlissandoModel = (
       JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
         ? Stream.SKIP
         : value,
-    {
-      ...glissandoState.initialState,
-    },
+    Stream.SKIP,
     states,
+  );
+
+  const getChanges = Stream.lift(
+    value => value as Glissando.State,
+    changedStates,
   );
 
   return {
     getState: states,
-    getChanges: changedStates,
+    getChanges,
     ...actions,
     ...selectors,
   } as Glissando.Model;
