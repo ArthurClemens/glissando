@@ -17,7 +17,7 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
     onupdate: ({ dom, children }) => {
       // Children count
       const count = (children as m.ChildArray).length;
-      if (count > getState().count) {
+      if (count !== getState().count) {
         setCount(count);
       }
       // Reading direction
