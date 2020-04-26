@@ -10,9 +10,28 @@ type IndexChange = {
   animate?: boolean;
 };
 
+const calculateNewIndex = (
+  state: Glissando.State,
+  index: number | undefined,
+) => {
+  if (index === undefined || Number.isNaN(index)) {
+    return {
+      newIndex: state.index,
+      shouldUpdate: false,
+    };
+  }
+  const newIndex = Math.min(index, state.count - 1);
+  const isValid = newIndex >= 0 && newIndex < state.count;
+  const shouldUpdate = isValid && newIndex !== state.index;
+  return {
+    newIndex,
+    shouldUpdate,
+  };
+};
+
 const setIndex = (state: Glissando.State) => (change: IndexChange) => {
-  const newIndex = Math.min(change.index, state.count - 1);
-  return newIndex >= 0 && newIndex < state.count
+  const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+  return shouldUpdate
     ? {
         ...state,
         ...(change.animate ? undefined : { index: newIndex }),
