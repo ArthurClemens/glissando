@@ -18,7 +18,6 @@
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json"
   },
   "dependencies": {
-    "@types/react": "16.9.34",
     "glissando-react": "^0.6.1",
     "mithril": "2.0.4",
     "react": "16.13.1",
@@ -27,6 +26,7 @@
   },
   "devDependencies": {
     "@types/mithril": "^2.0.2",
+    "@types/react": "16.9.34",
     "http-server": "^0.12.1",
     "npm-run-all": "^4.1.5",
     "typescript": "3.3.3"
