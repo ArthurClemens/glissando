@@ -7,14 +7,17 @@ For React and Mithril.
 - [Features](#features)
 - [Usage, demos and examples](#usage-demos-and-examples)
 - [API](#api)
+  - [Introduction](#introduction)
+    - [Standalone use](#standalone-use)
+    - [Directed use](#directed-use)
   - [Slider model](#slider-model)
     - [Initial state](#initial-state)
   - [Model methods](#model-methods)
     - [next](#next)
     - [previous](#previous)
     - [goTo](#goto)
-    - [hasPrevious](#hasprevious)
     - [hasNext](#hasnext)
+    - [hasPrevious](#hasprevious)
     - [isAnimating](#isanimating)
     - [getState](#getstate)
     - [getChanges](#getchanges)
@@ -34,7 +37,8 @@ For React and Mithril.
 - Efficient rendering: only 3 elements are rendered at a single time (the previous, current and next element).
 - This results in a minimal memory footprint, so safe for mobile.
 - Can be controlled with next/previous actions, jump to page action, with or without animation.
-- Can be queried for state, and subscribed to changes.
+- Use with a router: use the router location to control the slider.
+- Query for state, subscribe to changes.
 - The list of elements can be changed on the fly.
 - Right-to-left language support, using mirrored transitions.
 - Written in TypeScript.
@@ -49,6 +53,33 @@ For React and Mithril.
 
 
 ## API
+
+### Introduction
+
+A glissando slider is created with 2 parts:
+
+1. A **model** that maintains internal state and provides methods to control the slider.
+2. A **slider component** that takes child elements as views. The component informs the model to update, for instance when the children have been changed.
+
+The slider component can be used standalone or directed.
+
+#### Standalone use
+
+This is the simplest setup. Use control methods: `next()`, `goTo(0)`, etcetera to update the model state.
+ 
+
+#### Directed use
+
+Application state is used to control the slider. An example of application state is a router with a unique page URL for each slide.
+
+* Pass a list of location ids, for example: possible route paths.
+* Pass the current location id, for example: the current route path.
+
+When application state changes the current location id, the slider model will subsequently be updated. For example: the Next button invokes a new URL, and the new router path is used to set the location id, which then tells the slider to slide to that element.
+
+
+Examples for both uses are shown in the [React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md) and [Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md) documentation sections.
+
 
 ### Slider model
 
@@ -79,13 +110,23 @@ const model: Glissando.Model = useGlissandoModel(initalState);
 const model = useGlissandoModel();
 
 const {
+  // control:
   next,
   previous,
   goTo,
-  hasPrevious,
+
+  // state:
   hasNext,
+  hasPrevious,
   isAnimating,
   getState,
+  
+  // state (directed use):
+  getLocation,
+  getPreviousLocation,
+  getNextLocation,
+  
+  // subscribe to changes:
   getChanges,
 } = model;
 ```
@@ -137,22 +178,13 @@ model.goTo({
 Disable animation:
 
 ```typescript
-model.previous({
+model.goTo({
   index: 1,
   animate: false
 });
 ```
 
 Moves the slider to the indicated index. It is not possible to go further back than the first item, or beyond the last item.
-
-
-#### hasPrevious
-
-```typescript
-const hasPrevious: boolean = model.hasPrevious();
-```
-
-Returns whether it is possible to move the slider to a previous position.
 
 
 #### hasNext
@@ -162,6 +194,15 @@ const hasNext: boolean = model.hasNext();
 ```
 
 Returns whether it is possible to move the slider to a next position.
+
+
+#### hasPrevious
+
+```typescript
+const hasPrevious: boolean = model.hasPrevious();
+```
+
+Returns whether it is possible to move the slider to a previous position.
 
 
 #### isAnimating
@@ -233,13 +274,17 @@ Children can be changed dynamically.
 
 #### Options
 
-| **Parameter** | **Required** | **Type**           | **Description**                           |
-| ------------- | ------------ | ------------------ | ----------------------------------------- |
-| **model**     | required     | `GlissandoModel`   | The slider model                          |
-| **children**  | required     | Component children | Pass the items/pages to slide as children |
+| **Parameter** | **Required** | **Type**           | **Description**                                                             |
+| ------------- | ------------ | ------------------ | --------------------------------------------------------------------------- |
+| **model**     | required     | `GlissandoModel`   | The slider model                                                            |
+| **children**  | required     | Component children | The elements to slide                                                       |
+| **locations** | optional     | `string[]`         | (directed use) List of location ids, for example: possible route paths      |
+| **location**  | optional     | `string`           | (directed use) The current location id, for example: the current route path |
 
 
 #### With React
+
+**Standalone use**
 
 ```jsx
 import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
@@ -253,8 +298,30 @@ const model = useGlissandoModel();
 </GlissandoSlider>
 ```
 
+**Directed use**
+
+```jsx
+import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
+
+const model = useGlissandoModel();
+const pages = ["page-1", "page-2", "page-3"];
+const currentPage = "page-1";
+
+<GlissandoSlider
+  model={model}
+  locations={pages}
+  location={currentPage}
+>
+  <Page1 />
+  <Page2 />
+  <Page3 />
+</GlissandoSlider>
+```
+
 
 #### With Mithril
+
+**Standalone use**
 
 ```javascript
 import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril';

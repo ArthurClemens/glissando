@@ -5,11 +5,6 @@ import { Glissando } from '../index';
 
 type PatchFn = (state: Glissando.State) => Glissando.State;
 
-type IndexChange = {
-  index: number;
-  animate?: boolean;
-};
-
 const calculateNewIndex = (
   state: Glissando.State,
   index: number | undefined,
@@ -29,7 +24,9 @@ const calculateNewIndex = (
   };
 };
 
-const setIndex = (state: Glissando.State) => (change: IndexChange) => {
+const setIndex = (state: Glissando.State) => (
+  change: Glissando.IndexChange,
+) => {
   const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
   return shouldUpdate
     ? {
@@ -39,6 +36,49 @@ const setIndex = (state: Glissando.State) => (change: IndexChange) => {
         isAnimating: !!change.animate,
       }
     : state;
+};
+
+const setLocation = (state: Glissando.State) => (
+  change: Glissando.LocationChange,
+) => {
+  if (!state.locations || state.locations.length === 0) {
+    return state;
+  }
+  let locationStr = change.location.toString();
+  let index = state.locations.indexOf(locationStr);
+  if (index === -1) {
+    // Location does not exist; default to first index
+    index = 0;
+    locationStr = state.locations[index];
+  }
+  const shouldAnimate =
+    state.location === undefined
+      ? false // don't animate if we are setting the first location
+      : change.animate !== false;
+  const newState = {
+    ...state,
+    location: locationStr,
+  };
+  const indexChange: Glissando.IndexChange = {
+    index,
+    animate: shouldAnimate,
+  };
+  return setIndex(newState)(indexChange);
+};
+
+type IndexLocationChange = (index: number) => number;
+
+const lookupLocation = (state: Glissando.State) => (
+  changeFn: IndexLocationChange,
+) => {
+  if (!state.locations || !state.location) {
+    return undefined;
+  }
+  const index = state.locations.indexOf(state.location);
+  if (index === -1) {
+    return undefined;
+  }
+  return state.locations[changeFn(index)];
 };
 
 export const GlissandoModel = (
@@ -77,8 +117,30 @@ export const GlissandoModel = (
             });
           });
         },
-        goTo: (change: IndexChange) => {
+        goTo: ({
+          index,
+          location,
+          animate,
+        }: {
+          index?: number;
+          location?: string;
+          animate?: boolean;
+        }) => {
           update((state: Glissando.State) => {
+            if (location) {
+              const change: Glissando.LocationChange = {
+                location,
+                animate,
+              };
+              return setLocation(state)(change);
+            }
+            if (index === undefined) {
+              return state;
+            }
+            const change: Glissando.IndexChange = {
+              index,
+              animate,
+            };
             return setIndex(state)(change);
           });
         },
@@ -103,6 +165,14 @@ export const GlissandoModel = (
             return {
               ...state,
               direction,
+            };
+          });
+        },
+        setLocations: (locations: string[]) => {
+          update((state: Glissando.State) => {
+            return {
+              ...state,
+              locations,
             };
           });
         },
@@ -134,6 +204,18 @@ export const GlissandoModel = (
             }
             return index;
           });
+        },
+        getLocation: () => {
+          const state = states();
+          return lookupLocation(state)(index => index);
+        },
+        getNextLocation: () => {
+          const state = states();
+          return lookupLocation(state)(index => index + 1);
+        },
+        getPreviousLocation: () => {
+          const state = states();
+          return lookupLocation(state)(index => index - 1);
         },
       };
     },
