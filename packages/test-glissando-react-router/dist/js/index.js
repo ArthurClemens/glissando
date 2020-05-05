@@ -169,7 +169,9 @@ var useGlissandoModel = function useGlissandoModel(initialState) {
 
 var GlissandoSlider = function GlissandoSlider(props) {
   var model = props.model,
-      children = props.children;
+      children = props.children,
+      locations = props.locations,
+      location = props.location;
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -180,7 +182,9 @@ var GlissandoSlider = function GlissandoSlider(props) {
       finalize = model.finalize,
       setCount = model.setCount,
       setDirection = model.setDirection,
-      getViewIndices = model.getViewIndices; // Child count
+      getViewIndices = model.getViewIndices,
+      setLocations = model.setLocations,
+      goTo = model.goTo; // Child count
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     var count = (children || []).length;
@@ -188,7 +192,23 @@ var GlissandoSlider = function GlissandoSlider(props) {
     if (count !== getState().count) {
       setCount(count);
     }
-  }, [children, getState, setCount]); // Event listener: transitionend
+  }, [children, getState, setCount]); // Locations
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    if (locations && JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
+      setLocations(locations);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [locations]); // Location
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    if (location && location !== getState().location) {
+      goTo({
+        location: location
+      });
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [location]); // Event listener: transitionend
 
   var observeTransitionEnd = Object(react__WEBPACK_IMPORTED_MODULE_1__["useCallback"])(function (node) {
     if (node === null) {
@@ -480,6 +500,52 @@ var setIndex = function setIndex(state) {
   };
 };
 
+var setLocation = function setLocation(state) {
+  return function (change) {
+    if (!state.locations || state.locations.length === 0) {
+      return state;
+    }
+
+    var locationStr = change.location.toString();
+    var index = state.locations.indexOf(locationStr);
+
+    if (index === -1) {
+      // Location does not exist; default to first index
+      index = 0;
+      locationStr = state.locations[index];
+    }
+
+    var shouldAnimate = state.location === undefined ? false // don't animate if we are setting the first location
+    : change.animate !== false;
+
+    var newState = _objectSpread({}, state, {
+      location: locationStr
+    });
+
+    var indexChange = {
+      index: index,
+      animate: shouldAnimate
+    };
+    return setIndex(newState)(indexChange);
+  };
+};
+
+var lookupLocation = function lookupLocation(state) {
+  return function (changeFn) {
+    if (!state.locations || !state.location) {
+      return undefined;
+    }
+
+    var index = state.locations.indexOf(state.location);
+
+    if (index === -1) {
+      return undefined;
+    }
+
+    return state.locations[changeFn(index)];
+  };
+};
+
 var GlissandoModel = function GlissandoModel() {
   var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var sideViews = props.sideViews || 1;
@@ -527,8 +593,27 @@ var GlissandoModel = function GlissandoModel() {
             });
           });
         },
-        goTo: function goTo(change) {
+        goTo: function goTo(_ref3) {
+          var index = _ref3.index,
+              location = _ref3.location,
+              animate = _ref3.animate;
           update(function (state) {
+            if (location) {
+              var _change = {
+                location: location,
+                animate: animate
+              };
+              return setLocation(state)(_change);
+            }
+
+            if (index === undefined) {
+              return state;
+            }
+
+            var change = {
+              index: index,
+              animate: animate
+            };
             return setIndex(state)(change);
           });
         },
@@ -553,6 +638,13 @@ var GlissandoModel = function GlissandoModel() {
           update(function (state) {
             return _objectSpread({}, state, {
               direction: direction
+            });
+          });
+        },
+        setLocations: function setLocations(locations) {
+          update(function (state) {
+            return _objectSpread({}, state, {
+              locations: locations
             });
           });
         }
@@ -584,6 +676,24 @@ var GlissandoModel = function GlissandoModel() {
             }
 
             return index;
+          });
+        },
+        getLocation: function getLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index;
+          });
+        },
+        getNextLocation: function getNextLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index + 1;
+          });
+        },
+        getPreviousLocation: function getPreviousLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index - 1;
           });
         }
       };
@@ -33403,49 +33513,13 @@ var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
 
 
 var pageCount = 10;
+var pages = __spreadArrays(Array(pageCount)).map(function (_, i) { return (i + 1).toString(); });
 var RoutedSlider = function (_a) {
     var model = _a.model;
-    var goTo = model.goTo, getState = model.getState, getChanges = model.getChanges;
-    var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["useHistory"])();
     var match = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["useRouteMatch"])();
-    console.log('match', match);
-    var pageIndex = parseInt(match.params.page, 10);
-    var _b = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(pageIndex), index = _b[0], setIndex = _b[1];
-    // const index = getState().index;
-    // if (getState().index !== pageIndex) {
-    //   goTo({ index: pageIndex, animate: false });
-    // }
-    console.log('index', index);
-    var pagesList = __spreadArrays(Array(pageCount)).map(function (_, i) { return i; });
-    Object(react__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
-        if (pageIndex >= 0 && pageIndex < pagesList.length && pageIndex !== index) {
-            setIndex(pageIndex);
-            // goTo({ index: pageIndex, animate: false });
-            // console.log("should push to", index);
-            // history.push(`/${index}`);
-        }
-    }, [index, pageIndex, pagesList.length]);
-    getChanges
-        .map(function (state) {
-        console.log('getChanges pageIndex', pageIndex, 'state.index', state.index);
-        if (state.index !== index) {
-            setIndex(state.index);
-        }
-        return null;
-    })
-        .end(true);
-    Object(react__WEBPACK_IMPORTED_MODULE_3__["useEffect"])(function () {
-        var pageIndex = parseInt(match.params.page, 10);
-        if (pageIndex !== index) {
-            console.log('should push to', index);
-            history.push("/" + index);
-            // goTo({ index: index, animate: false });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [index]);
-    return (react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(glissando_react__WEBPACK_IMPORTED_MODULE_2__["GlissandoSlider"], { model: model }, pagesList.map(function (_, i) {
-        // eslint-disable-next-line react/no-array-index-key
-        return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_Page__WEBPACK_IMPORTED_MODULE_6__["Page"], { key: i, index: i });
+    var currentPage = match.params.page;
+    return (react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(glissando_react__WEBPACK_IMPORTED_MODULE_2__["GlissandoSlider"], { model: model, locations: pages, location: currentPage }, pages.map(function (id) {
+        return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_Page__WEBPACK_IMPORTED_MODULE_6__["Page"], { key: id, location: id });
     })));
 };
 function App() {
@@ -33472,22 +33546,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Header", function() { return Header; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "../node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 var Header = function (_a) {
     var model = _a.model;
-    var getState = model.getState, previous = model.previous, next = model.next, hasPrevious = model.hasPrevious, hasNext = model.hasNext, isAnimating = model.isAnimating;
-    var state = getState();
-    var index = state.index;
+    var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
+    var isAnimating = model.isAnimating, getLocation = model.getLocation, getNextLocation = model.getNextLocation, getPreviousLocation = model.getPreviousLocation;
+    var location = getLocation();
+    var previousLocation = getPreviousLocation();
+    var nextLocation = getNextLocation();
     return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("header", { className: "bar bar-nav" },
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { className: "btn btn-link btn-nav pull-left", onClick: function () { return previous(); }, disabled: !hasPrevious() || isAnimating() },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { type: "button", className: "btn btn-link btn-nav pull-left", onClick: function () { return history.push(previousLocation); }, onKeyUp: function () { return history.push(previousLocation); }, tabIndex: 0, disabled: !previousLocation || isAnimating() },
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null,
                 react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", { className: "icon icon-left-nav" }),
                 react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Previous"))),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { className: "btn btn-link btn-nav pull-right", onClick: function () { return next(); }, disabled: !hasNext() || isAnimating() },
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", { type: "button", className: "btn btn-link btn-nav pull-right", onClick: function () { return history.push(nextLocation); }, onKeyUp: function () { return history.push(nextLocation); }, tabIndex: 0, disabled: !nextLocation || isAnimating() },
             react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null,
                 react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Next"),
                 react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", { className: "icon icon-right-nav" }))),
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", { className: "title" }, index)));
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", { className: "title" }, location)));
 };
 
 
@@ -33507,8 +33585,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 var Page = function (props) {
-    var imageId = props.index + 1;
-    var imageName = "" + (imageId < 10 ? '0' : '') + imageId;
+    var imageNum = parseInt(props.location, 10);
+    var imageName = "" + (imageNum < 10 ? '0' : '') + imageNum;
     var imageUrl = "https://arthurclemens.github.io/assets/mithril-slider/img/" + imageName + ".jpg";
     return (react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", { className: "demo-page" },
         react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", { src: imageUrl, alt: "" })));
@@ -33538,9 +33616,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var rootElement = document.getElementById('root');
 react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["BrowserRouter"], null,
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "TEST"),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], { exact: true, path: "/" },
-        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], { to: "/0" })),
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Redirect"], { to: "/1" })),
     react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_3__["default"], null)), rootElement);
 
 

@@ -5,6 +5,8 @@ import { FunctionComponent } from 'react';
 export interface GlissandoSliderProps {
   model: Glissando.Model;
   children: React.ReactNode[];
+  locations?: string[];
+  location?: string;
 }
 
 export const GlissandoSlider: FunctionComponent<GlissandoSliderProps>;

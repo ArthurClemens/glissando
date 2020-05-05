@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 
 type TProps = {
-  index: number;
+  location: string;
 };
 
 export const Page: FunctionComponent<TProps> = props => {
-  const imageId = props.index + 1;
-  const imageName = `${imageId < 10 ? '0' : ''}${imageId}`;
+  const imageNum = parseInt(props.location, 10);
+  const imageName = `${imageNum < 10 ? '0' : ''}${imageNum}`;
   const imageUrl = `https://arthurclemens.github.io/assets/mithril-slider/img/${imageName}.jpg`;
   return (
     <div className="demo-page">

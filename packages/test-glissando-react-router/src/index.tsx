@@ -7,9 +7,8 @@ import App from './App';
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Router>
-    <div>TEST</div>
     <Route exact path="/">
-      <Redirect to="/0" />
+      <Redirect to="/1" />
     </Route>
     <App />
   </Router>,
