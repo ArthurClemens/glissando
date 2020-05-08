@@ -164,17 +164,17 @@ export namespace Glissando {
     isAnimating: () => boolean;
 
     /**
-     * Returns the current location id. If no next location exist returns undefined;
+     * Returns the current location id. If no next location exist returns undefined.
      */
     getLocation: () => string | undefined;
 
     /**
-     * Returns the next location id. If no next location exist returns undefined;
+     * Returns the next location id. If no next location exist returns undefined.
      */
     getNextLocation: () => string | undefined;
 
     /**
-     * Returns the previous location id. If no previous location exist returns undefined;
+     * Returns the previous location id. If no previous location exist returns undefined.
      */
     getPreviousLocation: () => string | undefined;
 
