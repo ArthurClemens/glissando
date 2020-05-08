@@ -1,6 +1,6 @@
 {
   "name": "test-glissando-mithril",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "private": true,
   "description": "",
   "keywords": [],
@@ -18,7 +18,7 @@
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json"
   },
   "dependencies": {
-    "glissando-mithril": "^0.6.1",
+    "glissando-mithril": "^0.7.0",
     "mithril": "2.0.4"
   },
   "devDependencies": {
