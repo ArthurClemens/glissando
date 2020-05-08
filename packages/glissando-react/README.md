@@ -89,14 +89,17 @@ const Slider = () => {
 Use application state to tell the slider what to show:
 
 ```tsx
+const pages = ["page-1", "page-2", "page-3"];
+
 const Slider = () => {
-  const pages = ["page-1", "page-2", "page-3"];
   const match = useRouteMatch();
   const currentPage = match.params.page;
 
   return (
     <GlissandoSlider model={model} locations={pages} location={currentPage}>
-      {/* child pages */}
+      {pages.map(id => {
+        return <Page key={id} location={id} />;
+      })}
     </GlissandoSlider>
   );
 };
