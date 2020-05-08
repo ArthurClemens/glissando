@@ -351,22 +351,21 @@ const model = useGlissandoModel();
 
 **Directed use**
 
-```jsx
-import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
-
-const model = useGlissandoModel();
+```tsx
 const pages = ["page-1", "page-2", "page-3"];
-const currentPage = "page-1";
 
-<GlissandoSlider
-  model={model}
-  locations={pages}
-  location={currentPage}
->
-  <Page1 />
-  <Page2 />
-  <Page3 />
-</GlissandoSlider>
+const Slider = () => {
+  const match = useRouteMatch();
+  const currentPage = match.params.page;
+
+  return (
+    <GlissandoSlider model={model} locations={pages} location={currentPage}>
+      {pages.map(id => {
+        return <Page key={id} location={id} />;
+      })}
+    </GlissandoSlider>
+  );
+};
 ```
 
 See also: [Glissando usage with React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md)
@@ -386,6 +385,34 @@ m(GlissandoSlider, { model }, [
   m(Page2),
   m(Page3),
 ]);
+```
+
+**Directed use**
+
+```ts
+const pages = ["page-1", "page-2", "page-3"];
+
+const Slider = {
+  view: ({ attrs }) => {
+    const { model } = attrs;
+    const currentPage = m.route.param('page');
+
+    return m(
+      GlissandoSlider,
+      {
+        model,
+        locations: pages,
+        location: currentPage,
+      },
+      pages.map(id =>
+        m(Page, {
+          key: id,
+          location: id,
+        }),
+      ),
+    );
+  },
+};
 ```
 
 See also: [Glissando usage with Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md)
