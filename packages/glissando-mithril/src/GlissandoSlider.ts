@@ -6,7 +6,15 @@ import { GlissandoSlider as TGlissandoSlider } from '../index';
 
 export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   const { model } = initialVnode.attrs;
-  const { getState, finalize, setCount, setDirection, getViewIndices } = model;
+  const {
+    getState,
+    finalize,
+    setCount,
+    setDirection,
+    getViewIndices,
+    goTo,
+    setLocations,
+  } = model;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onTransitionEnd = (evt: Event) => {
@@ -14,12 +22,28 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   };
 
   return {
-    onupdate: ({ dom, children }) => {
+    onupdate: ({ dom, children, attrs }) => {
+      const { locations, location } = attrs;
+
       // Children count
       const count = (children as m.ChildArray).length;
       if (count !== getState().count) {
         setCount(count);
       }
+
+      // Locations
+      if (
+        locations &&
+        JSON.stringify(locations) !== JSON.stringify(getState().locations)
+      ) {
+        setLocations(locations);
+      }
+
+      // Location
+      if (location && location !== getState().location) {
+        goTo({ location });
+      }
+
       // Reading direction
       const { direction } = getComputedStyle(dom);
       if (direction !== getState().direction) {

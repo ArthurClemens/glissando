@@ -5,7 +5,9 @@ A simple content slider for anything that needs to move.
 - [API](#api)
 - [Demo](#demo)
 - [Usage](#usage)
-- [Example](#example)
+  - [Standalone use](#standalone-use)
+    - [Example](#example)
+  - [Directed use](#directed-use)
 - [Size](#size)
 
 ## API
@@ -20,11 +22,7 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 ## Usage
 
-A glissando slider is created with 2 parts:
-
-1. A model to control the slider
-2. A slider component
-
+### Standalone use
 
 Import the component and model factory and slider CSS:
 
@@ -78,8 +76,7 @@ Control the slider with methods and query its state using selectors:
 }
 ```
 
-
-## Example
+#### Example
 
 ```js
 import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril'
@@ -123,6 +120,90 @@ const Slider = () => {
 }
 ```
 
+### Directed use
+
+Use application state to tell the slider what to show:
+
+```ts
+const pages = ["page-1", "page-2", "page-3"];
+
+const Slider = {
+  view: ({ attrs }) => {
+    const { model } = attrs;
+    const currentPage = m.route.param('page');
+
+    return m(
+      GlissandoSlider,
+      {
+        model,
+        locations: pages,
+        location: currentPage,
+      },
+      pages.map(id =>
+        m(Page, {
+          key: id,
+          location: id,
+        }),
+      ),
+    );
+  },
+};
+```
+
+The counterparts of component props `locations` and `location` are model selectors `getLocation`, `getNextLocation` and `getPreviousLocation`:
+
+```ts
+const Header: m.Component<TProps> = {
+  view: ({ attrs }) => {
+    const { model } = attrs;
+    const {
+      isAnimating,
+      getLocation,
+      getNextLocation,
+      getPreviousLocation,
+    } = model;
+    
+    const location = getLocation();
+    const previousLocation = getPreviousLocation();
+    const nextLocation = getNextLocation();
+
+    const goPrevious = () => {
+      if (previousLocation) {
+        m.route.set(previousLocation);
+      }
+    };
+    const goNext = () => {
+      if (nextLocation) {
+        m.route.set(nextLocation);
+      }
+    };
+
+    return m(
+      'header', [
+        m(
+          'button',
+          {
+            type: 'button',
+            disabled: !previousLocation || isAnimating(),
+            onclick: goPrevious,
+          },
+          'Previous'
+        ),
+        m(
+          'button',
+          {
+            type: 'button',
+            disabled: !nextLocation || isAnimating(),
+            onclick: goNext,
+          },
+          'Next'
+        ),
+      ],
+    );
+  },
+};
+```
+
 ## Size
 
-1005 B with all dependencies, minified and gzipped
+1.24 KB with all dependencies, minified and gzipped
