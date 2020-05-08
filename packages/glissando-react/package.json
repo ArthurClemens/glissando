@@ -35,15 +35,15 @@
   "dependencies": {
     "@huse/effect-ref": "1.0.1",
     "glissando": "^0.6.1",
-    "use-stream": "0.3.2"
+    "use-stream": "0.3.6"
   },
   "peerDependencies": {
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.4.5",
+    "@size-limit/preset-small-lib": "^4.5.0",
     "@types/react": "16.9.34",
-    "size-limit": "^4.4.5"
+    "size-limit": "^4.5.0"
   }
 }

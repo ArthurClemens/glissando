@@ -119,10 +119,6 @@ const Slider = () => {
                 },
                 'Next',
               ),
-              m('button', { class: 'ui right labeled icon button' }, [
-                m('i', { class: 'right arrow icon' }),
-                ' Next ',
-              ]),
               m(
                 'select',
                 {

@@ -100,13 +100,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-stream */ "../../glissando-react/node_modules/use-stream/dist/use-stream.js");
+/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-stream */ "../../glissando-react/node_modules/use-stream/dist/use-stream.mjs");
 /* harmony import */ var _huse_effect_ref__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @huse/effect-ref */ "../../glissando-react/node_modules/@huse/effect-ref/es/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -138,7 +138,9 @@ var useGlissandoModel = function useGlissandoModel(initialState) {
 
 var GlissandoSlider = function GlissandoSlider(props) {
   var model = props.model,
-      children = props.children;
+      children = props.children,
+      locations = props.locations,
+      location = props.location;
 
   var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
       _useState4 = _slicedToArray(_useState3, 2),
@@ -149,7 +151,9 @@ var GlissandoSlider = function GlissandoSlider(props) {
       finalize = model.finalize,
       setCount = model.setCount,
       setDirection = model.setDirection,
-      getViewIndices = model.getViewIndices; // Child count
+      getViewIndices = model.getViewIndices,
+      setLocations = model.setLocations,
+      goTo = model.goTo; // Child count
 
   Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
     var count = (children || []).length;
@@ -157,7 +161,23 @@ var GlissandoSlider = function GlissandoSlider(props) {
     if (count !== getState().count) {
       setCount(count);
     }
-  }, [children, getState, setCount]); // Event listener: transitionend
+  }, [children, getState, setCount]); // Locations
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    if (locations && JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
+      setLocations(locations);
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [locations]); // Location
+
+  Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
+    if (location && location !== getState().location) {
+      goTo({
+        location: location
+      });
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  }, [location]); // Event listener: transitionend
 
   var observeTransitionEnd = Object(react__WEBPACK_IMPORTED_MODULE_1__["useCallback"])(function (node) {
     if (node === null) {
@@ -270,10 +290,10 @@ function useEffectRef(callback) {
 
 /***/ }),
 
-/***/ "../../glissando-react/node_modules/use-stream/dist/use-stream.js":
-/*!************************************************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-react/node_modules/use-stream/dist/use-stream.js ***!
-  \************************************************************************************************************************/
+/***/ "../../glissando-react/node_modules/use-stream/dist/use-stream.mjs":
+/*!*************************************************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-react/node_modules/use-stream/dist/use-stream.mjs ***!
+  \*************************************************************************************************************************/
 /*! exports provided: useStream */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -290,7 +310,6 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
     const [streamValues, setStreamValues] = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState({});
     // Distinguish update from mount:
     const isInitedRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(false);
-    // Keep reference of all streams that update streamValues so they can be stopped:
     const subsRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef([]);
     const subscribe = (memo) => {
         if (debug) {
@@ -299,8 +318,8 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
         subsRef.current = Object.keys(memo)
             .map((key) => {
             const stream = memo[key];
-            return stream.map && typeof stream.map === 'function'
-                ? stream.map((value) => {
+            if (stream.map && typeof stream.map === 'function') {
+                return stream.map((value) => {
                     if (debug) {
                         debug('Will update %s', key);
                     }
@@ -309,8 +328,9 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
                         [key]: value,
                     });
                     return null;
-                })
-                : null;
+                });
+            }
+            return false;
         })
             .filter(Boolean);
     };
@@ -400,7 +420,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -440,12 +460,58 @@ var setIndex = function setIndex(state) {
         newIndex = _calculateNewIndex.newIndex,
         shouldUpdate = _calculateNewIndex.shouldUpdate;
 
-    return shouldUpdate ? _objectSpread({}, state, {}, change.animate ? undefined : {
+    return shouldUpdate ? _objectSpread(_objectSpread(_objectSpread({}, state), change.animate ? undefined : {
       index: newIndex
-    }, {
+    }), {}, {
       targetIndex: newIndex,
       isAnimating: !!change.animate
     }) : state;
+  };
+};
+
+var setLocation = function setLocation(state) {
+  return function (change) {
+    if (!state.locations || state.locations.length === 0) {
+      return state;
+    }
+
+    var locationStr = change.location.toString();
+    var index = state.locations.indexOf(locationStr);
+
+    if (index === -1) {
+      // Location does not exist; default to first index
+      index = 0;
+      locationStr = state.locations[index];
+    }
+
+    var shouldAnimate = state.location === undefined ? false // don't animate if we are setting the first location
+    : change.animate !== false;
+
+    var newState = _objectSpread(_objectSpread({}, state), {}, {
+      location: locationStr
+    });
+
+    var indexChange = {
+      index: index,
+      animate: shouldAnimate
+    };
+    return setIndex(newState)(indexChange);
+  };
+};
+
+var lookupLocation = function lookupLocation(state) {
+  return function (changeFn) {
+    if (!state.locations || !state.location) {
+      return undefined;
+    }
+
+    var index = state.locations.indexOf(state.location);
+
+    if (index === -1) {
+      return undefined;
+    }
+
+    return state.locations[changeFn(index)];
   };
 };
 
@@ -496,8 +562,27 @@ var GlissandoModel = function GlissandoModel() {
             });
           });
         },
-        goTo: function goTo(change) {
+        goTo: function goTo(_ref3) {
+          var index = _ref3.index,
+              location = _ref3.location,
+              animate = _ref3.animate;
           update(function (state) {
+            if (location) {
+              var _change = {
+                location: location,
+                animate: animate
+              };
+              return setLocation(state)(_change);
+            }
+
+            if (index === undefined) {
+              return state;
+            }
+
+            var change = {
+              index: index,
+              animate: animate
+            };
             return setIndex(state)(change);
           });
         },
@@ -511,7 +596,7 @@ var GlissandoModel = function GlissandoModel() {
         },
         setCount: function setCount(count) {
           update(function (state) {
-            return setIndex(_objectSpread({}, state, {
+            return setIndex(_objectSpread(_objectSpread({}, state), {}, {
               count: count
             }))({
               index: state.index
@@ -520,8 +605,15 @@ var GlissandoModel = function GlissandoModel() {
         },
         setDirection: function setDirection(direction) {
           update(function (state) {
-            return _objectSpread({}, state, {
+            return _objectSpread(_objectSpread({}, state), {}, {
               direction: direction
+            });
+          });
+        },
+        setLocations: function setLocations(locations) {
+          update(function (state) {
+            return _objectSpread(_objectSpread({}, state), {}, {
+              locations: locations
             });
           });
         }
@@ -554,6 +646,24 @@ var GlissandoModel = function GlissandoModel() {
 
             return index;
           });
+        },
+        getLocation: function getLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index;
+          });
+        },
+        getNextLocation: function getNextLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index + 1;
+          });
+        },
+        getPreviousLocation: function getPreviousLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index - 1;
+          });
         }
       };
     }
@@ -573,10 +683,10 @@ var GlissandoModel = function GlissandoModel() {
   var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) {
     return value;
   }, changedStates);
-  return _objectSpread({
+  return _objectSpread(_objectSpread({
     getState: states,
     getChanges: getChanges
-  }, actions, {}, selectors);
+  }, actions), selectors);
 };
 
 var getSliderStyle = function getSliderStyle(state) {
@@ -29313,10 +29423,10 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "../node_modules/use-stream/dist/use-stream.js":
-/*!*****************************************************!*\
-  !*** ../node_modules/use-stream/dist/use-stream.js ***!
-  \*****************************************************/
+/***/ "../node_modules/use-stream/dist/use-stream.mjs":
+/*!******************************************************!*\
+  !*** ../node_modules/use-stream/dist/use-stream.mjs ***!
+  \******************************************************/
 /*! exports provided: useStream */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -29333,7 +29443,6 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
     const [streamValues, setStreamValues] = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState({});
     // Distinguish update from mount:
     const isInitedRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(false);
-    // Keep reference of all streams that update streamValues so they can be stopped:
     const subsRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef([]);
     const subscribe = (memo) => {
         if (debug) {
@@ -29342,8 +29451,8 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
         subsRef.current = Object.keys(memo)
             .map((key) => {
             const stream = memo[key];
-            return stream.map && typeof stream.map === 'function'
-                ? stream.map((value) => {
+            if (stream.map && typeof stream.map === 'function') {
+                return stream.map((value) => {
                     if (debug) {
                         debug('Will update %s', key);
                     }
@@ -29352,8 +29461,9 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
                         [key]: value,
                     });
                     return null;
-                })
-                : null;
+                });
+            }
+            return false;
         })
             .filter(Boolean);
     };
@@ -29682,7 +29792,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useAppModel", function() { return useAppModel; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! use-stream */ "../node_modules/use-stream/dist/use-stream.js");
+/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! use-stream */ "../node_modules/use-stream/dist/use-stream.mjs");
 /* harmony import */ var _AppModel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AppModel */ "./AppModel.ts");
 
 

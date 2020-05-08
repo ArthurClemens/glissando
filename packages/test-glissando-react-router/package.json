@@ -24,14 +24,14 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-router-dom": "5.1.2",
-    "use-stream": "0.3.2"
+    "use-stream": "0.3.6"
   },
   "devDependencies": {
     "@types/mithril": "^2.0.2",
     "@types/react": "16.9.34",
-    "http-server": "^0.12.1",
+    "http-server": "^0.12.3",
     "npm-run-all": "^4.1.5",
-    "typescript": "3.3.3"
+    "typescript": "3.8.3"
   },
   "browserslist": [
     "defaults",

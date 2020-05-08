@@ -131,13 +131,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-stream */ "../../glissando-react/node_modules/use-stream/dist/use-stream.js");
+/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-stream */ "../../glissando-react/node_modules/use-stream/dist/use-stream.mjs");
 /* harmony import */ var _huse_effect_ref__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @huse/effect-ref */ "../../glissando-react/node_modules/@huse/effect-ref/es/index.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
@@ -321,10 +321,10 @@ function useEffectRef(callback) {
 
 /***/ }),
 
-/***/ "../../glissando-react/node_modules/use-stream/dist/use-stream.js":
-/*!************************************************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-react/node_modules/use-stream/dist/use-stream.js ***!
-  \************************************************************************************************************************/
+/***/ "../../glissando-react/node_modules/use-stream/dist/use-stream.mjs":
+/*!*************************************************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-react/node_modules/use-stream/dist/use-stream.mjs ***!
+  \*************************************************************************************************************************/
 /*! exports provided: useStream */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -341,7 +341,6 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
     const [streamValues, setStreamValues] = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState({});
     // Distinguish update from mount:
     const isInitedRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(false);
-    // Keep reference of all streams that update streamValues so they can be stopped:
     const subsRef = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef([]);
     const subscribe = (memo) => {
         if (debug) {
@@ -350,8 +349,8 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
         subsRef.current = Object.keys(memo)
             .map((key) => {
             const stream = memo[key];
-            return stream.map && typeof stream.map === 'function'
-                ? stream.map((value) => {
+            if (stream.map && typeof stream.map === 'function') {
+                return stream.map((value) => {
                     if (debug) {
                         debug('Will update %s', key);
                     }
@@ -360,8 +359,9 @@ const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debu
                         [key]: value,
                     });
                     return null;
-                })
-                : null;
+                });
+            }
+            return false;
         })
             .filter(Boolean);
     };
@@ -451,7 +451,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -491,9 +491,9 @@ var setIndex = function setIndex(state) {
         newIndex = _calculateNewIndex.newIndex,
         shouldUpdate = _calculateNewIndex.shouldUpdate;
 
-    return shouldUpdate ? _objectSpread({}, state, {}, change.animate ? undefined : {
+    return shouldUpdate ? _objectSpread(_objectSpread(_objectSpread({}, state), change.animate ? undefined : {
       index: newIndex
-    }, {
+    }), {}, {
       targetIndex: newIndex,
       isAnimating: !!change.animate
     }) : state;
@@ -518,7 +518,7 @@ var setLocation = function setLocation(state) {
     var shouldAnimate = state.location === undefined ? false // don't animate if we are setting the first location
     : change.animate !== false;
 
-    var newState = _objectSpread({}, state, {
+    var newState = _objectSpread(_objectSpread({}, state), {}, {
       location: locationStr
     });
 
@@ -627,7 +627,7 @@ var GlissandoModel = function GlissandoModel() {
         },
         setCount: function setCount(count) {
           update(function (state) {
-            return setIndex(_objectSpread({}, state, {
+            return setIndex(_objectSpread(_objectSpread({}, state), {}, {
               count: count
             }))({
               index: state.index
@@ -636,14 +636,14 @@ var GlissandoModel = function GlissandoModel() {
         },
         setDirection: function setDirection(direction) {
           update(function (state) {
-            return _objectSpread({}, state, {
+            return _objectSpread(_objectSpread({}, state), {}, {
               direction: direction
             });
           });
         },
         setLocations: function setLocations(locations) {
           update(function (state) {
-            return _objectSpread({}, state, {
+            return _objectSpread(_objectSpread({}, state), {}, {
               locations: locations
             });
           });
@@ -714,10 +714,10 @@ var GlissandoModel = function GlissandoModel() {
   var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) {
     return value;
   }, changedStates);
-  return _objectSpread({
+  return _objectSpread(_objectSpread({
     getState: states,
     getChanges: getChanges
-  }, actions, {}, selectors);
+  }, actions), selectors);
 };
 
 var getSliderStyle = function getSliderStyle(state) {

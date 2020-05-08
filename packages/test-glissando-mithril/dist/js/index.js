@@ -585,10 +585,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "../node_modules/glissando-mithril/dist/glissando-mithril.js":
-/*!*******************************************************************!*\
-  !*** ../node_modules/glissando-mithril/dist/glissando-mithril.js ***!
-  \*******************************************************************/
+/***/ "../../glissando-mithril/dist/glissando-mithril.js":
+/*!*********************************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-mithril/dist/glissando-mithril.js ***!
+  \*********************************************************************************************************/
 /*! exports provided: GlissandoSlider, useGlissandoModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -596,76 +596,102 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlissandoSlider", function() { return GlissandoSlider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useGlissandoModel", function() { return useGlissandoModel; });
-/* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../node_modules/glissando/dist/glissando.js");
+/* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-const useGlissandoModel = () => {
-  const model = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["GlissandoModel"])();
-  // Subscribe to changes
+var useGlissandoModel = function useGlissandoModel() {
+  var model = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["GlissandoModel"])(); // Subscribe to changes
+
   model.getState.map(mithril__WEBPACK_IMPORTED_MODULE_1___default.a.redraw);
   return model;
 };
 
-const GlissandoSlider = initialVnode => {
-  const { model } = initialVnode.attrs;
-  const { getState, finalize, setCount, setDirection, getViewIndices } = model;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onTransitionEnd = evt => {
+var GlissandoSlider = function GlissandoSlider(initialVnode) {
+  var model = initialVnode.attrs.model;
+  var getState = model.getState,
+      finalize = model.finalize,
+      setCount = model.setCount,
+      setDirection = model.setDirection,
+      getViewIndices = model.getViewIndices,
+      goTo = model.goTo,
+      setLocations = model.setLocations; // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  var onTransitionEnd = function onTransitionEnd(evt) {
     finalize(getState().targetIndex);
   };
+
   return {
-    onupdate: ({ dom, children }) => {
-      // Children count
-      const count = children.length;
+    onupdate: function onupdate(_ref) {
+      var dom = _ref.dom,
+          children = _ref.children,
+          attrs = _ref.attrs;
+      var locations = attrs.locations,
+          location = attrs.location; // Children count
+
+      var count = children.length;
+
       if (count !== getState().count) {
         setCount(count);
-      }
-      // Reading direction
-      const { direction } = getComputedStyle(dom);
+      } // Locations
+
+
+      if (locations && JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
+        setLocations(locations);
+      } // Location
+
+
+      if (location && location !== getState().location) {
+        goTo({
+          location: location
+        });
+      } // Reading direction
+
+
+      var _getComputedStyle = getComputedStyle(dom),
+          direction = _getComputedStyle.direction;
+
       if (direction !== getState().direction) {
         setDirection(direction);
       }
     },
-    view: ({ children }) => {
+    view: function view(_ref2) {
+      var children = _ref2.children;
+
       if (!children) {
         return null;
       }
-      const { className, style } = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["getSliderStyle"])(getState());
-      return mithril__WEBPACK_IMPORTED_MODULE_1___default()(
-        '.glissando',
-        mithril__WEBPACK_IMPORTED_MODULE_1___default()(
-          '.glissando-slider',
-          {
-            oncreate: vnode => {
-              vnode.dom.addEventListener('transitionend', onTransitionEnd);
-            },
-            onremove: vnode => {
-              vnode.dom.removeEventListener('transitionend', onTransitionEnd);
-            },
-            className,
-            style,
-          },
-          getViewIndices().map(viewIndex =>
-            mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-page', children[viewIndex]),
-          ),
-        ),
-      );
-    },
+
+      var _getSliderStyle = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["getSliderStyle"])(getState()),
+          className = _getSliderStyle.className,
+          style = _getSliderStyle.style;
+
+      return mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando', mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-slider', {
+        oncreate: function oncreate(vnode) {
+          vnode.dom.addEventListener('transitionend', onTransitionEnd);
+        },
+        onremove: function onremove(vnode) {
+          vnode.dom.removeEventListener('transitionend', onTransitionEnd);
+        },
+        className: className,
+        style: style
+      }, getViewIndices().map(function (viewIndex) {
+        return mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-page', children[viewIndex]);
+      })));
+    }
   };
 };
-
 
 
 
 /***/ }),
 
-/***/ "../node_modules/glissando-mithril/dist/glissando.min.css":
-/*!****************************************************************!*\
-  !*** ../node_modules/glissando-mithril/dist/glissando.min.css ***!
-  \****************************************************************/
+/***/ "../../glissando-mithril/dist/glissando.min.css":
+/*!******************************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-mithril/dist/glissando.min.css ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -673,10 +699,10 @@ const GlissandoSlider = initialVnode => {
 
 /***/ }),
 
-/***/ "../node_modules/glissando/dist/glissando.js":
-/*!***************************************************!*\
-  !*** ../node_modules/glissando/dist/glissando.js ***!
-  \***************************************************/
+/***/ "../../glissando/dist/glissando.js":
+/*!*****************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando/dist/glissando.js ***!
+  \*****************************************************************************************/
 /*! exports provided: Stream, GlissandoModel, getSliderStyle */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -687,182 +713,304 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril/stream */ "../node_modules/mithril/stream/stream.js");
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril_stream__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "Stream", function() { return mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a; });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
+ // eslint-disable-next-line import/no-unresolved
 
-// eslint-disable-next-line import/no-unresolved
-const calculateNewIndex = (state, index) => {
+var calculateNewIndex = function calculateNewIndex(state, index) {
   if (index === undefined || Number.isNaN(index)) {
     return {
       newIndex: state.index,
-      shouldUpdate: false,
+      shouldUpdate: false
     };
   }
-  const newIndex = Math.min(index, state.count - 1);
-  const isValid = newIndex >= 0 && newIndex < state.count;
-  const shouldUpdate = isValid && newIndex !== state.index;
+
+  var newIndex = Math.min(index, state.count - 1);
+  var isValid = newIndex >= 0 && newIndex < state.count;
+  var shouldUpdate = isValid && newIndex !== state.index;
   return {
-    newIndex,
-    shouldUpdate,
+    newIndex: newIndex,
+    shouldUpdate: shouldUpdate
   };
 };
-const setIndex = state => change => {
-  const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
-  return shouldUpdate
-    ? {
-        ...state,
-        ...(change.animate ? undefined : { index: newIndex }),
-        targetIndex: newIndex,
-        isAnimating: !!change.animate,
-      }
-    : state;
+
+var setIndex = function setIndex(state) {
+  return function (change) {
+    var _calculateNewIndex = calculateNewIndex(state, change.index),
+        newIndex = _calculateNewIndex.newIndex,
+        shouldUpdate = _calculateNewIndex.shouldUpdate;
+
+    return shouldUpdate ? _objectSpread(_objectSpread(_objectSpread({}, state), change.animate ? undefined : {
+      index: newIndex
+    }), {}, {
+      targetIndex: newIndex,
+      isAnimating: !!change.animate
+    }) : state;
+  };
 };
-const GlissandoModel = (props = {}) => {
-  const sideViews = props.sideViews || 1;
-  const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
-  const initialState = {
+
+var setLocation = function setLocation(state) {
+  return function (change) {
+    if (!state.locations || state.locations.length === 0) {
+      return state;
+    }
+
+    var locationStr = change.location.toString();
+    var index = state.locations.indexOf(locationStr);
+
+    if (index === -1) {
+      // Location does not exist; default to first index
+      index = 0;
+      locationStr = state.locations[index];
+    }
+
+    var shouldAnimate = state.location === undefined ? false // don't animate if we are setting the first location
+    : change.animate !== false;
+
+    var newState = _objectSpread(_objectSpread({}, state), {}, {
+      location: locationStr
+    });
+
+    var indexChange = {
+      index: index,
+      animate: shouldAnimate
+    };
+    return setIndex(newState)(indexChange);
+  };
+};
+
+var lookupLocation = function lookupLocation(state) {
+  return function (changeFn) {
+    if (!state.locations || !state.location) {
+      return undefined;
+    }
+
+    var index = state.locations.indexOf(state.location);
+
+    if (index === -1) {
+      return undefined;
+    }
+
+    return state.locations[changeFn(index)];
+  };
+};
+
+var GlissandoModel = function GlissandoModel() {
+  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var sideViews = props.sideViews || 1;
+
+  var slots = _toConsumableArray(Array(1 + sideViews * 2)).map(function (_, i) {
+    return i - sideViews;
+  });
+
+  var initialState = {
     index: props.index || 0,
     targetIndex: props.index || 0,
     isAnimating: false,
     count: 0,
     direction: 'ltr',
-    slots,
-    sideViews,
+    slots: slots,
+    sideViews: sideViews
   };
-  const glissandoState = {
-    initialState,
-    actions: update => {
+  var glissandoState = {
+    initialState: initialState,
+    actions: function actions(update) {
       return {
-        previous: ({ animate } = { animate: true }) => {
-          update(state => {
+        previous: function previous() {
+          var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+            animate: true
+          },
+              animate = _ref.animate;
+
+          update(function (state) {
             return setIndex(state)({
               index: state.index - 1,
-              animate: animate !== false,
+              animate: animate !== false
             });
           });
         },
-        next: ({ animate } = { animate: true }) => {
-          update(state => {
+        next: function next() {
+          var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+            animate: true
+          },
+              animate = _ref2.animate;
+
+          update(function (state) {
             return setIndex(state)({
               index: state.index + 1,
-              animate: animate !== false,
+              animate: animate !== false
             });
           });
         },
-        goTo: change => {
-          update(state => {
+        goTo: function goTo(_ref3) {
+          var index = _ref3.index,
+              location = _ref3.location,
+              animate = _ref3.animate;
+          update(function (state) {
+            if (location) {
+              var _change = {
+                location: location,
+                animate: animate
+              };
+              return setLocation(state)(_change);
+            }
+
+            if (index === undefined) {
+              return state;
+            }
+
+            var change = {
+              index: index,
+              animate: animate
+            };
             return setIndex(state)(change);
           });
         },
-        finalize: index => {
-          update(state => {
+        finalize: function finalize(index) {
+          update(function (state) {
             return setIndex(state)({
-              index,
-              animate: false,
+              index: index,
+              animate: false
             });
           });
         },
-        setCount: count => {
-          update(state => {
-            return setIndex({
-              ...state,
-              count,
-            })({ index: state.index });
+        setCount: function setCount(count) {
+          update(function (state) {
+            return setIndex(_objectSpread(_objectSpread({}, state), {}, {
+              count: count
+            }))({
+              index: state.index
+            });
           });
         },
-        setDirection: direction => {
-          update(state => {
-            return {
-              ...state,
-              direction,
-            };
+        setDirection: function setDirection(direction) {
+          update(function (state) {
+            return _objectSpread(_objectSpread({}, state), {}, {
+              direction: direction
+            });
           });
         },
+        setLocations: function setLocations(locations) {
+          update(function (state) {
+            return _objectSpread(_objectSpread({}, state), {}, {
+              locations: locations
+            });
+          });
+        }
       };
     },
-    selectors: states => {
+    selectors: function selectors(states) {
       return {
-        hasNext: () => {
-          const state = states();
+        hasNext: function hasNext() {
+          var state = states();
           return state.index < state.count - 1;
         },
-        hasPrevious: () => {
-          const state = states();
+        hasPrevious: function hasPrevious() {
+          var state = states();
           return state.index > 0;
         },
-        isAnimating: () => {
-          const state = states();
+        isAnimating: function isAnimating() {
+          var state = states();
           return state.isAnimating;
         },
-        getViewIndices: () => {
-          const state = states();
-          return slots.map(slotIndex => {
-            let index = slotIndex + state.index + 0;
+        getViewIndices: function getViewIndices() {
+          var state = states();
+          return slots.map(function (slotIndex) {
+            var index = slotIndex + state.index + 0;
+
             if (slotIndex < 0 && state.targetIndex < state.index) {
               index = slotIndex + state.targetIndex + 1;
             } else if (slotIndex > 0 && state.targetIndex > state.index) {
               index = slotIndex + state.targetIndex - 1;
             }
+
             return index;
           });
         },
+        getLocation: function getLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index;
+          });
+        },
+        getNextLocation: function getNextLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index + 1;
+          });
+        },
+        getPreviousLocation: function getPreviousLocation() {
+          var state = states();
+          return lookupLocation(state)(function (index) {
+            return index - 1;
+          });
+        }
       };
-    },
+    }
   };
-  const update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
-  const states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(
-    (state, patch) => patch(state),
-    {
-      ...glissandoState.initialState,
-    },
-    update,
-  );
-  const actions = {
-    ...glissandoState.actions(update),
-  };
-  const selectors = {
-    ...glissandoState.selectors(states),
-  };
-  const changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(
-    (state, value) =>
-      JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
-        ? mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP
-        : value,
-    mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP,
-    states,
-  );
-  const getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(value => value, changedStates);
-  return {
+  var update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
+  var states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, patch) {
+    return patch(state);
+  }, _objectSpread({}, glissandoState.initialState), update);
+
+  var actions = _objectSpread({}, glissandoState.actions(update));
+
+  var selectors = _objectSpread({}, glissandoState.selectors(states));
+
+  var changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, value) {
+    return JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2) ? mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP : value;
+  }, mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP, states);
+  var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) {
+    return value;
+  }, changedStates);
+  return _objectSpread(_objectSpread({
     getState: states,
-    getChanges,
-    ...actions,
-    ...selectors,
-  };
+    getChanges: getChanges
+  }, actions), selectors);
 };
 
-const getSliderStyle = state => {
-  const slotCount = 2 * state.sideViews + 1;
-  const slotWidth = 100 / slotCount;
-  const direction = state.direction === 'rtl' ? 1 : -1;
-  let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
+var getSliderStyle = function getSliderStyle(state) {
+  var slotCount = 2 * state.sideViews + 1;
+  var slotWidth = 100 / slotCount;
+  var direction = state.direction === 'rtl' ? 1 : -1;
+  var sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
+
   if (state.targetIndex > state.index) {
     sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
   } else if (state.targetIndex < state.index) {
     sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
   }
-  const style = {
-    width: `${slotCount * 100}%`,
-    transform: `translateX(${sliderTranslateX}%)`,
-    ...(!state.isAnimating
-      ? {
-          transitionDuration: '0ms',
-        }
-      : undefined),
-  };
-  const className = state.isAnimating ? 'glissando-animating' : '';
-  return { style, className };
-};
 
+  var style = _objectSpread({
+    width: "".concat(slotCount * 100, "%"),
+    transform: "translateX(".concat(sliderTranslateX, "%)")
+  }, !state.isAnimating ? {
+    transitionDuration: '0ms'
+  } : undefined);
+
+  var className = state.isAnimating ? 'glissando-animating' : '';
+  return {
+    style: style,
+    className: className
+  };
+};
 
 
 
@@ -2910,17 +3058,6 @@ else {}
 
 /***/ }),
 
-/***/ "../node_modules/semantic-ui-css/semantic.min.css":
-/*!********************************************************!*\
-  !*** ../node_modules/semantic-ui-css/semantic.min.css ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from /Users/arthur/code/Github Projects/glissando/node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleParseError: Module parse failed: Unexpected character '\u0000' (1:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n(Source code omitted for this binary file)\n    at handleParseError (/Users/arthur/code/Github Projects/glissando/node_modules/webpack/lib/NormalModule.js:469:19)\n    at /Users/arthur/code/Github Projects/glissando/node_modules/webpack/lib/NormalModule.js:503:5\n    at /Users/arthur/code/Github Projects/glissando/node_modules/webpack/lib/NormalModule.js:358:12\n    at /Users/arthur/code/Github Projects/glissando/node_modules/loader-runner/lib/LoaderRunner.js:373:3\n    at iterateNormalLoaders (/Users/arthur/code/Github Projects/glissando/node_modules/loader-runner/lib/LoaderRunner.js:214:10)\n    at Array.<anonymous> (/Users/arthur/code/Github Projects/glissando/node_modules/loader-runner/lib/LoaderRunner.js:205:4)\n    at Storage.finished (/Users/arthur/code/Github Projects/glissando/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:55:16)\n    at /Users/arthur/code/Github Projects/glissando/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:91:9\n    at /Users/arthur/code/Github Projects/glissando/node_modules/graceful-fs/graceful-fs.js:115:16\n    at FSReqCallback.readFileAfterClose [as oncomplete] (internal/fs/read_file_context.js:61:3)");
-
-/***/ }),
-
 /***/ "./App.ts":
 /*!****************!*\
   !*** ./App.ts ***!
@@ -2931,7 +3068,7 @@ throw new Error("Module build failed (from /Users/arthur/code/Github Projects/gl
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
-/* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../node_modules/glissando-mithril/dist/glissando-mithril.js");
+/* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../../glissando-mithril/dist/glissando-mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _AppModel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AppModel */ "./AppModel.ts");
@@ -3023,10 +3160,6 @@ var Slider = function () {
                             },
                             disabled: !hasNext() || isAnimating(),
                         }, 'Next'),
-                        mithril__WEBPACK_IMPORTED_MODULE_1___default()('button', { class: 'ui right labeled icon button' }, [
-                            mithril__WEBPACK_IMPORTED_MODULE_1___default()('i', { class: 'right arrow icon' }),
-                            ' Next ',
-                        ]),
                         mithril__WEBPACK_IMPORTED_MODULE_1___default()('select', {
                             disabled: getState().isAnimating || getState().count < 2,
                             value: getState().index,
@@ -3195,23 +3328,20 @@ var Page = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var semantic_ui_css_semantic_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! semantic-ui-css/semantic.min.css */ "../node_modules/semantic-ui-css/semantic.min.css");
-/* harmony import */ var semantic_ui_css_semantic_min_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(semantic_ui_css_semantic_min_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! glissando-mithril/dist/glissando.min.css */ "../node_modules/glissando-mithril/dist/glissando.min.css");
-/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App */ "./App.ts");
-
+/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril/dist/glissando.min.css */ "../../glissando-mithril/dist/glissando.min.css");
+/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./App.ts");
 
 
 
 
 var rootElement = document.getElementById('root');
 if (rootElement) {
-    mithril__WEBPACK_IMPORTED_MODULE_3___default.a.mount(rootElement, _App__WEBPACK_IMPORTED_MODULE_4__["App"]);
+    mithril__WEBPACK_IMPORTED_MODULE_2___default.a.mount(rootElement, _App__WEBPACK_IMPORTED_MODULE_3__["App"]);
 }
 
 

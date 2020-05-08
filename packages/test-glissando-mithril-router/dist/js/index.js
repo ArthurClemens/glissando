@@ -717,7 +717,7 @@ function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableTo
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
 
@@ -757,9 +757,9 @@ var setIndex = function setIndex(state) {
         newIndex = _calculateNewIndex.newIndex,
         shouldUpdate = _calculateNewIndex.shouldUpdate;
 
-    return shouldUpdate ? _objectSpread({}, state, {}, change.animate ? undefined : {
+    return shouldUpdate ? _objectSpread(_objectSpread(_objectSpread({}, state), change.animate ? undefined : {
       index: newIndex
-    }, {
+    }), {}, {
       targetIndex: newIndex,
       isAnimating: !!change.animate
     }) : state;
@@ -784,7 +784,7 @@ var setLocation = function setLocation(state) {
     var shouldAnimate = state.location === undefined ? false // don't animate if we are setting the first location
     : change.animate !== false;
 
-    var newState = _objectSpread({}, state, {
+    var newState = _objectSpread(_objectSpread({}, state), {}, {
       location: locationStr
     });
 
@@ -893,7 +893,7 @@ var GlissandoModel = function GlissandoModel() {
         },
         setCount: function setCount(count) {
           update(function (state) {
-            return setIndex(_objectSpread({}, state, {
+            return setIndex(_objectSpread(_objectSpread({}, state), {}, {
               count: count
             }))({
               index: state.index
@@ -902,14 +902,14 @@ var GlissandoModel = function GlissandoModel() {
         },
         setDirection: function setDirection(direction) {
           update(function (state) {
-            return _objectSpread({}, state, {
+            return _objectSpread(_objectSpread({}, state), {}, {
               direction: direction
             });
           });
         },
         setLocations: function setLocations(locations) {
           update(function (state) {
-            return _objectSpread({}, state, {
+            return _objectSpread(_objectSpread({}, state), {}, {
               locations: locations
             });
           });
@@ -980,10 +980,10 @@ var GlissandoModel = function GlissandoModel() {
   var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) {
     return value;
   }, changedStates);
-  return _objectSpread({
+  return _objectSpread(_objectSpread({
     getState: states,
     getChanges: getChanges
-  }, actions, {}, selectors);
+  }, actions), selectors);
 };
 
 var getSliderStyle = function getSliderStyle(state) {
