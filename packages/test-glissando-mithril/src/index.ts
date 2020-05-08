@@ -3,13 +3,7 @@ import './styles.css';
 
 import m from 'mithril';
 
-import { AppPage } from './AppPage';
-
-const App = () => {
-  return {
-    view: () => m(AppPage),
-  };
-};
+import { App } from './App';
 
 const rootElement: HTMLElement | null = document.getElementById('root');
 if (rootElement) {
