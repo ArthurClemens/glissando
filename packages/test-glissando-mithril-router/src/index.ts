@@ -7,5 +7,12 @@ import { App } from './App';
 
 const rootElement: HTMLElement | null = document.getElementById('root');
 if (rootElement) {
-  m.mount(rootElement, App);
+  m.route(document.body, '/', {
+    '/': {
+      onmatch() {
+        m.route.set('/1');
+      },
+    },
+    '/:page': App,
+  });
 }

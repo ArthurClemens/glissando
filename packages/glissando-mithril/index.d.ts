@@ -4,6 +4,8 @@ import { ClosureComponent } from 'mithril';
 
 export interface Attrs {
   model: Glissando.Model;
+  location?: string;
+  locations?: string[];
 }
 
 type GlissandoSlider = ClosureComponent<Attrs>;

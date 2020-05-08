@@ -12,9 +12,17 @@ import React, {
 import { GlissandoSliderProps } from '../index';
 
 export const GlissandoSlider: FunctionComponent<GlissandoSliderProps> = props => {
-  const { model, children } = props;
+  const { model, children, locations, location } = props;
   const [sliderNode, setSliderNode] = useState<HTMLDivElement>();
-  const { getState, finalize, setCount, setDirection, getViewIndices } = model;
+  const {
+    getState,
+    finalize,
+    setCount,
+    setDirection,
+    getViewIndices,
+    setLocations,
+    goTo,
+  } = model;
 
   // Child count
   useEffect(() => {
@@ -23,6 +31,25 @@ export const GlissandoSlider: FunctionComponent<GlissandoSliderProps> = props =>
       setCount(count);
     }
   }, [children, getState, setCount]);
+
+  // Locations
+  useEffect(() => {
+    if (
+      locations &&
+      JSON.stringify(locations) !== JSON.stringify(getState().locations)
+    ) {
+      setLocations(locations);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locations]);
+
+  // Location
+  useEffect(() => {
+    if (location && location !== getState().location) {
+      goTo({ location });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   // Event listener: transitionend
   const observeTransitionEnd: RefCallback<HTMLDivElement> = useCallback(

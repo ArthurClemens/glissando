@@ -5,6 +5,8 @@ A simple content slider for anything that needs to move.
 - [API](#api)
 - [Demo](#demo)
 - [Usage](#usage)
+  - [Standalone use](#standalone-use)
+  - [Directed use](#directed-use)
 - [Size](#size)
 
 
@@ -15,16 +17,12 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 ## Demo
 
-* [CodeSandbox example](https://codesandbox.io/s/glissando-for-react-2bgz4)
+* [CodeSandbox example standalone use](https://codesandbox.io/s/glissando-for-react-2bgz4)
 
 
 ## Usage
 
-A glissando slider is created with 2 parts:
-
-1. A model to control the slider
-2. A slider component
-
+### Standalone use
 
 Import the component and model factory and slider CSS:
 
@@ -39,7 +37,7 @@ Create a new model instance:
 const model = useGlissandoModel();
 ```
 
-Use the rendering component. Pass the model as a prop and the pages as children.
+Use the slider component. Pass the model as a prop and the pages as children.
 
 ```jsx
 <GlissandoSlider model={model}>
@@ -86,6 +84,65 @@ const Slider = () => {
 }
 ```
 
+### Directed use
+
+Use application state to tell the slider what to show:
+
+```tsx
+const pages = ["page-1", "page-2", "page-3"];
+
+const Slider = () => {
+  const match = useRouteMatch();
+  const currentPage = match.params.page;
+
+  return (
+    <GlissandoSlider model={model} locations={pages} location={currentPage}>
+      {pages.map(id => {
+        return <Page key={id} location={id} />;
+      })}
+    </GlissandoSlider>
+  );
+};
+```
+
+The counterparts of component props `locations` and `location` are model selectors `getLocation`, `getNextLocation` and `getPreviousLocation`:
+
+```jsx
+const Header = ({ model }) => {
+  const history = useHistory();
+
+  const {
+    isAnimating,
+    getLocation,
+    getNextLocation,
+    getPreviousLocation,
+  } = model;
+  const location = getLocation();
+  const previousLocation = getPreviousLocation();
+  const nextLocation = getNextLocation();
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => history.push(previousLocation)}
+        disabled={!previousLocation || isAnimating()}
+      >
+        Previous
+      </button>
+      <button
+        type="button"
+        onClick={() => history.push(nextLocation)}
+        disabled={!nextLocation || isAnimating()}
+      >
+        Next
+      </button>
+    </>
+  );
+};
+```
+
+
 ## Size
 
-2.32 KB with all dependencies, minified and gzipped
+2.56 KB with all dependencies, minified and gzipped

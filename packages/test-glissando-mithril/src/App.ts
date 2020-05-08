@@ -119,6 +119,10 @@ const Slider = () => {
                 },
                 'Next',
               ),
+              m('button', { class: 'ui right labeled icon button' }, [
+                m('i', { class: 'right arrow icon' }),
+                ' Next ',
+              ]),
               m(
                 'select',
                 {
@@ -179,7 +183,7 @@ const Slider = () => {
   };
 };
 
-export const AppPage = () => {
+export const App = () => {
   return {
     view: () => m(Slider),
   };

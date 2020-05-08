@@ -26,6 +26,16 @@ export namespace Glissando {
     index: number;
 
     /**
+     * The current location id.
+     */
+    location?: string;
+
+    /**
+     * Locations ids.
+     */
+    locations?: string[];
+
+    /**
      * The target location index.
      */
     targetIndex: number;
@@ -80,6 +90,16 @@ export namespace Glissando {
 
   type Direction = 'rtl' | 'ltr';
 
+  type IndexChange = {
+    index: number;
+    animate?: boolean;
+  };
+
+  type LocationChange = {
+    location: string;
+    animate?: boolean;
+  };
+
   type Actions = {
     /**
      * Go to the previous location.
@@ -96,14 +116,25 @@ export namespace Glissando {
     /**
      * Go to a location.
      * @param index Location index.
+     * @param location Location id.
      * @param animate Optionally animate the transition. Default `false`.
      */
-    goTo: ({ index, animate }: { index: number; animate?: boolean }) => void;
+    goTo: (change: IndexChange | LocationChange) => void;
 
     /**
      * For internal use. Sets the number of locations (commonly the number of child elements of the slider).
      */
     setCount: (count: number) => void;
+
+    /**
+     * For internal use. Sets the location ids.
+     */
+    setLocations: (ids: string[]) => void;
+
+    /**
+     * For internal use. Sets the index to the matching location id. If no matching id is found, defaults to 0.
+     */
+    setLocation: (change: LocationChange) => void;
 
     /**
      * For internal use. Set to 'rtl to change the slider's reading/sliding direction to right-to-left.
@@ -131,6 +162,21 @@ export namespace Glissando {
      * Returns true if the slider is animating.
      */
     isAnimating: () => boolean;
+
+    /**
+     * Returns the current location id. If no next location exist returns undefined.
+     */
+    getLocation: () => string | undefined;
+
+    /**
+     * Returns the next location id. If no next location exist returns undefined.
+     */
+    getNextLocation: () => string | undefined;
+
+    /**
+     * Returns the previous location id. If no previous location exist returns undefined.
+     */
+    getPreviousLocation: () => string | undefined;
 
     /**
      * For internal use.

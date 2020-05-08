@@ -1,0 +1,17 @@
+*:focus {
+  outline: none;
+}
+
+.content {
+  width: 100%;
+}
+
+.demo-page img {
+  width: 100%;
+}
+
+.demo-page {
+  background: #efefef;
+  overflow: auto;
+  font-size: 18px;
+}
