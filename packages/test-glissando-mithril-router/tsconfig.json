@@ -1,0 +1,14 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/*"],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "ESNEXT",
+    "strict": true,
+    "noUnusedLocals": false,
+    "moduleResolution": "node",
+    "types": [],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}
