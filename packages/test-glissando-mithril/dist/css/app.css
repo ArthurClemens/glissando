@@ -9,23 +9,19 @@ body {
 }
 
 .demo-container {
-  width: 375px;
+  width: 100%;
+  max-width: 460px;
   margin: 0 auto;
 }
 
-.demo-meta-controls {
+.row {
   display: flex;
   padding: 20px 0;
   border-bottom: 1px solid #ddd;
 }
 
-.demo-controls {
-  display: flex;
-  padding: 20px 0;
-}
-
-.demo-controls > * + * {
-  margin-left: 5px;
+.row > * + * {
+  margin-left: 10px;
 }
 
 .demo-page {

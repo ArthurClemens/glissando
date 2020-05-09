@@ -2,7 +2,6 @@
 import Stream from 'mithril/stream';
 
 export type TAppState = {
-  isVisible: boolean;
   isAnimated: boolean;
   isRtl: boolean;
   count: number;
@@ -19,7 +18,6 @@ export type TAppStates = Stream<TAppState>;
 export type TAppModel = {
   getState: TAppStates;
   getChanges: TAppStates;
-  setIsVisible: (value: boolean) => void;
   setIsAnimated: (value: boolean) => void;
   setIsRtl: (value: boolean) => void;
   setCount: (value: number) => void;
@@ -30,7 +28,6 @@ const createSelectIndices = (count: number) =>
 
 export const AppModel = (props: TAppState) => {
   const initialState: TAppState = {
-    isVisible: props.isVisible,
     isAnimated: props.isAnimated,
     isRtl: props.isRtl,
     count: props.count,
@@ -41,14 +38,6 @@ export const AppModel = (props: TAppState) => {
     initialState,
     actions: (update: Stream<PatchFn>) => {
       return {
-        setIsVisible: (isVisible: boolean) => {
-          update((state: TAppState) => {
-            return {
-              ...state,
-              isVisible,
-            };
-          });
-        },
         setIsAnimated: (isAnimated: boolean) => {
           update((state: TAppState) => {
             return {
