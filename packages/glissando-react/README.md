@@ -4,9 +4,11 @@ A simple content slider for anything that needs to move.
 
 - [API](#api)
 - [Demos](#demos)
-- [Usage](#usage)
   - [Standalone use](#standalone-use)
   - [Directed use](#directed-use)
+- [Usage](#usage)
+  - [Standalone use](#standalone-use-1)
+  - [Directed use](#directed-use-1)
 - [Size](#size)
 
 
@@ -17,8 +19,14 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 ## Demos
 
-* [Simple standalone use](https://codesandbox.io/s/glissando-for-react-2bgz4)
-* [Directed use with React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-d0kno)
+### Standalone use
+
+* [Simple example](https://codesandbox.io/s/glissando-for-react-2bgz4)
+* [Kitchensink](https://codesandbox.io/s/glissando-for-react-kitchensink-7hw9y)
+
+### Directed use
+
+* [With React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-d0kno)
 
 
 ## Usage

@@ -4,10 +4,12 @@ A simple content slider for anything that needs to move.
 
 - [API](#api)
 - [Demos](#demos)
-- [Usage](#usage)
   - [Standalone use](#standalone-use)
-    - [Example](#example)
   - [Directed use](#directed-use)
+- [Usage](#usage)
+  - [Standalone use](#standalone-use-1)
+    - [Example](#example)
+  - [Directed use](#directed-use-1)
 - [Size](#size)
 
 ## API
@@ -17,9 +19,14 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 ## Demos
 
-* [Simple example standalone use](https://codesandbox.io/s/glissando-for-mithril-mbhli)
-* [Kitchensink standalone use](https://codesandbox.io/s/glissando-for-mithril-kitchensink-z3ddm)
-* [Directed use with router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-woujo)
+### Standalone use
+
+* [Simple example](https://codesandbox.io/s/glissando-for-mithril-mbhli)
+* [Kitchensink](https://codesandbox.io/s/glissando-for-mithril-kitchensink-z3ddm)
+
+### Directed use 
+
+* [With Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-woujo)
 
 
 ## Usage
