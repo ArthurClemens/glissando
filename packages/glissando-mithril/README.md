@@ -18,6 +18,7 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 ## Demos
 
 * [CodeSandbox example](https://codesandbox.io/s/glissando-for-mithril-mbhli)
+* [CodeSandbox example kitchensink](https://codesandbox.io/s/glissando-for-mithril-kitchensink-z3ddm)
 * [CodeSandbox example directed use with Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-woujo)
 
 
