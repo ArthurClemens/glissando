@@ -17,8 +17,8 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 ## Demos
 
-* [CodeSandbox example standalone use](https://codesandbox.io/s/glissando-for-react-2bgz4)
-* [CodeSandbox example directed use with React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-d0kno)
+* [Simple standalone use](https://codesandbox.io/s/glissando-for-react-2bgz4)
+* [Directed use with React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-d0kno)
 
 
 ## Usage
