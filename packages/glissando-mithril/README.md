@@ -3,7 +3,7 @@
 A simple content slider for anything that needs to move.
 
 - [API](#api)
-- [Demo](#demo)
+- [Demos](#demos)
 - [Usage](#usage)
   - [Standalone use](#standalone-use)
     - [Example](#example)
@@ -15,9 +15,10 @@ A simple content slider for anything that needs to move.
 See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 
-## Demo
+## Demos
 
 * [CodeSandbox example](https://codesandbox.io/s/glissando-for-mithril-mbhli)
+* [CodeSandbox example directed use with Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-woujo)
 
 
 ## Usage

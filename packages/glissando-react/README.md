@@ -3,7 +3,7 @@
 A simple content slider for anything that needs to move.
 
 - [API](#api)
-- [Demo](#demo)
+- [Demos](#demos)
 - [Usage](#usage)
   - [Standalone use](#standalone-use)
   - [Directed use](#directed-use)
@@ -15,9 +15,10 @@ A simple content slider for anything that needs to move.
 See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 
-## Demo
+## Demos
 
 * [CodeSandbox example standalone use](https://codesandbox.io/s/glissando-for-react-2bgz4)
+* [CodeSandbox example directed use with React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-d0kno)
 
 
 ## Usage
