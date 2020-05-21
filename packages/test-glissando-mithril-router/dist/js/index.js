@@ -585,10 +585,10 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "../../glissando-mithril/dist/glissando-mithril.js":
-/*!*********************************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-mithril/dist/glissando-mithril.js ***!
-  \*********************************************************************************************************/
+/***/ "../../glissando-mithril/dist/glissando-mithril.mjs":
+/*!**********************************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-mithril/dist/glissando-mithril.mjs ***!
+  \**********************************************************************************************************/
 /*! exports provided: GlissandoSlider, useGlissandoModel */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -596,93 +596,87 @@ module.exports = g;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlissandoSlider", function() { return GlissandoSlider; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useGlissandoModel", function() { return useGlissandoModel; });
-/* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.js");
+/* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.mjs");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
 
 
 
-var useGlissandoModel = function useGlissandoModel() {
-  var model = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["GlissandoModel"])(); // Subscribe to changes
-
+const useGlissandoModel = () => {
+  const model = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["GlissandoModel"])();
+  // Subscribe to changes
   model.getState.map(mithril__WEBPACK_IMPORTED_MODULE_1___default.a.redraw);
   return model;
 };
 
-var GlissandoSlider = function GlissandoSlider(initialVnode) {
-  var model = initialVnode.attrs.model;
-  var getState = model.getState,
-      finalize = model.finalize,
-      setCount = model.setCount,
-      setDirection = model.setDirection,
-      getViewIndices = model.getViewIndices,
-      goTo = model.goTo,
-      setLocations = model.setLocations; // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-  var onTransitionEnd = function onTransitionEnd(evt) {
+const GlissandoSlider = initialVnode => {
+  const { model } = initialVnode.attrs;
+  const {
+    getState,
+    finalize,
+    setCount,
+    setDirection,
+    getViewIndices,
+    goTo,
+    setLocations,
+  } = model;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onTransitionEnd = evt => {
     finalize(getState().targetIndex);
   };
-
   return {
-    onupdate: function onupdate(_ref) {
-      var dom = _ref.dom,
-          children = _ref.children,
-          attrs = _ref.attrs;
-      var locations = attrs.locations,
-          location = attrs.location; // Children count
-
-      var count = children.length;
-
+    onupdate: ({ dom, children, attrs }) => {
+      const { locations, location } = attrs;
+      // Children count
+      const count = children.length;
       if (count !== getState().count) {
         setCount(count);
-      } // Locations
-
-
-      if (locations && JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
+      }
+      // Locations
+      if (
+        locations &&
+        JSON.stringify(locations) !== JSON.stringify(getState().locations)
+      ) {
         setLocations(locations);
-      } // Location
-
-
+      }
+      // Location
       if (location && location !== getState().location) {
-        goTo({
-          location: location
-        });
-      } // Reading direction
-
-
-      var _getComputedStyle = getComputedStyle(dom),
-          direction = _getComputedStyle.direction;
-
+        goTo({ location });
+      }
+      // Reading direction
+      const { direction } = getComputedStyle(dom);
       if (direction !== getState().direction) {
         setDirection(direction);
       }
     },
-    view: function view(_ref2) {
-      var children = _ref2.children;
-
+    view: ({ children }) => {
       if (!children) {
         return null;
       }
-
-      var _getSliderStyle = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["getSliderStyle"])(getState()),
-          className = _getSliderStyle.className,
-          style = _getSliderStyle.style;
-
-      return mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando', mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-slider', {
-        oncreate: function oncreate(vnode) {
-          vnode.dom.addEventListener('transitionend', onTransitionEnd);
-        },
-        onremove: function onremove(vnode) {
-          vnode.dom.removeEventListener('transitionend', onTransitionEnd);
-        },
-        className: className,
-        style: style
-      }, getViewIndices().map(function (viewIndex) {
-        return mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-page', children[viewIndex]);
-      })));
-    }
+      const { className, style } = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["getSliderStyle"])(getState());
+      return mithril__WEBPACK_IMPORTED_MODULE_1___default()(
+        '.glissando',
+        mithril__WEBPACK_IMPORTED_MODULE_1___default()(
+          '.glissando-slider',
+          {
+            oncreate: vnode => {
+              vnode.dom.addEventListener('transitionend', onTransitionEnd);
+            },
+            onremove: vnode => {
+              vnode.dom.removeEventListener('transitionend', onTransitionEnd);
+            },
+            className,
+            style,
+          },
+          getViewIndices().map(viewIndex =>
+            mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-page', children[viewIndex]),
+          ),
+        ),
+      );
+    },
   };
 };
+
 
 
 
@@ -699,319 +693,21 @@ var GlissandoSlider = function GlissandoSlider(initialVnode) {
 
 /***/ }),
 
-/***/ "../../glissando/dist/glissando.js":
-/*!*****************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando/dist/glissando.js ***!
-  \*****************************************************************************************/
+/***/ "../../glissando/dist/glissando.mjs":
+/*!******************************************************************************************!*\
+  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando/dist/glissando.mjs ***!
+  \******************************************************************************************/
 /*! exports provided: Stream, GlissandoModel, getSliderStyle */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlissandoModel", function() { return GlissandoModel; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSliderStyle", function() { return getSliderStyle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlissandoModel", function() { return e; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSliderStyle", function() { return a; });
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril/stream */ "../node_modules/mithril/stream/stream.js");
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril_stream__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "Stream", function() { return mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a; });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
- // eslint-disable-next-line import/no-unresolved
-
-var calculateNewIndex = function calculateNewIndex(state, index) {
-  if (index === undefined || Number.isNaN(index)) {
-    return {
-      newIndex: state.index,
-      shouldUpdate: false
-    };
-  }
-
-  var newIndex = Math.min(index, state.count - 1);
-  var isValid = newIndex >= 0 && newIndex < state.count;
-  var shouldUpdate = isValid && newIndex !== state.index;
-  return {
-    newIndex: newIndex,
-    shouldUpdate: shouldUpdate
-  };
-};
-
-var setIndex = function setIndex(state) {
-  return function (change) {
-    var _calculateNewIndex = calculateNewIndex(state, change.index),
-        newIndex = _calculateNewIndex.newIndex,
-        shouldUpdate = _calculateNewIndex.shouldUpdate;
-
-    return shouldUpdate ? _objectSpread(_objectSpread(_objectSpread({}, state), change.animate ? undefined : {
-      index: newIndex
-    }), {}, {
-      targetIndex: newIndex,
-      isAnimating: !!change.animate
-    }) : state;
-  };
-};
-
-var setLocation = function setLocation(state) {
-  return function (change) {
-    if (!state.locations || state.locations.length === 0) {
-      return state;
-    }
-
-    var locationStr = change.location.toString();
-    var index = state.locations.indexOf(locationStr);
-
-    if (index === -1) {
-      // Location does not exist; default to first index
-      index = 0;
-      locationStr = state.locations[index];
-    }
-
-    var shouldAnimate = state.location === undefined ? false // don't animate if we are setting the first location
-    : change.animate !== false;
-
-    var newState = _objectSpread(_objectSpread({}, state), {}, {
-      location: locationStr
-    });
-
-    var indexChange = {
-      index: index,
-      animate: shouldAnimate
-    };
-    return setIndex(newState)(indexChange);
-  };
-};
-
-var lookupLocation = function lookupLocation(state) {
-  return function (changeFn) {
-    if (!state.locations || !state.location) {
-      return undefined;
-    }
-
-    var index = state.locations.indexOf(state.location);
-
-    if (index === -1) {
-      return undefined;
-    }
-
-    return state.locations[changeFn(index)];
-  };
-};
-
-var GlissandoModel = function GlissandoModel() {
-  var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var sideViews = props.sideViews || 1;
-
-  var slots = _toConsumableArray(Array(1 + sideViews * 2)).map(function (_, i) {
-    return i - sideViews;
-  });
-
-  var initialState = {
-    index: props.index || 0,
-    targetIndex: props.index || 0,
-    isAnimating: false,
-    count: 0,
-    direction: 'ltr',
-    slots: slots,
-    sideViews: sideViews
-  };
-  var glissandoState = {
-    initialState: initialState,
-    actions: function actions(update) {
-      return {
-        previous: function previous() {
-          var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-            animate: true
-          },
-              animate = _ref.animate;
-
-          update(function (state) {
-            return setIndex(state)({
-              index: state.index - 1,
-              animate: animate !== false
-            });
-          });
-        },
-        next: function next() {
-          var _ref2 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-            animate: true
-          },
-              animate = _ref2.animate;
-
-          update(function (state) {
-            return setIndex(state)({
-              index: state.index + 1,
-              animate: animate !== false
-            });
-          });
-        },
-        goTo: function goTo(_ref3) {
-          var index = _ref3.index,
-              location = _ref3.location,
-              animate = _ref3.animate;
-          update(function (state) {
-            if (location) {
-              var _change = {
-                location: location,
-                animate: animate
-              };
-              return setLocation(state)(_change);
-            }
-
-            if (index === undefined) {
-              return state;
-            }
-
-            var change = {
-              index: index,
-              animate: animate
-            };
-            return setIndex(state)(change);
-          });
-        },
-        finalize: function finalize(index) {
-          update(function (state) {
-            return setIndex(state)({
-              index: index,
-              animate: false
-            });
-          });
-        },
-        setCount: function setCount(count) {
-          update(function (state) {
-            return setIndex(_objectSpread(_objectSpread({}, state), {}, {
-              count: count
-            }))({
-              index: state.index
-            });
-          });
-        },
-        setDirection: function setDirection(direction) {
-          update(function (state) {
-            return _objectSpread(_objectSpread({}, state), {}, {
-              direction: direction
-            });
-          });
-        },
-        setLocations: function setLocations(locations) {
-          update(function (state) {
-            return _objectSpread(_objectSpread({}, state), {}, {
-              locations: locations
-            });
-          });
-        }
-      };
-    },
-    selectors: function selectors(states) {
-      return {
-        hasNext: function hasNext() {
-          var state = states();
-          return state.index < state.count - 1;
-        },
-        hasPrevious: function hasPrevious() {
-          var state = states();
-          return state.index > 0;
-        },
-        isAnimating: function isAnimating() {
-          var state = states();
-          return state.isAnimating;
-        },
-        getViewIndices: function getViewIndices() {
-          var state = states();
-          return slots.map(function (slotIndex) {
-            var index = slotIndex + state.index + 0;
-
-            if (slotIndex < 0 && state.targetIndex < state.index) {
-              index = slotIndex + state.targetIndex + 1;
-            } else if (slotIndex > 0 && state.targetIndex > state.index) {
-              index = slotIndex + state.targetIndex - 1;
-            }
-
-            return index;
-          });
-        },
-        getLocation: function getLocation() {
-          var state = states();
-          return lookupLocation(state)(function (index) {
-            return index;
-          });
-        },
-        getNextLocation: function getNextLocation() {
-          var state = states();
-          return lookupLocation(state)(function (index) {
-            return index + 1;
-          });
-        },
-        getPreviousLocation: function getPreviousLocation() {
-          var state = states();
-          return lookupLocation(state)(function (index) {
-            return index - 1;
-          });
-        }
-      };
-    }
-  };
-  var update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
-  var states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, patch) {
-    return patch(state);
-  }, _objectSpread({}, glissandoState.initialState), update);
-
-  var actions = _objectSpread({}, glissandoState.actions(update));
-
-  var selectors = _objectSpread({}, glissandoState.selectors(states));
-
-  var changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan(function (state, value) {
-    return JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2) ? mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP : value;
-  }, mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP, states);
-  var getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(function (value) {
-    return value;
-  }, changedStates);
-  return _objectSpread(_objectSpread({
-    getState: states,
-    getChanges: getChanges
-  }, actions), selectors);
-};
-
-var getSliderStyle = function getSliderStyle(state) {
-  var slotCount = 2 * state.sideViews + 1;
-  var slotWidth = 100 / slotCount;
-  var direction = state.direction === 'rtl' ? 1 : -1;
-  var sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
-
-  if (state.targetIndex > state.index) {
-    sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
-  } else if (state.targetIndex < state.index) {
-    sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
-  }
-
-  var style = _objectSpread({
-    width: "".concat(slotCount * 100, "%"),
-    transform: "translateX(".concat(sliderTranslateX, "%)")
-  }, !state.isAnimating ? {
-    transitionDuration: '0ms'
-  } : undefined);
-
-  var className = state.isAnimating ? 'glissando-animating' : '';
-  return {
-    style: style,
-    className: className
-  };
-};
-
+const t=n=>t=>{const{newIndex:i,shouldUpdate:e}=((n,t)=>{if(void 0===t||Number.isNaN(t))return{newIndex:n.index,shouldUpdate:!1};const i=Math.min(t,n.count-1);return{newIndex:i,shouldUpdate:i>=0&&i<n.count&&i!==n.index}})(n,t.index);return e?{...n,...t.animate?void 0:{index:i},targetIndex:i,isAnimating:!!t.animate}:n},i=n=>t=>{if(!n.locations||!n.location)return;const i=n.locations.indexOf(n.location);return-1!==i?n.locations[t(i)]:void 0},e=(e={})=>{const a=e.sideViews||1,o=[...Array(1+2*a)].map((n,t)=>t-a),r={index:e.index||0,targetIndex:e.index||0,isAnimating:!1,count:0,direction:"ltr",slots:o,sideViews:a},s=n=>({previous:({animate:i}={animate:!0})=>{n(n=>t(n)({index:n.index-1,animate:!1!==i}))},next:({animate:i}={animate:!0})=>{n(n=>t(n)({index:n.index+1,animate:!1!==i}))},goTo:({index:i,location:e,animate:a})=>{n(n=>{if(e){const i={location:e,animate:a};return(n=>i=>{if(!n.locations||0===n.locations.length)return n;let e=i.location.toString(),a=n.locations.indexOf(e);-1===a&&(a=0,e=n.locations[a]);const o=void 0!==n.location&&!1!==i.animate,r={...n,location:e},s={index:a,animate:o};return t(r)(s)})(n)(i)}if(void 0===i)return n;const o={index:i,animate:a};return t(n)(o)})},finalize:i=>{n(n=>t(n)({index:i,animate:!1}))},setCount:i=>{n(n=>t({...n,count:i})({index:n.index}))},setDirection:t=>{n(n=>({...n,direction:t}))},setLocations:t=>{n(n=>({...n,locations:t}))}}),d=n=>({hasNext:()=>{const t=n();return t.index<t.count-1},hasPrevious:()=>n().index>0,isAnimating:()=>n().isAnimating,getViewIndices:()=>{const t=n();return o.map(n=>{let i=n+t.index+0;return n<0&&t.targetIndex<t.index?i=n+t.targetIndex+1:n>0&&t.targetIndex>t.index&&(i=n+t.targetIndex-1),i})},getLocation:()=>{const t=n();return i(t)(n=>n)},getNextLocation:()=>{const t=n();return i(t)(n=>n+1)},getPreviousLocation:()=>{const t=n();return i(t)(n=>n-1)}}),c=mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()(),x=mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan((n,t)=>t(n),{...r},c),l={...s(c)},m={...d(x)},u=mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan((t,i)=>JSON.stringify(t,null,2)===JSON.stringify(i,null,2)?mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP:i,mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP,x);return{getState:x,getChanges:mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(n=>n,u),...l,...m}},a=n=>{const t=2*n.sideViews+1,i=100/t,e="rtl"===n.direction?1:-1;let a=e*i*(n.sideViews+0);return n.targetIndex>n.index?a=e*i*(n.sideViews+1):n.targetIndex<n.index&&(a=e*i*(n.sideViews-1)),{style:{width:`${100*t}%`,transform:`translateX(${a}%)`,...n.isAnimating?void 0:{transitionDuration:"0ms"}},className:n.isAnimating?"glissando-animating":""}};
 
 
 /***/ }),
@@ -3068,7 +2764,7 @@ else {}
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
-/* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../../glissando-mithril/dist/glissando-mithril.js");
+/* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../../glissando-mithril/dist/glissando-mithril.mjs");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ "./Header.ts");

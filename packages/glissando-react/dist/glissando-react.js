@@ -1,110 +1,117 @@
-import { GlissandoModel, getSliderStyle } from 'glissando';
-import React, { useState, useEffect, useCallback } from 'react';
-import { useStream } from 'use-stream';
-import { useEffectRef } from '@huse/effect-ref';
-
-const useGlissandoModel = initialState => {
-  const [model] = useState(GlissandoModel(initialState));
-  // Subscribe to changes
-  useStream({
-    model: () => ({
-      _: model.getState,
-    }),
-    defer: true,
-  });
-  return model;
-};
-
-const GlissandoSlider = props => {
-  const { model, children, locations, location } = props;
-  const [sliderNode, setSliderNode] = useState();
-  const {
-    getState,
-    finalize,
-    setCount,
-    setDirection,
-    getViewIndices,
-    setLocations,
-    goTo,
-  } = model;
-  // Child count
-  useEffect(() => {
-    const count = (children || []).length;
-    if (count !== getState().count) {
-      setCount(count);
-    }
-  }, [children, getState, setCount]);
-  // Locations
-  useEffect(() => {
-    if (
-      locations &&
-      JSON.stringify(locations) !== JSON.stringify(getState().locations)
-    ) {
-      setLocations(locations);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locations]);
-  // Location
-  useEffect(() => {
-    if (location && location !== getState().location) {
-      goTo({ location });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
-  // Event listener: transitionend
-  const observeTransitionEnd = useCallback(
-    node => {
-      if (node === null) {
-        return null;
-      }
-      setSliderNode(node);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const onTransitionEnd = evt => {
-        finalize(getState().targetIndex);
-      };
-      node.addEventListener('transitionend', onTransitionEnd);
-      return () => {
-        node.removeEventListener('transitionend', onTransitionEnd);
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-  // Reading direction
-  useEffect(() => {
-    if (!sliderNode) {
-      return;
-    }
-    const { direction } = getComputedStyle(sliderNode);
-    if (direction !== getState().direction) {
-      setDirection(direction);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-  const sliderRef = useEffectRef(node => observeTransitionEnd(node));
-  if (!children) {
-    return null;
-  }
-  const { className, style } = getSliderStyle(getState());
-  return React.createElement(
-    'div',
-    { className: 'glissando' },
-    React.createElement(
-      'div',
-      {
-        className: `glissando-slider ${className}`,
-        style: style,
-        ref: sliderRef,
+!(function (e, t) {
+  typeof exports === 'object' && typeof module !== 'undefined'
+    ? t(
+        exports,
+        require('glissando'),
+        require('react'),
+        require('use-stream'),
+        require('@huse/effect-ref'),
+      )
+    : typeof define === 'function' && define.amd
+    ? define([
+        'exports',
+        'glissando',
+        'react',
+        'use-stream',
+        '@huse/effect-ref',
+      ], t)
+    : t(
+        ((e = e || self).glissandoReact = {}),
+        e.glissando,
+        e.React,
+        e.useStream,
+        e.effectRef,
+      );
+})(this, function (e, N, h, n, q) {
+  const x = 'default' in h ? h.default : h;
+  (e.GlissandoSlider = function (e) {
+    const t = e.model;
+    const n = e.children;
+    const i = e.locations;
+    const s = e.location;
+    const r = h.useState();
+    const o = r[0];
+    const a = r[1];
+    const u = t.getState;
+    const f = t.finalize;
+    const c = t.setCount;
+    const l = t.setDirection;
+    const d = t.getViewIndices;
+    const g = t.setLocations;
+    const m = t.goTo;
+    h.useEffect(
+      function () {
+        const e = (n || []).length;
+        e !== u().count && c(e);
       },
-      getViewIndices().map(viewIndex =>
-        React.createElement(
-          'div',
-          { key: viewIndex, className: 'glissando-page' },
-          children[viewIndex],
-        ),
-      ),
+      [n, u, c],
     ),
-  );
-};
-
-export { GlissandoSlider, useGlissandoModel };
+      h.useEffect(
+        function () {
+          i && JSON.stringify(i) !== JSON.stringify(u().locations) && g(i);
+        },
+        [i],
+      ),
+      h.useEffect(
+        function () {
+          s && s !== u().location && m({ location: s });
+        },
+        [s],
+      );
+    const v = h.useCallback(function (e) {
+      if (e === null) return null;
+      a(e);
+      function t(e) {
+        f(u().targetIndex);
+      }
+      return (
+        e.addEventListener('transitionend', t),
+        function () {
+          e.removeEventListener('transitionend', t);
+        }
+      );
+    }, []);
+    h.useEffect(
+      function () {
+        let e;
+        !o || ((e = getComputedStyle(o).direction) !== u().direction && l(e));
+      },
+      [e],
+    );
+    const S = q.useEffectRef(function (e) {
+      return v(e);
+    });
+    if (!n) return null;
+    const y = N.getSliderStyle(u());
+    const p = y.className;
+    const E = y.style;
+    return x.createElement(
+      'div',
+      { className: 'glissando' },
+      x.createElement(
+        'div',
+        { className: `glissando-slider ${p}`, style: E, ref: S },
+        d().map(function (e) {
+          return x.createElement(
+            'div',
+            { key: e, className: 'glissando-page' },
+            n[e],
+          );
+        }),
+      ),
+    );
+  }),
+    (e.useGlissandoModel = function (e) {
+      const t = h.useState(N.GlissandoModel(e))[0];
+      return (
+        n.useStream({
+          model() {
+            return { _: t.getState };
+          },
+          defer: !0,
+        }),
+        t
+      );
+    }),
+    Object.defineProperty(e, '__esModule', { value: !0 });
+});
