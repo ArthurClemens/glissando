@@ -22,11 +22,12 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 ### Standalone use
 
 * [Simple example](https://codesandbox.io/s/glissando-for-mithril-mbhli)
-* [Kitchensink](https://codesandbox.io/s/glissando-for-mithril-kitchensink-z3ddm)
+* [Kitchen sink](https://codesandbox.io/s/glissando-for-mithril-kitchensink-z3ddm)
 
 ### Directed use 
 
 * [With Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-woujo)
+* [Nested routes with Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-list-and-details-o5679)
 
 
 ## Usage

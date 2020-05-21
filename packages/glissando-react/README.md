@@ -22,11 +22,12 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 ### Standalone use
 
 * [Simple example](https://codesandbox.io/s/glissando-for-react-2bgz4)
-* [Kitchensink](https://codesandbox.io/s/glissando-for-react-kitchensink-7hw9y)
+* [Kitchen sink](https://codesandbox.io/s/glissando-for-react-kitchensink-7hw9y)
 
 ### Directed use
 
 * [With React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-d0kno)
+* [Nested routes with React Router and TypeScript](https://codesandbox.io/s/glissando-for-react-with-react-router-list-and-details-34552)
 
 
 ## Usage
