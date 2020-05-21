@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.5.0",
-    "@types/mithril": "^2.0.2",
+    "@types/mithril": "^2.0.3",
     "size-limit": "^4.5.0"
   }
 }
