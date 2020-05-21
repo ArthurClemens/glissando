@@ -1,6 +1,6 @@
 {
   "name": "test-glissando-react",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "description": "",
   "keywords": [],
@@ -18,7 +18,7 @@
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json"
   },
   "dependencies": {
-    "glissando-react": "^0.7.0",
+    "glissando-react": "^0.7.1",
     "mithril": "2.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
