@@ -27,7 +27,7 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 ### Directed use 
 
 * [With Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-woujo)
-* [Nested routes with Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-list-and-details-o5679)
+* [Nested routes with Mithril router and TypeScript](https://codesandbox.io/s/glissando-for-mithril-router-list-and-details-dynamic-data-exxns)
 
 
 ## Usage
