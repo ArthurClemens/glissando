@@ -19,6 +19,8 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 ## Demos
 
+* [All examples](https://codesandbox.io/dashboard/all/Glissando/Glissando%20for%20React?workspace=214fe89f-3718-4af2-9611-3b2cb150dcc5)
+
 ### Standalone use
 
 * [Simple example](https://codesandbox.io/s/glissando-for-react-2bgz4)
