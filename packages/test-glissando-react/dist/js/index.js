@@ -224,8 +224,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
 
-var Page = function (props) {
-    var imageId = props.index + 1;
+var Page = function (_a) {
+    var index = _a.index;
+    var imageId = index + 1;
     var imageName = "" + (imageId < 10 ? '0' : '') + imageId;
     var imageUrl = "https://arthurclemens.github.io/assets/mithril-slider/img/" + imageName + ".jpg";
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "demo-page" },
@@ -322,8 +323,8 @@ const useGlissandoModel = (initialState) => {
     return model;
 };
 
-const GlissandoSlider = props => {
-    const { model, children, locations, location } = props;
+const GlissandoSlider = (props) => {
+    const { model, children, locations, location, } = props;
     const [sliderNode, setSliderNode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
     const { getState, finalize, setCount, setDirection, getViewIndices, setLocations, goTo, } = model;
     // Child count

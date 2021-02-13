@@ -1,11 +1,11 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 
-type TProps = {
+type Props = {
   index: number;
 };
 
-export const Page: FunctionComponent<TProps> = props => {
-  const imageId = props.index + 1;
+export const Page = ({ index }: Props) => {
+  const imageId = index + 1;
   const imageName = `${imageId < 10 ? '0' : ''}${imageId}`;
   const imageUrl = `https://arthurclemens.github.io/assets/mithril-slider/img/${imageName}.jpg`;
   return (

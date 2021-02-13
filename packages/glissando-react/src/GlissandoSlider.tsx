@@ -1,7 +1,6 @@
 import { useEffectRef } from '@huse/effect-ref';
 import { getSliderStyle, Glissando } from 'glissando';
 import React, {
-  FunctionComponent,
   RefCallback,
   useCallback,
   useEffect,
@@ -11,7 +10,7 @@ import React, {
 
 import { GlissandoSliderProps } from '../index';
 
-export const GlissandoSlider: FunctionComponent<GlissandoSliderProps> = props => {
+export const GlissandoSlider = (props: GlissandoSliderProps) => {
   const { model, children, locations, location } = props;
   const [sliderNode, setSliderNode] = useState<HTMLDivElement>();
   const {

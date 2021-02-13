@@ -1,12 +1,12 @@
 import { Glissando } from 'glissando-react';
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-type THeaderProps = {
+type HeaderProps = {
   model: Glissando.Model;
 };
 
-export const Header: FunctionComponent<THeaderProps> = ({ model }) => {
+export const Header = ({ model }: HeaderProps) => {
   const history = useHistory();
 
   const {

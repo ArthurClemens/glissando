@@ -1,13 +1,13 @@
 import { Glissando } from 'glissando';
 // eslint-disable-next-line import/no-unresolved
-import { FunctionComponent } from 'react';
+import { ReactNode, FunctionComponent } from 'react';
 
-export interface GlissandoSliderProps {
+export type GlissandoSliderProps = {
   model: Glissando.Model;
-  children: React.ReactNode[];
+  children: ReactNode[];
   locations?: string[];
   location?: string;
-}
+};
 
 export const GlissandoSlider: FunctionComponent<GlissandoSliderProps>;
 
