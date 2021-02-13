@@ -1,6 +1,6 @@
 {
   "name": "test-glissando-react",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "description": "",
   "keywords": [],
@@ -19,7 +19,7 @@
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "dependencies": {
-    "glissando-react": "^0.7.1",
+    "glissando-react": "^0.7.2",
     "mithril": "2.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",

@@ -1,6 +1,6 @@
 {
   "name": "test-glissando-mithril-router-nested",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "description": "",
   "keywords": [],
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@types/ramda": "^0.27.38",
-    "glissando-mithril": "^0.7.1",
+    "glissando-mithril": "^0.7.2",
     "mithril": "2.0.4"
   },
   "devDependencies": {
