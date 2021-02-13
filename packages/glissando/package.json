@@ -1,6 +1,6 @@
 {
   "name": "glissando",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "description": "A simple content slider for anything that needs to move. Base functions to create Glissando components.",
   "main": "dist/glissando",
   "module": "dist/glissando.mjs",

@@ -35,7 +35,7 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "glissando": "^0.7.2"
+    "glissando": "^0.7.3"
   },
   "peerDependencies": {
     "mithril": ">=2.0.4"

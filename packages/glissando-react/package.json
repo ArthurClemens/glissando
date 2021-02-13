@@ -36,7 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "@huse/effect-ref": "1.0.3",
-    "glissando": "^0.7.2",
+    "glissando": "^0.7.3",
     "use-stream": "0.3.7"
   },
   "peerDependencies": {
