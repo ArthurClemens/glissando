@@ -75,10 +75,16 @@ This is the simplest setup. Use control methods: `next()`, `goTo(0)`, etcetera t
 
 Application state is used to control the slider. An example of application state is a router with a unique page URL for each slide.
 
-* Pass a list of location ids, for example: possible route paths.
-* Pass the current location id, for example: the current route path.
+Pass:
+* A list of location ids (for example: possible route paths)
+* The current location id (for example: the current route path)
 
-When application state changes the current location id, the slider model will subsequently be updated. For example: the Next button invokes a new URL, and the new router path is used to set the location id, which then tells the slider to slide to that element.
+When application state changes the current location id, the slider model will subsequently be updated.
+
+For example:
+1. The Next button invokes a new URL
+2. The new router path is used to set the location id
+3. With the updated slider state, the slider component will slide to the corresponding element
 
 
 Examples for both uses are shown in the [React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md) and [Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md) documentation sections.
