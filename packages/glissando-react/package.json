@@ -13,12 +13,13 @@
     "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
     "build:prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./dist/*.js\"",
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
-    "test": "react-scripts test --env=jsdom",
+    "test": "true",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/*.{mjs,css}\"",
     "fix": "yarn run lint --fix && yarn run prettier",
     "size": "size-limit",
-    "size:why": "size-limit --why"
+    "size:why": "size-limit --why",
+    "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "files": [
     "dist",
@@ -34,17 +35,17 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "@huse/effect-ref": "1.0.1",
+    "@huse/effect-ref": "1.0.3",
     "glissando": "^0.7.1",
-    "use-stream": "0.3.6"
+    "use-stream": "0.3.7"
   },
   "peerDependencies": {
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.5.0",
-    "@types/react": "16.9.35",
-    "size-limit": "^4.5.0"
+    "@size-limit/preset-small-lib": "^4.9.2",
+    "@types/react": "17.0.2",
+    "size-limit": "^4.9.2"
   }
 }

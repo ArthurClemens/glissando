@@ -1,1 +1,238 @@
-import n from"mithril/stream";export{default as Stream}from"mithril/stream";const t=n=>t=>{const{newIndex:i,shouldUpdate:e}=((n,t)=>{if(void 0===t||Number.isNaN(t))return{newIndex:n.index,shouldUpdate:!1};const i=Math.min(t,n.count-1);return{newIndex:i,shouldUpdate:i>=0&&i<n.count&&i!==n.index}})(n,t.index);return e?{...n,...t.animate?void 0:{index:i},targetIndex:i,isAnimating:!!t.animate}:n},i=n=>t=>{if(!n.locations||!n.location)return;const i=n.locations.indexOf(n.location);return-1!==i?n.locations[t(i)]:void 0},e=(e={})=>{const a=e.sideViews||1,o=[...Array(1+2*a)].map((n,t)=>t-a),r={index:e.index||0,targetIndex:e.index||0,isAnimating:!1,count:0,direction:"ltr",slots:o,sideViews:a},s=n=>({previous:({animate:i}={animate:!0})=>{n(n=>t(n)({index:n.index-1,animate:!1!==i}))},next:({animate:i}={animate:!0})=>{n(n=>t(n)({index:n.index+1,animate:!1!==i}))},goTo:({index:i,location:e,animate:a})=>{n(n=>{if(e){const i={location:e,animate:a};return(n=>i=>{if(!n.locations||0===n.locations.length)return n;let e=i.location.toString(),a=n.locations.indexOf(e);-1===a&&(a=0,e=n.locations[a]);const o=void 0!==n.location&&!1!==i.animate,r={...n,location:e},s={index:a,animate:o};return t(r)(s)})(n)(i)}if(void 0===i)return n;const o={index:i,animate:a};return t(n)(o)})},finalize:i=>{n(n=>t(n)({index:i,animate:!1}))},setCount:i=>{n(n=>t({...n,count:i})({index:n.index}))},setDirection:t=>{n(n=>({...n,direction:t}))},setLocations:t=>{n(n=>({...n,locations:t}))}}),d=n=>({hasNext:()=>{const t=n();return t.index<t.count-1},hasPrevious:()=>n().index>0,isAnimating:()=>n().isAnimating,getViewIndices:()=>{const t=n();return o.map(n=>{let i=n+t.index+0;return n<0&&t.targetIndex<t.index?i=n+t.targetIndex+1:n>0&&t.targetIndex>t.index&&(i=n+t.targetIndex-1),i})},getLocation:()=>{const t=n();return i(t)(n=>n)},getNextLocation:()=>{const t=n();return i(t)(n=>n+1)},getPreviousLocation:()=>{const t=n();return i(t)(n=>n-1)}}),c=n(),x=n.scan((n,t)=>t(n),{...r},c),l={...s(c)},m={...d(x)},u=n.scan((t,i)=>JSON.stringify(t,null,2)===JSON.stringify(i,null,2)?n.SKIP:i,n.SKIP,x);return{getState:x,getChanges:n.lift(n=>n,u),...l,...m}},a=n=>{const t=2*n.sideViews+1,i=100/t,e="rtl"===n.direction?1:-1;let a=e*i*(n.sideViews+0);return n.targetIndex>n.index?a=e*i*(n.sideViews+1):n.targetIndex<n.index&&(a=e*i*(n.sideViews-1)),{style:{width:`${100*t}%`,transform:`translateX(${a}%)`,...n.isAnimating?void 0:{transitionDuration:"0ms"}},className:n.isAnimating?"glissando-animating":""}};export{e as GlissandoModel,a as getSliderStyle};
+import Stream from 'mithril/stream';
+export { default as Stream } from 'mithril/stream';
+
+// eslint-disable-next-line import/no-unresolved
+const calculateNewIndex = (state, index) => {
+    if (index === undefined || Number.isNaN(index)) {
+        return {
+            newIndex: state.index,
+            shouldUpdate: false,
+        };
+    }
+    const newIndex = Math.min(index, state.count - 1);
+    const isValid = newIndex >= 0 && newIndex < state.count;
+    const shouldUpdate = isValid && newIndex !== state.index;
+    return {
+        newIndex,
+        shouldUpdate,
+    };
+};
+const setIndex = (state) => (change) => {
+    const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+    return shouldUpdate
+        ? {
+            ...state,
+            ...(change.animate ? undefined : { index: newIndex }),
+            targetIndex: newIndex,
+            isAnimating: !!change.animate,
+        }
+        : state;
+};
+const setLocation = (state) => (change) => {
+    if (!state.locations || state.locations.length === 0) {
+        return state;
+    }
+    let locationStr = change.location.toString();
+    let index = state.locations.indexOf(locationStr);
+    if (index === -1) {
+        // Location does not exist; default to first index
+        index = 0;
+        locationStr = state.locations[index];
+    }
+    const shouldAnimate = state.location === undefined
+        ? false // don't animate if we are setting the first location
+        : change.animate !== false;
+    const newState = {
+        ...state,
+        location: locationStr,
+    };
+    const indexChange = {
+        index,
+        animate: shouldAnimate,
+    };
+    return setIndex(newState)(indexChange);
+};
+const lookupLocation = (state) => (changeFn) => {
+    if (!state.locations || !state.location) {
+        return undefined;
+    }
+    const index = state.locations.indexOf(state.location);
+    if (index === -1) {
+        return undefined;
+    }
+    return state.locations[changeFn(index)];
+};
+const GlissandoModel = (props = {}) => {
+    const sideViews = props.sideViews || 1;
+    const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
+    const initialState = {
+        index: props.index || 0,
+        targetIndex: props.index || 0,
+        isAnimating: false,
+        count: 0,
+        direction: 'ltr',
+        slots,
+        sideViews,
+    };
+    const glissandoState = {
+        initialState,
+        actions: (update) => {
+            return {
+                previous: ({ animate } = { animate: true }) => {
+                    update((state) => {
+                        return setIndex(state)({
+                            index: state.index - 1,
+                            animate: animate !== false,
+                        });
+                    });
+                },
+                next: ({ animate } = { animate: true }) => {
+                    update((state) => {
+                        return setIndex(state)({
+                            index: state.index + 1,
+                            animate: animate !== false,
+                        });
+                    });
+                },
+                goTo: ({ index, location, animate, }) => {
+                    update((state) => {
+                        if (location) {
+                            const change = {
+                                location,
+                                animate,
+                            };
+                            return setLocation(state)(change);
+                        }
+                        if (index === undefined) {
+                            return state;
+                        }
+                        const change = {
+                            index,
+                            animate,
+                        };
+                        return setIndex(state)(change);
+                    });
+                },
+                finalize: (index) => {
+                    update((state) => {
+                        return setIndex(state)({
+                            index,
+                            animate: false,
+                        });
+                    });
+                },
+                setCount: (count) => {
+                    update((state) => {
+                        return setIndex({
+                            ...state,
+                            count,
+                        })({ index: state.index });
+                    });
+                },
+                setDirection: (direction) => {
+                    update((state) => {
+                        return {
+                            ...state,
+                            direction,
+                        };
+                    });
+                },
+                setLocations: (locations) => {
+                    update((state) => {
+                        return {
+                            ...state,
+                            locations,
+                        };
+                    });
+                },
+            };
+        },
+        selectors: (states) => {
+            return {
+                hasNext: () => {
+                    const state = states();
+                    return state.index < state.count - 1;
+                },
+                hasPrevious: () => {
+                    const state = states();
+                    return state.index > 0;
+                },
+                isAnimating: () => {
+                    const state = states();
+                    return state.isAnimating;
+                },
+                getViewIndices: () => {
+                    const state = states();
+                    return slots.map(slotIndex => {
+                        let index = slotIndex + state.index + 0;
+                        if (slotIndex < 0 && state.targetIndex < state.index) {
+                            index = slotIndex + state.targetIndex + 1;
+                        }
+                        else if (slotIndex > 0 && state.targetIndex > state.index) {
+                            index = slotIndex + state.targetIndex - 1;
+                        }
+                        return index;
+                    });
+                },
+                getLocation: () => {
+                    const state = states();
+                    return lookupLocation(state)(index => index);
+                },
+                getNextLocation: () => {
+                    const state = states();
+                    return lookupLocation(state)(index => index + 1);
+                },
+                getPreviousLocation: () => {
+                    const state = states();
+                    return lookupLocation(state)(index => index - 1);
+                },
+            };
+        },
+    };
+    const update = Stream();
+    const states = Stream.scan((state, patch) => patch(state), {
+        ...glissandoState.initialState,
+    }, update);
+    const actions = {
+        ...glissandoState.actions(update),
+    };
+    const selectors = {
+        ...glissandoState.selectors(states),
+    };
+    const changedStates = Stream.scan((state, value) => JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+        ? Stream.SKIP
+        : value, Stream.SKIP, states);
+    const getChanges = Stream.lift(value => value, changedStates);
+    return {
+        getState: states,
+        getChanges,
+        ...actions,
+        ...selectors,
+    };
+};
+
+const getSliderStyle = (state) => {
+    const slotCount = 2 * state.sideViews + 1;
+    const slotWidth = 100 / slotCount;
+    const direction = state.direction === 'rtl' ? 1 : -1;
+    let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
+    if (state.targetIndex > state.index) {
+        sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
+    }
+    else if (state.targetIndex < state.index) {
+        sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
+    }
+    const style = {
+        width: `${slotCount * 100}%`,
+        transform: `translateX(${sliderTranslateX}%)`,
+        ...(!state.isAnimating
+            ? {
+                transitionDuration: '0ms',
+            }
+            : undefined),
+    };
+    const className = state.isAnimating ? 'glissando-animating' : '';
+    return { style, className };
+};
+
+export { GlissandoModel, getSliderStyle };

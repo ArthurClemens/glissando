@@ -1,601 +1,399 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "http://localhost:3000/";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./index.ts");
-/******/ })
-/************************************************************************/
-/******/ ({
+/******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
-/***/ "../../../node_modules/process/browser.js":
-/*!************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/node_modules/process/browser.js ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "../../glissando-mithril/dist/glissando.min.css":
+/*!******************************************************!*\
+  !*** ../../glissando-mithril/dist/glissando.min.css ***!
+  \******************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
 
 /***/ }),
 
-/***/ "../../../node_modules/setimmediate/setImmediate.js":
-/*!**********************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/node_modules/setimmediate/setImmediate.js ***!
-  \**********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./styles.css":
+/*!********************!*\
+  !*** ./styles.css ***!
+  \********************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
 
-    if (global.setImmediate) {
-        return;
-    }
 
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
+/***/ }),
 
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
+/***/ "./App.ts":
+/*!****************!*\
+  !*** ./App.ts ***!
+  \****************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
-
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "App": function() { return /* binding */ App; }
+/* harmony export */ });
+/* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../../glissando-mithril/dist/glissando-mithril.mjs");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ "./Header.ts");
+/* harmony import */ var _Listing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Listing */ "./Listing.ts");
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./User */ "./User.ts");
+/* harmony import */ var _UserDetails__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserDetails */ "./UserDetails.ts");
+/* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./users */ "./users.ts");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
         }
-    }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
+
+
+
+
+
+
+var trailToBreadCrumb = function (trail) {
+    return trail.reduce(function (acc, path, index) {
+        var _a;
+        return (__assign(__assign({}, acc), (_a = {}, _a[index.toString()] = path, _a)));
+    }, {});
+};
+var createBreadCrumb = function (route) {
+    return route
+        .slice(1)
+        .split('/')
+        .map(function (fragment) { return "/" + fragment; })
+        .reduce(function (acc, fragment) {
+        var previousPath = acc[acc.length - 1];
+        var path = previousPath ? previousPath + fragment : fragment;
+        return __spreadArrays(acc, [path]);
+    }, []);
+};
+var Slider = function () {
+    // Store the user so that the page can be shown while sliding back to the overview
+    var localState = {
+        user: '',
+    };
+    return {
+        view: function (_a) {
+            var attrs = _a.attrs;
+            var model = attrs.model;
+            if (mithril__WEBPACK_IMPORTED_MODULE_1___default().route.param('user')) {
+                localState.user = mithril__WEBPACK_IMPORTED_MODULE_1___default().route.param('user');
+            }
+            /*
+            Support starting from a deeper route (a User or UserDetails page).
+            When starting from there, we don't have any locations stored in the Glissando model yet.
+            To know which pages come before we create a breadcrumb from the current route to know which pages should be shown.
+            */
+            var breadcrumb = createBreadCrumb(mithril__WEBPACK_IMPORTED_MODULE_1___default().route.get());
+            /*
+            We use the stored locations to know which pages should be shown after
+            (so that when sliding back the pages don't disappear).
+            Then combine all collected data.
+            */
+            var storedLocations = model.getState().locations || [];
+            var merged = __assign(__assign({}, trailToBreadCrumb(storedLocations)), trailToBreadCrumb(breadcrumb));
+            var pages = Object.keys(merged).map(function (key) { return merged[key]; });
+            var currentPage = pages[breadcrumb.length - 1];
+            return mithril__WEBPACK_IMPORTED_MODULE_1___default()(glissando_mithril__WEBPACK_IMPORTED_MODULE_0__.GlissandoSlider, {
+                model: model,
+                locations: pages,
+                location: currentPage,
+            }, pages.map(function (_, index) {
+                switch (index) {
+                    case 0:
+                        return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_Listing__WEBPACK_IMPORTED_MODULE_3__.Listing, { users: _users__WEBPACK_IMPORTED_MODULE_6__.default });
+                    case 1:
+                        return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_User__WEBPACK_IMPORTED_MODULE_4__.User, {
+                            user: localState.user,
+                        });
+                    case 2:
+                        return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_UserDetails__WEBPACK_IMPORTED_MODULE_5__.UserDetails, {
+                            user: localState.user,
+                        });
+                    default:
+                        return null;
                 }
-            }
-        }
-    }
+            }));
+        },
+    };
+};
+var App = function () {
+    var model = (0,glissando_mithril__WEBPACK_IMPORTED_MODULE_0__.useGlissandoModel)();
+    return {
+        view: function () {
+            return [mithril__WEBPACK_IMPORTED_MODULE_1___default()(_Header__WEBPACK_IMPORTED_MODULE_2__.Header, { model: model }), mithril__WEBPACK_IMPORTED_MODULE_1___default()(Slider, { model: model })];
+        },
+    };
+};
 
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
-
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
-
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
-
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
-            }
-        };
-
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
-
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
-
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
-
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
-
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
-
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
-
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
-
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
-
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
-
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
-
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
-
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
-
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "../../../node_modules/process/browser.js")))
 
 /***/ }),
 
-/***/ "../../../node_modules/timers-browserify/main.js":
-/*!*******************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/node_modules/timers-browserify/main.js ***!
-  \*******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./Header.ts":
+/*!*******************!*\
+  !*** ./Header.ts ***!
+  \*******************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Header": function() { return /* binding */ Header; }
+/* harmony export */ });
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
 
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
+var Header = {
+    view: function (_a) {
+        var attrs = _a.attrs;
+        var model = attrs.model;
+        var isAnimating = model.isAnimating, getLocation = model.getLocation, getPreviousLocation = model.getPreviousLocation;
+        var location = getLocation();
+        var previousLocation = getPreviousLocation();
+        var goPrevious = function () {
+            if (previousLocation) {
+                mithril__WEBPACK_IMPORTED_MODULE_0___default().route.set(previousLocation);
+            }
+        };
+        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('header', {
+            className: 'bar bar-nav',
+        }, [
+            mithril__WEBPACK_IMPORTED_MODULE_0___default()('button', {
+                type: 'button',
+                className: 'btn btn-link btn-nav pull-left',
+                tabIndex: 0,
+                disabled: !previousLocation || isAnimating(),
+                onclick: goPrevious,
+                onkeyup: goPrevious,
+            }, [
+                mithril__WEBPACK_IMPORTED_MODULE_0___default()('span', {
+                    className: 'icon icon-left-nav',
+                }),
+                mithril__WEBPACK_IMPORTED_MODULE_0___default()('span', 'Back'),
+            ]),
+            mithril__WEBPACK_IMPORTED_MODULE_0___default()('h1', {
+                className: 'title',
+            }, location),
+        ]);
+    },
 };
 
-// setimmediate attaches itself to the global object
-__webpack_require__(/*! setimmediate */ "../../../node_modules/setimmediate/setImmediate.js");
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
-/***/ "../../../node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./Listing.ts":
+/*!********************!*\
+  !*** ./Listing.ts ***!
+  \********************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-var g;
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Listing": function() { return /* binding */ Listing; }
+/* harmony export */ });
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
 
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
+var Listing = {
+    view: function (_a) {
+        var attrs = _a.attrs;
+        var users = attrs.users;
+        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('.content', mithril__WEBPACK_IMPORTED_MODULE_0___default()('ul.table-view', users.map(function (name) {
+            var personRoute = "/users/" + name;
+            return mithril__WEBPACK_IMPORTED_MODULE_0___default()('li.table-view-cell media', mithril__WEBPACK_IMPORTED_MODULE_0___default()((mithril__WEBPACK_IMPORTED_MODULE_0___default().route.Link), {
+                href: personRoute,
+                class: 'navigate-right',
+            }, name));
+        })));
+    },
+};
 
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
+
+/***/ }),
+
+/***/ "./User.ts":
+/*!*****************!*\
+  !*** ./User.ts ***!
+  \*****************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "User": function() { return /* binding */ User; }
+/* harmony export */ });
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
+
+var User = {
+    view: function (_a) {
+        var attrs = _a.attrs;
+        var user = attrs.user;
+        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('.content', user &&
+            mithril__WEBPACK_IMPORTED_MODULE_0___default()('.user-page', [
+                mithril__WEBPACK_IMPORTED_MODULE_0___default()('.user-first-letter', user[0]),
+                mithril__WEBPACK_IMPORTED_MODULE_0___default()((mithril__WEBPACK_IMPORTED_MODULE_0___default().route.Link), {
+                    className: 'user-details-link',
+                    href: "/users/" + user + "/details",
+                }, "More about " + user),
+            ]));
+    },
+};
+
+
+/***/ }),
+
+/***/ "./UserDetails.ts":
+/*!************************!*\
+  !*** ./UserDetails.ts ***!
+  \************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "UserDetails": function() { return /* binding */ UserDetails; }
+/* harmony export */ });
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
+
+var UserDetails = {
+    view: function (_a) {
+        var attrs = _a.attrs;
+        var user = attrs.user;
+        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('.content', mithril__WEBPACK_IMPORTED_MODULE_0___default()('.details', user + " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."));
+    },
+};
+
+
+/***/ }),
+
+/***/ "./index.ts":
+/*!******************!*\
+  !*** ./index.ts ***!
+  \******************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril/dist/glissando.min.css */ "../../glissando-mithril/dist/glissando.min.css");
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
+/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./App.ts");
+
+
+
+
+// m.route.prefix = '';
+var rootElement = document.getElementById('root');
+if (rootElement) {
+    mithril__WEBPACK_IMPORTED_MODULE_2___default().route(document.body, '/users', {
+        '/users': _App__WEBPACK_IMPORTED_MODULE_3__.App,
+        '/users/:user': _App__WEBPACK_IMPORTED_MODULE_3__.App,
+        '/users/:user/details': _App__WEBPACK_IMPORTED_MODULE_3__.App,
+    });
 }
 
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
 
-module.exports = g;
+/***/ }),
+
+/***/ "./users.ts":
+/*!******************!*\
+  !*** ./users.ts ***!
+  \******************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ([
+    'Alexis',
+    'Armand',
+    'Bastian',
+    'Betty',
+    'Caroline',
+    'Colin',
+    'Danny',
+    'Denise',
+    'Elsa',
+    'Eric',
+    'Ferdinand',
+    'Francesca',
+    'Grace',
+    'Guy',
+    'Hannah',
+    'Harold',
+    'Irene',
+    'Isac',
+    'Jackie',
+    'Javier',
+    'Kai',
+    'Kate',
+    'Laureen',
+    'Lucas',
+    'Madelyn',
+    'Marc',
+    'Nadine',
+    'Nic',
+    'Olive',
+    'Oscar',
+    'Paula',
+    'Pierre',
+    'Rebecca',
+    'Rob',
+    'Sander',
+    'Sara',
+    'Tim',
+    'Tina',
+    'Ulysse',
+    'Una',
+    'Vera',
+    'Vincent',
+    'Wendy',
+    'William',
+    'Yanis',
+    'Yvonne',
+    'Zac',
+    'Zoe',
+]);
 
 
 /***/ }),
 
 /***/ "../../glissando-mithril/dist/glissando-mithril.mjs":
-/*!**********************************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-mithril/dist/glissando-mithril.mjs ***!
-  \**********************************************************************************************************/
-/*! exports provided: GlissandoSlider, useGlissandoModel */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*!**********************************************************!*\
+  !*** ../../glissando-mithril/dist/glissando-mithril.mjs ***!
+  \**********************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlissandoSlider", function() { return GlissandoSlider; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useGlissandoModel", function() { return useGlissandoModel; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GlissandoSlider": function() { return /* binding */ GlissandoSlider; },
+/* harmony export */   "useGlissandoModel": function() { return /* binding */ useGlissandoModel; }
+/* harmony export */ });
 /* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.mjs");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
 /* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
@@ -603,111 +401,319 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const useGlissandoModel = () => {
-  const model = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["GlissandoModel"])();
-  // Subscribe to changes
-  model.getState.map(mithril__WEBPACK_IMPORTED_MODULE_1___default.a.redraw);
-  return model;
+    const model = (0,glissando__WEBPACK_IMPORTED_MODULE_0__.GlissandoModel)();
+    // Subscribe to changes
+    model.getState.map((mithril__WEBPACK_IMPORTED_MODULE_1___default().redraw));
+    return model;
 };
 
 const GlissandoSlider = initialVnode => {
-  const { model } = initialVnode.attrs;
-  const {
-    getState,
-    finalize,
-    setCount,
-    setDirection,
-    getViewIndices,
-    goTo,
-    setLocations,
-  } = model;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onTransitionEnd = evt => {
-    finalize(getState().targetIndex);
-  };
-  return {
-    onupdate: ({ dom, children, attrs }) => {
-      const { locations, location } = attrs;
-      // Children count
-      const count = children.length;
-      if (count !== getState().count) {
-        setCount(count);
-      }
-      // Locations
-      if (
-        locations &&
-        JSON.stringify(locations) !== JSON.stringify(getState().locations)
-      ) {
-        setLocations(locations);
-      }
-      // Location
-      if (location && location !== getState().location) {
-        goTo({ location });
-      }
-      // Reading direction
-      const { direction } = getComputedStyle(dom);
-      if (direction !== getState().direction) {
-        setDirection(direction);
-      }
-    },
-    view: ({ children }) => {
-      if (!children) {
-        return null;
-      }
-      const { className, style } = Object(glissando__WEBPACK_IMPORTED_MODULE_0__["getSliderStyle"])(getState());
-      return mithril__WEBPACK_IMPORTED_MODULE_1___default()(
-        '.glissando',
-        mithril__WEBPACK_IMPORTED_MODULE_1___default()(
-          '.glissando-slider',
-          {
-            oncreate: vnode => {
-              vnode.dom.addEventListener('transitionend', onTransitionEnd);
-            },
-            onremove: vnode => {
-              vnode.dom.removeEventListener('transitionend', onTransitionEnd);
-            },
-            className,
-            style,
-          },
-          getViewIndices().map(viewIndex =>
-            mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-page', children[viewIndex]),
-          ),
-        ),
-      );
-    },
-  };
+    const { model } = initialVnode.attrs;
+    const { getState, finalize, setCount, setDirection, getViewIndices, goTo, setLocations, } = model;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const onTransitionEnd = (evt) => {
+        finalize(getState().targetIndex);
+    };
+    return {
+        onupdate: ({ dom, children, attrs }) => {
+            const { locations, location } = attrs;
+            // Children count
+            const count = children.length;
+            if (count !== getState().count) {
+                setCount(count);
+            }
+            // Locations
+            if (locations &&
+                JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
+                setLocations(locations);
+            }
+            // Location
+            if (location && location !== getState().location) {
+                goTo({ location });
+            }
+            // Reading direction
+            const { direction } = getComputedStyle(dom);
+            if (direction !== getState().direction) {
+                setDirection(direction);
+            }
+        },
+        view: ({ children }) => {
+            if (!children) {
+                return null;
+            }
+            const { className, style } = (0,glissando__WEBPACK_IMPORTED_MODULE_0__.getSliderStyle)(getState());
+            return mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando', mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-slider', {
+                oncreate: (vnode) => {
+                    vnode.dom.addEventListener('transitionend', onTransitionEnd);
+                },
+                onremove: (vnode) => {
+                    vnode.dom.removeEventListener('transitionend', onTransitionEnd);
+                },
+                className,
+                style,
+            }, getViewIndices().map(viewIndex => mithril__WEBPACK_IMPORTED_MODULE_1___default()('.glissando-page', children[viewIndex]))));
+        },
+    };
 };
 
 
 
-
-/***/ }),
-
-/***/ "../../glissando-mithril/dist/glissando.min.css":
-/*!******************************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando-mithril/dist/glissando.min.css ***!
-  \******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
 /***/ "../../glissando/dist/glissando.mjs":
-/*!******************************************************************************************!*\
-  !*** /Users/arthur/code/Github Projects/glissando/packages/glissando/dist/glissando.mjs ***!
-  \******************************************************************************************/
-/*! exports provided: Stream, GlissandoModel, getSliderStyle */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*!******************************************!*\
+  !*** ../../glissando/dist/glissando.mjs ***!
+  \******************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GlissandoModel", function() { return e; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getSliderStyle", function() { return a; });
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Stream": function() { return /* reexport default from dynamic */ mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a; },
+/* harmony export */   "GlissandoModel": function() { return /* binding */ GlissandoModel; },
+/* harmony export */   "getSliderStyle": function() { return /* binding */ getSliderStyle; }
+/* harmony export */ });
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril/stream */ "../node_modules/mithril/stream/stream.js");
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril_stream__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (default from non-harmony) */ __webpack_require__.d(__webpack_exports__, "Stream", function() { return mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a; });
-const t=n=>t=>{const{newIndex:i,shouldUpdate:e}=((n,t)=>{if(void 0===t||Number.isNaN(t))return{newIndex:n.index,shouldUpdate:!1};const i=Math.min(t,n.count-1);return{newIndex:i,shouldUpdate:i>=0&&i<n.count&&i!==n.index}})(n,t.index);return e?{...n,...t.animate?void 0:{index:i},targetIndex:i,isAnimating:!!t.animate}:n},i=n=>t=>{if(!n.locations||!n.location)return;const i=n.locations.indexOf(n.location);return-1!==i?n.locations[t(i)]:void 0},e=(e={})=>{const a=e.sideViews||1,o=[...Array(1+2*a)].map((n,t)=>t-a),r={index:e.index||0,targetIndex:e.index||0,isAnimating:!1,count:0,direction:"ltr",slots:o,sideViews:a},s=n=>({previous:({animate:i}={animate:!0})=>{n(n=>t(n)({index:n.index-1,animate:!1!==i}))},next:({animate:i}={animate:!0})=>{n(n=>t(n)({index:n.index+1,animate:!1!==i}))},goTo:({index:i,location:e,animate:a})=>{n(n=>{if(e){const i={location:e,animate:a};return(n=>i=>{if(!n.locations||0===n.locations.length)return n;let e=i.location.toString(),a=n.locations.indexOf(e);-1===a&&(a=0,e=n.locations[a]);const o=void 0!==n.location&&!1!==i.animate,r={...n,location:e},s={index:a,animate:o};return t(r)(s)})(n)(i)}if(void 0===i)return n;const o={index:i,animate:a};return t(n)(o)})},finalize:i=>{n(n=>t(n)({index:i,animate:!1}))},setCount:i=>{n(n=>t({...n,count:i})({index:n.index}))},setDirection:t=>{n(n=>({...n,direction:t}))},setLocations:t=>{n(n=>({...n,locations:t}))}}),d=n=>({hasNext:()=>{const t=n();return t.index<t.count-1},hasPrevious:()=>n().index>0,isAnimating:()=>n().isAnimating,getViewIndices:()=>{const t=n();return o.map(n=>{let i=n+t.index+0;return n<0&&t.targetIndex<t.index?i=n+t.targetIndex+1:n>0&&t.targetIndex>t.index&&(i=n+t.targetIndex-1),i})},getLocation:()=>{const t=n();return i(t)(n=>n)},getNextLocation:()=>{const t=n();return i(t)(n=>n+1)},getPreviousLocation:()=>{const t=n();return i(t)(n=>n-1)}}),c=mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()(),x=mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan((n,t)=>t(n),{...r},c),l={...s(c)},m={...d(x)},u=mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.scan((t,i)=>JSON.stringify(t,null,2)===JSON.stringify(i,null,2)?mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP:i,mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.SKIP,x);return{getState:x,getChanges:mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a.lift(n=>n,u),...l,...m}},a=n=>{const t=2*n.sideViews+1,i=100/t,e="rtl"===n.direction?1:-1;let a=e*i*(n.sideViews+0);return n.targetIndex>n.index?a=e*i*(n.sideViews+1):n.targetIndex<n.index&&(a=e*i*(n.sideViews-1)),{style:{width:`${100*t}%`,transform:`translateX(${a}%)`,...n.isAnimating?void 0:{transitionDuration:"0ms"}},className:n.isAnimating?"glissando-animating":""}};
+
+
+
+// eslint-disable-next-line import/no-unresolved
+const calculateNewIndex = (state, index) => {
+    if (index === undefined || Number.isNaN(index)) {
+        return {
+            newIndex: state.index,
+            shouldUpdate: false,
+        };
+    }
+    const newIndex = Math.min(index, state.count - 1);
+    const isValid = newIndex >= 0 && newIndex < state.count;
+    const shouldUpdate = isValid && newIndex !== state.index;
+    return {
+        newIndex,
+        shouldUpdate,
+    };
+};
+const setIndex = (state) => (change) => {
+    const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+    return shouldUpdate
+        ? {
+            ...state,
+            ...(change.animate ? undefined : { index: newIndex }),
+            targetIndex: newIndex,
+            isAnimating: !!change.animate,
+        }
+        : state;
+};
+const setLocation = (state) => (change) => {
+    if (!state.locations || state.locations.length === 0) {
+        return state;
+    }
+    let locationStr = change.location.toString();
+    let index = state.locations.indexOf(locationStr);
+    if (index === -1) {
+        // Location does not exist; default to first index
+        index = 0;
+        locationStr = state.locations[index];
+    }
+    const shouldAnimate = state.location === undefined
+        ? false // don't animate if we are setting the first location
+        : change.animate !== false;
+    const newState = {
+        ...state,
+        location: locationStr,
+    };
+    const indexChange = {
+        index,
+        animate: shouldAnimate,
+    };
+    return setIndex(newState)(indexChange);
+};
+const lookupLocation = (state) => (changeFn) => {
+    if (!state.locations || !state.location) {
+        return undefined;
+    }
+    const index = state.locations.indexOf(state.location);
+    if (index === -1) {
+        return undefined;
+    }
+    return state.locations[changeFn(index)];
+};
+const GlissandoModel = (props = {}) => {
+    const sideViews = props.sideViews || 1;
+    const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
+    const initialState = {
+        index: props.index || 0,
+        targetIndex: props.index || 0,
+        isAnimating: false,
+        count: 0,
+        direction: 'ltr',
+        slots,
+        sideViews,
+    };
+    const glissandoState = {
+        initialState,
+        actions: (update) => {
+            return {
+                previous: ({ animate } = { animate: true }) => {
+                    update((state) => {
+                        return setIndex(state)({
+                            index: state.index - 1,
+                            animate: animate !== false,
+                        });
+                    });
+                },
+                next: ({ animate } = { animate: true }) => {
+                    update((state) => {
+                        return setIndex(state)({
+                            index: state.index + 1,
+                            animate: animate !== false,
+                        });
+                    });
+                },
+                goTo: ({ index, location, animate, }) => {
+                    update((state) => {
+                        if (location) {
+                            const change = {
+                                location,
+                                animate,
+                            };
+                            return setLocation(state)(change);
+                        }
+                        if (index === undefined) {
+                            return state;
+                        }
+                        const change = {
+                            index,
+                            animate,
+                        };
+                        return setIndex(state)(change);
+                    });
+                },
+                finalize: (index) => {
+                    update((state) => {
+                        return setIndex(state)({
+                            index,
+                            animate: false,
+                        });
+                    });
+                },
+                setCount: (count) => {
+                    update((state) => {
+                        return setIndex({
+                            ...state,
+                            count,
+                        })({ index: state.index });
+                    });
+                },
+                setDirection: (direction) => {
+                    update((state) => {
+                        return {
+                            ...state,
+                            direction,
+                        };
+                    });
+                },
+                setLocations: (locations) => {
+                    update((state) => {
+                        return {
+                            ...state,
+                            locations,
+                        };
+                    });
+                },
+            };
+        },
+        selectors: (states) => {
+            return {
+                hasNext: () => {
+                    const state = states();
+                    return state.index < state.count - 1;
+                },
+                hasPrevious: () => {
+                    const state = states();
+                    return state.index > 0;
+                },
+                isAnimating: () => {
+                    const state = states();
+                    return state.isAnimating;
+                },
+                getViewIndices: () => {
+                    const state = states();
+                    return slots.map(slotIndex => {
+                        let index = slotIndex + state.index + 0;
+                        if (slotIndex < 0 && state.targetIndex < state.index) {
+                            index = slotIndex + state.targetIndex + 1;
+                        }
+                        else if (slotIndex > 0 && state.targetIndex > state.index) {
+                            index = slotIndex + state.targetIndex - 1;
+                        }
+                        return index;
+                    });
+                },
+                getLocation: () => {
+                    const state = states();
+                    return lookupLocation(state)(index => index);
+                },
+                getNextLocation: () => {
+                    const state = states();
+                    return lookupLocation(state)(index => index + 1);
+                },
+                getPreviousLocation: () => {
+                    const state = states();
+                    return lookupLocation(state)(index => index - 1);
+                },
+            };
+        },
+    };
+    const update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
+    const states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().scan((state, patch) => patch(state), {
+        ...glissandoState.initialState,
+    }, update);
+    const actions = {
+        ...glissandoState.actions(update),
+    };
+    const selectors = {
+        ...glissandoState.selectors(states),
+    };
+    const changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().scan((state, value) => JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+        ? (mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().SKIP)
+        : value, (mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().SKIP), states);
+    const getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().lift(value => value, changedStates);
+    return {
+        getState: states,
+        getChanges,
+        ...actions,
+        ...selectors,
+    };
+};
+
+const getSliderStyle = (state) => {
+    const slotCount = 2 * state.sideViews + 1;
+    const slotWidth = 100 / slotCount;
+    const direction = state.direction === 'rtl' ? 1 : -1;
+    let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
+    if (state.targetIndex > state.index) {
+        sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
+    }
+    else if (state.targetIndex < state.index) {
+        sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
+    }
+    const style = {
+        width: `${slotCount * 100}%`,
+        transform: `translateX(${sliderTranslateX}%)`,
+        ...(!state.isAnimating
+            ? {
+                transitionDuration: '0ms',
+            }
+            : undefined),
+    };
+    const className = state.isAnimating ? 'glissando-animating' : '';
+    return { style, className };
+};
+
+
 
 
 /***/ }),
@@ -716,10 +722,9 @@ const t=n=>t=>{const{newIndex:i,shouldUpdate:e}=((n,t)=>{if(void 0===t||Number.i
 /*!******************************************!*\
   !*** ../node_modules/mithril/mithril.js ***!
   \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(setImmediate, global) {;(function() {
+;(function() {
 "use strict"
 function Vnode(tag, key, attrs0, children0, text, dom) {
 	return {tag: tag, key: key, attrs: attrs0, children: children0, text: text, dom: dom, domSize: undefined, state: undefined, events: undefined, instance: undefined}
@@ -996,13 +1001,13 @@ if (typeof window !== "undefined") {
 		window.Promise.prototype.finally = PromisePolyfill.prototype.finally
 	}
 	var PromisePolyfill = window.Promise
-} else if (typeof global !== "undefined") {
-	if (typeof global.Promise === "undefined") {
-		global.Promise = PromisePolyfill
-	} else if (!global.Promise.prototype.finally) {
-		global.Promise.prototype.finally = PromisePolyfill.prototype.finally
+} else if (typeof __webpack_require__.g !== "undefined") {
+	if (typeof __webpack_require__.g.Promise === "undefined") {
+		__webpack_require__.g.Promise = PromisePolyfill
+	} else if (!__webpack_require__.g.Promise.prototype.finally) {
+		__webpack_require__.g.Promise.prototype.finally = PromisePolyfill.prototype.finally
 	}
-	var PromisePolyfill = global.Promise
+	var PromisePolyfill = __webpack_require__.g.Promise
 } else {
 }
 var _12 = function($window) {
@@ -2561,7 +2566,6 @@ m.PromisePolyfill = PromisePolyfill
 if (true) module["exports"] = m
 else {}
 }());
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../node_modules/timers-browserify/main.js */ "../../../node_modules/timers-browserify/main.js").setImmediate, __webpack_require__(/*! ./../../../../node_modules/webpack/buildin/global.js */ "../../../node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -2569,8 +2573,7 @@ else {}
 /*!************************************************!*\
   !*** ../node_modules/mithril/stream/stream.js ***!
   \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module) {
 
 /* eslint-disable */
 ;(function() {
@@ -2752,372 +2755,91 @@ else {}
 }());
 
 
-/***/ }),
-
-/***/ "./App.ts":
-/*!****************!*\
-  !*** ./App.ts ***!
-  \****************/
-/*! exports provided: App */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "App", function() { return App; });
-/* harmony import */ var glissando_mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril */ "../../glissando-mithril/dist/glissando-mithril.mjs");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ "./Header.ts");
-/* harmony import */ var _Listing__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Listing */ "./Listing.ts");
-/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./User */ "./User.ts");
-/* harmony import */ var _UserDetails__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./UserDetails */ "./UserDetails.ts");
-/* harmony import */ var _users__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./users */ "./users.ts");
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __spreadArrays = (undefined && undefined.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
-
-
-
-
-
-
-
-var trailToBreadCrumb = function (trail) {
-    return trail.reduce(function (acc, path, index) {
-        var _a;
-        return (__assign(__assign({}, acc), (_a = {}, _a[index.toString()] = path, _a)));
-    }, {});
-};
-var createBreadCrumb = function (route) {
-    return route
-        .slice(1)
-        .split('/')
-        .map(function (fragment) { return "/" + fragment; })
-        .reduce(function (acc, fragment) {
-        var previousPath = acc[acc.length - 1];
-        var path = previousPath ? previousPath + fragment : fragment;
-        return __spreadArrays(acc, [path]);
-    }, []);
-};
-var Slider = function () {
-    // Store the user so that the page can be shown while sliding back to the overview
-    var localState = {
-        user: '',
-    };
-    return {
-        view: function (_a) {
-            var attrs = _a.attrs;
-            var model = attrs.model;
-            if (mithril__WEBPACK_IMPORTED_MODULE_1___default.a.route.param('user')) {
-                localState.user = mithril__WEBPACK_IMPORTED_MODULE_1___default.a.route.param('user');
-            }
-            /*
-            Support starting from a deeper route (a User or UserDetails page).
-            When starting from there, we don't have any locations stored in the Glissando model yet.
-            To know which pages come before we create a breadcrumb from the current route to know which pages should be shown.
-            */
-            var breadcrumb = createBreadCrumb(mithril__WEBPACK_IMPORTED_MODULE_1___default.a.route.get());
-            /*
-            We use the stored locations to know which pages should be shown after
-            (so that when sliding back the pages don't disappear).
-            Then combine all collected data.
-            */
-            var storedLocations = model.getState().locations || [];
-            var merged = __assign(__assign({}, trailToBreadCrumb(storedLocations)), trailToBreadCrumb(breadcrumb));
-            var pages = Object.keys(merged).map(function (key) { return merged[key]; });
-            var currentPage = pages[breadcrumb.length - 1];
-            return mithril__WEBPACK_IMPORTED_MODULE_1___default()(glissando_mithril__WEBPACK_IMPORTED_MODULE_0__["GlissandoSlider"], {
-                model: model,
-                locations: pages,
-                location: currentPage,
-            }, pages.map(function (_, index) {
-                switch (index) {
-                    case 0:
-                        return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_Listing__WEBPACK_IMPORTED_MODULE_3__["Listing"], { users: _users__WEBPACK_IMPORTED_MODULE_6__["default"] });
-                    case 1:
-                        return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_User__WEBPACK_IMPORTED_MODULE_4__["User"], {
-                            user: localState.user,
-                        });
-                    case 2:
-                        return mithril__WEBPACK_IMPORTED_MODULE_1___default()(_UserDetails__WEBPACK_IMPORTED_MODULE_5__["UserDetails"], {
-                            user: localState.user,
-                        });
-                    default:
-                        return null;
-                }
-            }));
-        },
-    };
-};
-var App = function () {
-    var model = Object(glissando_mithril__WEBPACK_IMPORTED_MODULE_0__["useGlissandoModel"])();
-    return {
-        view: function () {
-            return [mithril__WEBPACK_IMPORTED_MODULE_1___default()(_Header__WEBPACK_IMPORTED_MODULE_2__["Header"], { model: model }), mithril__WEBPACK_IMPORTED_MODULE_1___default()(Slider, { model: model })];
-        },
-    };
-};
-
-
-/***/ }),
-
-/***/ "./Header.ts":
-/*!*******************!*\
-  !*** ./Header.ts ***!
-  \*******************/
-/*! exports provided: Header */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Header", function() { return Header; });
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
-
-var Header = {
-    view: function (_a) {
-        var attrs = _a.attrs;
-        var model = attrs.model;
-        var isAnimating = model.isAnimating, getLocation = model.getLocation, getPreviousLocation = model.getPreviousLocation;
-        var location = getLocation();
-        var previousLocation = getPreviousLocation();
-        var goPrevious = function () {
-            if (previousLocation) {
-                mithril__WEBPACK_IMPORTED_MODULE_0___default.a.route.set(previousLocation);
-            }
-        };
-        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('header', {
-            className: 'bar bar-nav',
-        }, [
-            mithril__WEBPACK_IMPORTED_MODULE_0___default()('button', {
-                type: 'button',
-                className: 'btn btn-link btn-nav pull-left',
-                tabIndex: 0,
-                disabled: !previousLocation || isAnimating(),
-                onclick: goPrevious,
-                onkeyup: goPrevious,
-            }, [
-                mithril__WEBPACK_IMPORTED_MODULE_0___default()('span', {
-                    className: 'icon icon-left-nav',
-                }),
-                mithril__WEBPACK_IMPORTED_MODULE_0___default()('span', 'Back'),
-            ]),
-            mithril__WEBPACK_IMPORTED_MODULE_0___default()('h1', {
-                className: 'title',
-            }, location),
-        ]);
-    },
-};
-
-
-/***/ }),
-
-/***/ "./Listing.ts":
-/*!********************!*\
-  !*** ./Listing.ts ***!
-  \********************/
-/*! exports provided: Listing */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Listing", function() { return Listing; });
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
-
-var Listing = {
-    view: function (_a) {
-        var attrs = _a.attrs;
-        var users = attrs.users;
-        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('.content', mithril__WEBPACK_IMPORTED_MODULE_0___default()('ul.table-view', users.map(function (name) {
-            var personRoute = "/users/" + name;
-            return mithril__WEBPACK_IMPORTED_MODULE_0___default()('li.table-view-cell media', mithril__WEBPACK_IMPORTED_MODULE_0___default()(mithril__WEBPACK_IMPORTED_MODULE_0___default.a.route.Link, {
-                href: personRoute,
-                class: 'navigate-right',
-            }, name));
-        })));
-    },
-};
-
-
-/***/ }),
-
-/***/ "./User.ts":
-/*!*****************!*\
-  !*** ./User.ts ***!
-  \*****************/
-/*! exports provided: User */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "User", function() { return User; });
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
-
-var User = {
-    view: function (_a) {
-        var attrs = _a.attrs;
-        var user = attrs.user;
-        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('.content', user &&
-            mithril__WEBPACK_IMPORTED_MODULE_0___default()('.user-page', [
-                mithril__WEBPACK_IMPORTED_MODULE_0___default()('.user-first-letter', user[0]),
-                mithril__WEBPACK_IMPORTED_MODULE_0___default()(mithril__WEBPACK_IMPORTED_MODULE_0___default.a.route.Link, {
-                    className: 'user-details-link',
-                    href: "/users/" + user + "/details",
-                }, "More about " + user),
-            ]));
-    },
-};
-
-
-/***/ }),
-
-/***/ "./UserDetails.ts":
-/*!************************!*\
-  !*** ./UserDetails.ts ***!
-  \************************/
-/*! exports provided: UserDetails */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserDetails", function() { return UserDetails; });
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_0__);
-
-var UserDetails = {
-    view: function (_a) {
-        var attrs = _a.attrs;
-        var user = attrs.user;
-        return mithril__WEBPACK_IMPORTED_MODULE_0___default()('.content', mithril__WEBPACK_IMPORTED_MODULE_0___default()('.details', user + " Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."));
-    },
-};
-
-
-/***/ }),
-
-/***/ "./index.ts":
-/*!******************!*\
-  !*** ./index.ts ***!
-  \******************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando-mithril/dist/glissando.min.css */ "../../glissando-mithril/dist/glissando.min.css");
-/* harmony import */ var glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(glissando_mithril_dist_glissando_min_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mithril */ "../node_modules/mithril/mithril.js");
-/* harmony import */ var mithril__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mithril__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./App.ts");
-
-
-
-
-// m.route.prefix = '';
-var rootElement = document.getElementById('root');
-if (rootElement) {
-    mithril__WEBPACK_IMPORTED_MODULE_2___default.a.route(document.body, '/users', {
-        '/users': _App__WEBPACK_IMPORTED_MODULE_3__["App"],
-        '/users/:user': _App__WEBPACK_IMPORTED_MODULE_3__["App"],
-        '/users/:user/details': _App__WEBPACK_IMPORTED_MODULE_3__["App"],
-    });
-}
-
-
-/***/ }),
-
-/***/ "./styles.css":
-/*!********************!*\
-  !*** ./styles.css ***!
-  \********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "./users.ts":
-/*!******************!*\
-  !*** ./users.ts ***!
-  \******************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ([
-    'Alexis',
-    'Armand',
-    'Bastian',
-    'Betty',
-    'Caroline',
-    'Colin',
-    'Danny',
-    'Denise',
-    'Elsa',
-    'Eric',
-    'Ferdinand',
-    'Francesca',
-    'Grace',
-    'Guy',
-    'Hannah',
-    'Harold',
-    'Irene',
-    'Isac',
-    'Jackie',
-    'Javier',
-    'Kai',
-    'Kate',
-    'Laureen',
-    'Lucas',
-    'Madelyn',
-    'Marc',
-    'Nadine',
-    'Nic',
-    'Olive',
-    'Oscar',
-    'Paula',
-    'Pierre',
-    'Rebecca',
-    'Rob',
-    'Sander',
-    'Sara',
-    'Tim',
-    'Tina',
-    'Ulysse',
-    'Una',
-    'Vera',
-    'Vincent',
-    'Wendy',
-    'William',
-    'Yanis',
-    'Yvonne',
-    'Zac',
-    'Zoe',
-]);
-
-
 /***/ })
 
-/******/ });
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	!function() {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	!function() {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = function(exports) {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+/******/ 	// startup
+/******/ 	// Load entry module
+/******/ 	__webpack_require__("./index.ts");
+/******/ 	// This entry module used 'exports' so it can't be inlined
+/******/ })()
+;
 //# sourceMappingURL=index.js.map

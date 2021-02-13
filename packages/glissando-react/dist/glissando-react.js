@@ -1,5 +1,5 @@
 !(function (e, t) {
-  typeof exports === 'object' && typeof module !== 'undefined'
+  'object' == typeof exports && 'undefined' != typeof module
     ? t(
         exports,
         require('glissando'),
@@ -7,7 +7,7 @@
         require('use-stream'),
         require('@huse/effect-ref'),
       )
-    : typeof define === 'function' && define.amd
+    : 'function' == typeof define && define.amd
     ? define([
         'exports',
         'glissando',
@@ -16,50 +16,57 @@
         '@huse/effect-ref',
       ], t)
     : t(
-        ((e = e || self).glissandoReact = {}),
+        ((e =
+          'undefined' != typeof globalThis
+            ? globalThis
+            : e || self).glissandoReact = {}),
         e.glissando,
         e.React,
         e.useStream,
         e.effectRef,
       );
-})(this, function (e, N, h, n, q) {
-  const x = 'default' in h ? h.default : h;
+})(this, function (e, y, p, n, S) {
+  'use strict';
+  function t(e) {
+    return e && 'object' == typeof e && 'default' in e ? e : { default: e };
+  }
+  var E = t(p);
   (e.GlissandoSlider = function (e) {
-    const t = e.model;
-    const n = e.children;
-    const i = e.locations;
-    const s = e.location;
-    const r = h.useState();
-    const o = r[0];
-    const a = r[1];
-    const u = t.getState;
-    const f = t.finalize;
-    const c = t.setCount;
-    const l = t.setDirection;
-    const d = t.getViewIndices;
-    const g = t.setLocations;
-    const m = t.goTo;
-    h.useEffect(
+    var t = e.model,
+      n = e.children,
+      i = e.locations,
+      s = e.location,
+      o = p.useState(),
+      r = o[0],
+      a = o[1],
+      u = t.getState,
+      f = t.finalize,
+      l = t.setCount,
+      c = t.setDirection,
+      d = t.getViewIndices,
+      g = t.setLocations,
+      m = t.goTo;
+    p.useEffect(
       function () {
-        const e = (n || []).length;
-        e !== u().count && c(e);
+        var e = (n || []).length;
+        e !== u().count && l(e);
       },
-      [n, u, c],
+      [n, u, l],
     ),
-      h.useEffect(
+      p.useEffect(
         function () {
           i && JSON.stringify(i) !== JSON.stringify(u().locations) && g(i);
         },
         [i],
       ),
-      h.useEffect(
+      p.useEffect(
         function () {
           s && s !== u().location && m({ location: s });
         },
         [s],
       );
-    const v = h.useCallback(function (e) {
-      if (e === null) return null;
+    var v = p.useCallback(function (e) {
+      if (null === e) return null;
       a(e);
       function t(e) {
         f(u().targetIndex);
@@ -71,28 +78,26 @@
         }
       );
     }, []);
-    h.useEffect(
+    p.useEffect(
       function () {
-        let e;
-        !o || ((e = getComputedStyle(o).direction) !== u().direction && l(e));
+        var e;
+        !r || ((e = getComputedStyle(r).direction) !== u().direction && c(e));
       },
       [e],
     );
-    const S = q.useEffectRef(function (e) {
+    o = S.useEffectRef(function (e) {
       return v(e);
     });
     if (!n) return null;
-    const y = N.getSliderStyle(u());
-    const p = y.className;
-    const E = y.style;
-    return x.createElement(
+    (t = y.getSliderStyle(u())), (e = t.className), (t = t.style);
+    return E.default.createElement(
       'div',
       { className: 'glissando' },
-      x.createElement(
+      E.default.createElement(
         'div',
-        { className: `glissando-slider ${p}`, style: E, ref: S },
+        { className: 'glissando-slider ' + e, style: t, ref: o },
         d().map(function (e) {
-          return x.createElement(
+          return E.default.createElement(
             'div',
             { key: e, className: 'glissando-page' },
             n[e],
@@ -102,10 +107,10 @@
     );
   }),
     (e.useGlissandoModel = function (e) {
-      const t = h.useState(N.GlissandoModel(e))[0];
+      var t = p.useState(y.GlissandoModel(e))[0];
       return (
         n.useStream({
-          model() {
+          model: function () {
             return { _: t.getState };
           },
           defer: !0,

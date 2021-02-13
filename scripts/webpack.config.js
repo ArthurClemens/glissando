@@ -60,11 +60,6 @@ module.exports = {
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              modules: true,
-              sourceMap: true,
-              localIdentName: '[local]',
-            },
           },
           'css-loader',
         ],

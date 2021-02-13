@@ -9,8 +9,7 @@ body {
 }
 
 .demo-container {
-  width: 100%;
-  max-width: 460px;
+  width: 375px;
   margin: 0 auto;
 }
 

@@ -15,10 +15,11 @@
     "build:css:minify": "../../node_modules/postcss-cli/bin/postcss ./styles/glissando.css > dist/glissando.min.css",
     "build:prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./dist/*.js\"",
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
-    "test": "react-scripts test --env=jsdom",
+    "test": "true",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
     "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{js,jsx,ts,tsx}\"",
-    "fix": "yarn run lint --fix && yarn run prettier"
+    "fix": "yarn run lint --fix && yarn run prettier",
+    "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "files": [
     "dist",
@@ -29,7 +30,7 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "@types/mithril": "2.0.3",
+    "@types/mithril": "2.0.6",
     "mithril": "2.0.4"
   }
 }

@@ -1,59 +1,70 @@
 !(function (e, t) {
-  typeof exports === 'object' && typeof module !== 'undefined'
+  'object' == typeof exports && 'undefined' != typeof module
     ? t(exports, require('glissando'), require('mithril'))
-    : typeof define === 'function' && define.amd
+    : 'function' == typeof define && define.amd
     ? define(['exports', 'glissando', 'mithril'], t)
-    : t(((e = e || self).glissandoMithril = {}), e.glissando, e.m);
-})(this, function (e, a, g) {
-  g = g && Object.prototype.hasOwnProperty.call(g, 'default') ? g.default : g;
+    : t(
+        ((e =
+          'undefined' != typeof globalThis
+            ? globalThis
+            : e || self).glissandoMithril = {}),
+        e.glissando,
+        e.m,
+      );
+})(this, function (e, u, t) {
+  'use strict';
+  function n(e) {
+    return e && 'object' == typeof e && 'default' in e ? e : { default: e };
+  }
+  var f = n(t);
   (e.GlissandoSlider = function (e) {
-    function r(e) {
-      n(l().targetIndex);
+    function i(e) {
+      t(o().targetIndex);
     }
-    const t = e.attrs.model;
-    var l = t.getState;
-    var n = t.finalize;
-    const d = t.setCount;
-    const c = t.setDirection;
-    const s = t.getViewIndices;
-    const u = t.goTo;
-    const f = t.setLocations;
+    var e = e.attrs.model,
+      o = e.getState,
+      t = e.finalize,
+      r = e.setCount,
+      s = e.setDirection,
+      a = e.getViewIndices,
+      l = e.goTo,
+      d = e.setLocations;
     return {
-      onupdate(e) {
-        const t = e.dom;
-        const n = e.children;
-        const i = e.attrs;
-        const o = i.locations;
-        const r = i.location;
-        const s = n.length;
-        s !== l().count && d(s),
-          o && JSON.stringify(o) !== JSON.stringify(l().locations) && f(o),
-          r && r !== l().location && u({ location: r });
-        const a = getComputedStyle(t).direction;
-        a !== l().direction && c(a);
+      onupdate: function (e) {
+        var t = e.dom,
+          n = e.children,
+          i = e.attrs,
+          e = i.locations,
+          i = i.location,
+          n = n.length;
+        n !== o().count && r(n),
+          e && JSON.stringify(e) !== JSON.stringify(o().locations) && d(e),
+          i && i !== o().location && l({ location: i });
+        t = getComputedStyle(t).direction;
+        t !== o().direction && s(t);
       },
-      view(e) {
-        const t = e.children;
+      view: function (e) {
+        var t = e.children;
         if (!t) return null;
-        const n = a.getSliderStyle(l());
-        const i = n.className;
-        const o = n.style;
-        return g(
+        var n = u.getSliderStyle(o()),
+          e = n.className,
+          n = n.style;
+        return f.default(
           '.glissando',
-          g(
+          f.default(
             '.glissando-slider',
             {
-              oncreate(e) {
-                e.dom.addEventListener('transitionend', r);
+              oncreate: function (e) {
+                e.dom.addEventListener('transitionend', i);
               },
-              onremove(e) {
-                e.dom.removeEventListener('transitionend', r);
+              onremove: function (e) {
+                e.dom.removeEventListener('transitionend', i);
               },
-              className: i,
-              style: o,
+              className: e,
+              style: n,
             },
-            s().map(function (e) {
-              return g('.glissando-page', t[e]);
+            a().map(function (e) {
+              return f.default('.glissando-page', t[e]);
             }),
           ),
         );
@@ -61,8 +72,8 @@
     };
   }),
     (e.useGlissandoModel = function () {
-      const e = a.GlissandoModel();
-      return e.getState.map(g.redraw), e;
+      var e = u.GlissandoModel();
+      return e.getState.map(f.default.redraw), e;
     }),
     Object.defineProperty(e, '__esModule', { value: !0 });
 });
