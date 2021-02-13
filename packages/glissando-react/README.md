@@ -56,7 +56,7 @@ Use the slider component. Pass the model as a prop and the pages as children.
   <Page1 />
   <Page2 />
   <Page3 />
-  {/* ... add as many as needed */}
+  {/* ... add as many as needed - only 3 will be rendered */}
 </GlissandoSlider>
 ```
 
@@ -157,4 +157,4 @@ const Header = ({ model }) => {
 
 ## Size
 
-2.69 KB with all dependencies, minified and gzipped
+2.8 KB with all dependencies, minified and gzipped

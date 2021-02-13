@@ -56,7 +56,7 @@ m(GlissandoSlider, { model }, [
   m(Page1),
   m(Page2),
   m(Page3),
-  // ... add as many as needed
+  // ... add as many as needed - only 3 will be rendered
 ])
 ```
 
