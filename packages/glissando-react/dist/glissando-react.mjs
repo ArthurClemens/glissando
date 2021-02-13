@@ -16,7 +16,7 @@ const useGlissandoModel = (initialState) => {
 };
 
 const GlissandoSlider = (props) => {
-    const { model, children, locations, location, } = props;
+    const { model, children, locations, location } = props;
     const [sliderNode, setSliderNode] = useState();
     const { getState, finalize, setCount, setDirection, getViewIndices, setLocations, goTo, } = model;
     // Child count

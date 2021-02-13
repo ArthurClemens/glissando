@@ -1,12 +1,6 @@
 import { useEffectRef } from '@huse/effect-ref';
 import { getSliderStyle, Glissando } from 'glissando';
-import React, {
-  RefCallback,
-  useCallback,
-  useEffect,
-  useState,
-  // eslint-disable-next-line import/no-unresolved
-} from 'react';
+import React, { RefCallback, useCallback, useEffect, useState } from 'react';
 
 import { GlissandoSliderProps } from '../index';
 

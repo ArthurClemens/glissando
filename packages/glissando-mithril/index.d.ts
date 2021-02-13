@@ -1,5 +1,4 @@
 import { Glissando } from 'glissando';
-// eslint-disable-next-line import/no-unresolved
 import { ClosureComponent } from 'mithril';
 
 export interface Attrs {
@@ -8,7 +7,7 @@ export interface Attrs {
   locations?: string[];
 }
 
-type GlissandoSlider = ClosureComponent<Attrs>;
+export type TGlissandoSlider = ClosureComponent<Attrs>;
 declare const GlissandoSlider: ClosureComponent<Attrs>;
 
 export { GlissandoSlider };

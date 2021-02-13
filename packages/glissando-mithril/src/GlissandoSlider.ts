@@ -1,8 +1,7 @@
 import { getSliderStyle, Glissando } from 'glissando';
-// eslint-disable-next-line import/no-unresolved
 import m from 'mithril';
 
-import { GlissandoSlider as TGlissandoSlider } from '../index';
+import type { TGlissandoSlider } from '../index';
 
 export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   const { model } = initialVnode.attrs;

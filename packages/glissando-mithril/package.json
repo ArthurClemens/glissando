@@ -43,6 +43,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.2",
     "@types/mithril": "^2.0.6",
+    "mithril": ">=2.0.4",
     "size-limit": "^4.9.2"
   }
 }
