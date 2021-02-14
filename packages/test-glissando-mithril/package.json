@@ -1,6 +1,6 @@
 {
   "name": "test-glissando-mithril",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "private": true,
   "description": "",
   "keywords": [],
@@ -19,7 +19,7 @@
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "dependencies": {
-    "glissando-mithril": "^0.7.3",
+    "glissando-mithril": "^0.7.4",
     "mithril": "2.0.4"
   },
   "devDependencies": {
