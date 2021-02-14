@@ -40,7 +40,7 @@ Import the component and model factory and slider CSS:
 
 ```js
 import { GlissandoSlider, useGlissandoModel } from 'glissando-react'
-import 'glissando-react/dist/glissando.min.css'
+import 'glissando-react/dist/glissando.global.min.css'
 ```
 
 Create a new model instance:
@@ -157,4 +157,4 @@ const Header = ({ model }) => {
 
 ## Size
 
-2.8 KB with all dependencies, minified and gzipped
+2.82 KB with all dependencies, minified and gzipped

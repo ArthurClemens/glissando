@@ -27,7 +27,13 @@ For React and Mithril.
   - [Slider component](#slider-component)
     - [Options](#options)
     - [With React](#with-react)
+      - [Standalone use](#standalone-use-1)
+      - [Directed use](#directed-use-1)
+      - [CSS](#css)
     - [With Mithril](#with-mithril)
+      - [Standalone use](#standalone-use-2)
+      - [Directed use](#directed-use-2)
+      - [CSS](#css-1)
 - [RTL support](#rtl-support)
 - [Supported browsers](#supported-browsers)
 - [License](#license)
@@ -342,7 +348,7 @@ Children can be changed dynamically.
 
 #### With React
 
-**Standalone use**
+##### Standalone use
 
 ```jsx
 import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
@@ -356,7 +362,7 @@ const model = useGlissandoModel();
 </GlissandoSlider>
 ```
 
-**Directed use**
+##### Directed use
 
 ```tsx
 const pages = ["page-1", "page-2", "page-3"];
@@ -377,10 +383,24 @@ const Slider = () => {
 
 See also: [Glissando usage with React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md)
 
+##### CSS
+
+Import GlissandoSlider CSS in your project: 
+
+```jsx
+import 'glissando-react/dist/glissando.min.css'
+```
+
+Or when using PostCSS:
+
+```jsx
+import 'glissando-react/dist/glissando.global.min.css'
+```
+
 
 #### With Mithril
 
-**Standalone use**
+##### Standalone use
 
 ```javascript
 import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril';
@@ -394,7 +414,7 @@ m(GlissandoSlider, { model }, [
 ]);
 ```
 
-**Directed use**
+##### Directed use
 
 ```ts
 const pages = ["page-1", "page-2", "page-3"];
@@ -424,7 +444,19 @@ const Slider = {
 
 See also: [Glissando usage with Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md)
 
+##### CSS
 
+Import GlissandoSlider CSS in your project: 
+
+```js
+import 'glissando-mithril/dist/glissando.min.css'
+```
+
+Or when using PostCSS:
+
+```js
+import 'glissando-mithril/dist/glissando.global.min.css'
+```
 
 ## RTL support
 

@@ -40,7 +40,7 @@ Import the component and model factory and slider CSS:
 
 ```js
 import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril'
-import 'glissando-mithril/dist/glissando.min.css'
+import 'glissando-mithril/dist/glissando.global.min.css'
 ```
 
 Create a new model instance:
@@ -92,7 +92,7 @@ Control the slider with methods and query its state using selectors:
 
 ```js
 import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril'
-import 'glissando-mithril/dist/glissando.min.css'
+import 'glissando-mithril/dist/glissando.global.min.css'
 import { Page1, Page2, Page3 } from './pages'
 
 const Slider = () => {
@@ -218,4 +218,4 @@ const Header: m.Component<TProps> = {
 
 ## Size
 
-1.32 KB with all dependencies, minified and gzipped
+1.33 KB with all dependencies, minified and gzipped
