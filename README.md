@@ -245,7 +245,7 @@ _State_
 Returns the state object.
 
 ```typescript
-const state: Glissando.States = model.getState();
+const state: Glissando.State = model.getState();
 const index: number = model.getState().index;
 ```
 
