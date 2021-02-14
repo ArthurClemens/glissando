@@ -12,7 +12,7 @@ export const getSliderStyle = (state: Glissando.State) => {
   }
 
   const style = {
-    width: `${slotCount * 100}%`,
+    width: `calc(${slotCount} * calc(100%))`,
     transform: `translateX(${sliderTranslateX}%)`,
     ...(!state.isAnimating
       ? {
