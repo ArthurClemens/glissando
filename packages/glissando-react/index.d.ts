@@ -6,6 +6,7 @@ export interface GlissandoSliderProps {
   children: ReactNode[];
   locations?: string[];
   location?: string;
+  className?: string;
 }
 
 export const GlissandoSlider: FunctionComponent<GlissandoSliderProps>;

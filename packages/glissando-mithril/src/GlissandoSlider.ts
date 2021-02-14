@@ -49,14 +49,15 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
         setDirection(direction as Glissando.Direction);
       }
     },
-    view: ({ children }) => {
+    view: ({ children, attrs }) => {
       if (!children) {
         return null;
       }
+      const { className: sliderClassName } = attrs;
       const { className, style } = getSliderStyle(getState());
 
       return m(
-        '.glissando',
+        `.glissando ${sliderClassName}`,
         m(
           '.glissando-slider',
           {

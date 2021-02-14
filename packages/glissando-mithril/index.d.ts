@@ -5,6 +5,7 @@ export interface Attrs {
   model: Glissando.Model;
   location?: string;
   locations?: string[];
+  className?: string;
 }
 
 export type TGlissandoSlider = ClosureComponent<Attrs>;

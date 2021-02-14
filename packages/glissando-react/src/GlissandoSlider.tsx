@@ -5,7 +5,13 @@ import React, { RefCallback, useCallback, useEffect, useState } from 'react';
 import { GlissandoSliderProps } from '../index';
 
 export const GlissandoSlider = (props: GlissandoSliderProps) => {
-  const { model, children, locations, location } = props;
+  const {
+    model,
+    children,
+    locations,
+    location,
+    className: sliderClassName,
+  } = props;
   const [sliderNode, setSliderNode] = useState<HTMLDivElement>();
   const {
     getState,
@@ -88,7 +94,7 @@ export const GlissandoSlider = (props: GlissandoSliderProps) => {
   const { className, style } = getSliderStyle(getState());
 
   return (
-    <div className="glissando">
+    <div className={['glissando', sliderClassName].join(' ')}>
       <div
         className={`glissando-slider ${className}`}
         style={style}
