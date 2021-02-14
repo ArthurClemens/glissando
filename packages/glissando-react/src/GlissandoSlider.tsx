@@ -1,10 +1,22 @@
 import { useEffectRef } from '@huse/effect-ref';
 import { getSliderStyle, Glissando } from 'glissando';
-import React, { RefCallback, useCallback, useEffect, useState } from 'react';
+import React, {
+  RefCallback,
+  useCallback,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
 
-import { GlissandoSliderProps } from '../index';
+type Props = {
+  model: Glissando.Model;
+  children: ReactNode[];
+  locations?: string[];
+  location?: string;
+  className?: string;
+};
 
-export const GlissandoSlider = (props: GlissandoSliderProps) => {
+export const GlissandoSlider = (props: Props) => {
   const {
     model,
     children,
@@ -54,7 +66,7 @@ export const GlissandoSlider = (props: GlissandoSliderProps) => {
   const observeTransitionEnd: RefCallback<HTMLDivElement> = useCallback(
     (node: HTMLDivElement) => {
       if (node === null) {
-        return null;
+        return <></>;
       }
       setSliderNode(node);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -88,7 +100,7 @@ export const GlissandoSlider = (props: GlissandoSliderProps) => {
   );
 
   if (!children) {
-    return null;
+    return <></>;
   }
 
   const { className, style } = getSliderStyle(getState());

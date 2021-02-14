@@ -157,4 +157,4 @@ const Header = ({ model }) => {
 
 ## Size
 
-2.82 KB with all dependencies, minified and gzipped
+2.86 KB with all dependencies, minified and gzipped

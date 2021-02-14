@@ -25,90 +25,103 @@
         e.useStream,
         e.effectRef,
       );
-})(this, function (e, p, S, n, E) {
+})(this, function (e, p, v, n, E) {
   'use strict';
   function t(e) {
     return e && 'object' == typeof e && 'default' in e ? e : { default: e };
   }
-  var h = t(S);
-  (e.GlissandoSlider = function (e) {
-    var t = e.model,
-      n = e.children,
-      i = e.locations,
-      s = e.location,
-      o = e.className,
-      r = S.useState(),
-      a = r[0],
-      u = r[1],
-      f = t.getState,
-      l = t.finalize,
-      c = t.setCount,
-      d = t.setDirection,
-      g = t.getViewIndices,
-      m = t.setLocations,
-      v = t.goTo;
-    S.useEffect(
-      function () {
-        var e = (n || []).length;
-        e !== f().count && c(e);
-      },
-      [n, f, c],
-    ),
-      S.useEffect(
-        function () {
-          i && JSON.stringify(i) !== JSON.stringify(f().locations) && m(i);
-        },
-        [i],
-      ),
-      S.useEffect(
-        function () {
-          s && s !== f().location && v({ location: s });
-        },
-        [s],
-      );
-    var y = S.useCallback(function (e) {
-      if (null === e) return null;
-      u(e);
-      function t(e) {
-        l(f().targetIndex);
-      }
-      return (
-        e.addEventListener('transitionend', t),
-        function () {
-          e.removeEventListener('transitionend', t);
-        }
-      );
-    }, []);
-    S.useEffect(
-      function () {
-        var e;
-        !a || ((e = getComputedStyle(a).direction) !== f().direction && d(e));
-      },
-      [e],
-    );
-    r = E.useEffectRef(function (e) {
-      return y(e);
-    });
-    if (!n) return null;
-    (t = p.getSliderStyle(f())), (e = t.className), (t = t.style);
-    return h.default.createElement(
-      'div',
-      { className: ['glissando', o].join(' ') },
-      h.default.createElement(
-        'div',
-        { className: 'glissando-slider ' + e, style: t, ref: r },
-        g().map(function (e) {
-          return h.default.createElement(
-            'div',
-            { key: e, className: 'glissando-page' },
-            n[e],
-          );
-        }),
-      ),
-    );
+  var b = t(v);
+  Object.defineProperty(e, 'GlissandoModel', {
+    enumerable: !0,
+    get: function () {
+      return p.GlissandoModel;
+    },
   }),
+    Object.defineProperty(e, 'getSliderStyle', {
+      enumerable: !0,
+      get: function () {
+        return p.getSliderStyle;
+      },
+    }),
+    (e.GlissandoSlider = function (e) {
+      var t = e.model,
+        n = e.children,
+        i = e.locations,
+        r = e.location,
+        a = e.className,
+        o = v.useState(),
+        s = o[0],
+        l = o[1],
+        u = t.getState,
+        f = t.finalize,
+        c = t.setCount,
+        d = t.setDirection,
+        g = t.getViewIndices,
+        m = t.setLocations,
+        y = t.goTo;
+      v.useEffect(
+        function () {
+          var e = (n || []).length;
+          e !== u().count && c(e);
+        },
+        [n, u, c],
+      ),
+        v.useEffect(
+          function () {
+            i && JSON.stringify(i) !== JSON.stringify(u().locations) && m(i);
+          },
+          [i],
+        ),
+        v.useEffect(
+          function () {
+            r && r !== u().location && y({ location: r });
+          },
+          [r],
+        );
+      var S = v.useCallback(function (e) {
+        if (null === e)
+          return b.default.createElement(b.default.Fragment, null);
+        l(e);
+        function t(e) {
+          f(u().targetIndex);
+        }
+        return (
+          e.addEventListener('transitionend', t),
+          function () {
+            e.removeEventListener('transitionend', t);
+          }
+        );
+      }, []);
+      v.useEffect(
+        function () {
+          var e;
+          !s || ((e = getComputedStyle(s).direction) !== u().direction && d(e));
+        },
+        [e],
+      );
+      o = E.useEffectRef(function (e) {
+        return S(e);
+      });
+      if (!n) return b.default.createElement(b.default.Fragment, null);
+      (t = p.getSliderStyle(u())), (e = t.className), (t = t.style);
+      return b.default.createElement(
+        'div',
+        { className: ['glissando', a].join(' ') },
+        b.default.createElement(
+          'div',
+          { className: 'glissando-slider ' + e, style: t, ref: o },
+          g().map(function (e) {
+            return b.default.createElement(
+              'div',
+              { key: e, className: 'glissando-page' },
+              n[e],
+            );
+          }),
+        ),
+      );
+    }),
     (e.useGlissandoModel = function (e) {
-      var t = S.useState(p.GlissandoModel(e))[0];
+      var t = v.useState(p.GlissandoModel(e))[0];
       return (
         n.useStream({
           model: function () {

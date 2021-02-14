@@ -69,6 +69,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': [ERROR, { fixToUnknown: true }],
 
     // React rules
+    'react/require-default-props': OFF,
     'react/prop-types': OFF, // otherwise creates false alerts in TS code
     'react/jsx-props-no-spreading': OFF,
     'react/destructuring-assignment': OFF,

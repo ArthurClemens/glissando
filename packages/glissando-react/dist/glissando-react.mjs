@@ -1,4 +1,5 @@
 import { GlissandoModel, getSliderStyle } from 'glissando';
+export { GlissandoModel, getSliderStyle } from 'glissando';
 import React, { useState, useEffect, useCallback } from 'react';
 import { useStream } from 'use-stream';
 import { useEffectRef } from '@huse/effect-ref';
@@ -44,7 +45,7 @@ const GlissandoSlider = (props) => {
     // Event listener: transitionend
     const observeTransitionEnd = useCallback((node) => {
         if (node === null) {
-            return null;
+            return React.createElement(React.Fragment, null);
         }
         setSliderNode(node);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -71,7 +72,7 @@ const GlissandoSlider = (props) => {
     }, [props]);
     const sliderRef = useEffectRef((node) => observeTransitionEnd(node));
     if (!children) {
-        return null;
+        return React.createElement(React.Fragment, null);
     }
     const { className, style } = getSliderStyle(getState());
     return (React.createElement("div", { className: ['glissando', sliderClassName].join(' ') },

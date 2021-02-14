@@ -6,8 +6,9 @@
   "module": "dist/glissando-react.mjs",
   "type": "module",
   "scripts": {
-    "build": "npm run build:clean && npm run build:module && npm run build:umd && npm run build:css && npm run build:prettier",
+    "build": "npm run build:clean && npm run build:types && npm run build:module && npm run build:umd && npm run build:css && npm run build:prettier",
     "build:clean": "rm -rf dist/*.js && rm -rf dist/*.css",
+    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
     "build:module": "MODULE=1 MODULE_NAME=glissandoReact ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
     "build:umd": "MODULE=0 MODULE_NAME=glissandoReact ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
     "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
@@ -23,9 +24,9 @@
   },
   "files": [
     "dist",
-    "index.d.ts",
     "README.md"
   ],
+  "types": "dist/index.d.ts",
   "size-limit": [
     {
       "path": "dist/glissando-react.js"

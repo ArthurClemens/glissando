@@ -6,7 +6,7 @@ type TModel = {
   _: Glissando.States;
 };
 
-export const useGlissandoModel = (initialState: Glissando.InitialState) => {
+export const useGlissandoModel = (initialState?: Glissando.InitialState) => {
   const [model] = useState<Glissando.Model>(GlissandoModel(initialState));
 
   // Subscribe to changes

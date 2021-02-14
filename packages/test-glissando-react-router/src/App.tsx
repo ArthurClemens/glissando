@@ -23,9 +23,9 @@ const RoutedSlider = ({ model }: RoutedSliderProps) => {
 
   return (
     <GlissandoSlider model={model} locations={pages} location={currentPage}>
-      {pages.map(id => {
-        return <Page key={id} location={id} />;
-      })}
+      {pages.map(id => (
+        <Page key={id} location={id} />
+      ))}
     </GlissandoSlider>
   );
 };
