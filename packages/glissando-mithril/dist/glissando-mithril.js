@@ -11,24 +11,24 @@
         e.glissando,
         e.m,
       );
-})(this, function (e, u, t) {
+})(this, function (e, f, t) {
   'use strict';
   function n(e) {
     return e && 'object' == typeof e && 'default' in e ? e : { default: e };
   }
-  var f = n(t);
+  var c = n(t);
   (e.GlissandoSlider = function (e) {
-    function i(e) {
-      t(o().targetIndex);
+    function o(e) {
+      t(s().targetIndex);
     }
     var e = e.attrs.model,
-      o = e.getState,
+      s = e.getState,
       t = e.finalize,
-      r = e.setCount,
-      s = e.setDirection,
-      a = e.getViewIndices,
-      l = e.goTo,
-      d = e.setLocations;
+      a = e.setCount,
+      r = e.setDirection,
+      l = e.getViewIndices,
+      d = e.goTo,
+      u = e.setLocations;
     return {
       onupdate: function (e) {
         var t = e.dom,
@@ -37,34 +37,36 @@
           e = i.locations,
           i = i.location,
           n = n.length;
-        n !== o().count && r(n),
-          e && JSON.stringify(e) !== JSON.stringify(o().locations) && d(e),
-          i && i !== o().location && l({ location: i });
+        n !== s().count && a(n),
+          e && JSON.stringify(e) !== JSON.stringify(s().locations) && u(e),
+          i && i !== s().location && d({ location: i });
         t = getComputedStyle(t).direction;
-        t !== o().direction && s(t);
+        t !== s().direction && r(t);
       },
       view: function (e) {
-        var t = e.children;
+        var t = e.children,
+          n = e.attrs;
         if (!t) return null;
-        var n = u.getSliderStyle(o()),
-          e = n.className,
-          n = n.style;
-        return f.default(
-          '.glissando',
-          f.default(
+        var i = n.className,
+          e = f.getSliderStyle(s()),
+          n = e.className,
+          e = e.style;
+        return c.default(
+          '.glissando ' + i,
+          c.default(
             '.glissando-slider',
             {
               oncreate: function (e) {
-                e.dom.addEventListener('transitionend', i);
+                e.dom.addEventListener('transitionend', o);
               },
               onremove: function (e) {
-                e.dom.removeEventListener('transitionend', i);
+                e.dom.removeEventListener('transitionend', o);
               },
-              className: e,
-              style: n,
+              className: n,
+              style: e,
             },
-            a().map(function (e) {
-              return f.default('.glissando-page', t[e]);
+            l().map(function (e) {
+              return c.default('.glissando-page', t[e]);
             }),
           ),
         );
@@ -72,8 +74,8 @@
     };
   }),
     (e.useGlissandoModel = function () {
-      var e = u.GlissandoModel();
-      return e.getState.map(f.default.redraw), e;
+      var e = f.GlissandoModel();
+      return e.getState.map(c.default.redraw), e;
     }),
     Object.defineProperty(e, '__esModule', { value: !0 });
 });

@@ -25,51 +25,52 @@
         e.useStream,
         e.effectRef,
       );
-})(this, function (e, y, p, n, S) {
+})(this, function (e, p, S, n, E) {
   'use strict';
   function t(e) {
     return e && 'object' == typeof e && 'default' in e ? e : { default: e };
   }
-  var E = t(p);
+  var h = t(S);
   (e.GlissandoSlider = function (e) {
     var t = e.model,
       n = e.children,
       i = e.locations,
       s = e.location,
-      o = p.useState(),
-      r = o[0],
-      a = o[1],
-      u = t.getState,
-      f = t.finalize,
-      l = t.setCount,
-      c = t.setDirection,
-      d = t.getViewIndices,
-      g = t.setLocations,
-      m = t.goTo;
-    p.useEffect(
+      o = e.className,
+      r = S.useState(),
+      a = r[0],
+      u = r[1],
+      f = t.getState,
+      l = t.finalize,
+      c = t.setCount,
+      d = t.setDirection,
+      g = t.getViewIndices,
+      m = t.setLocations,
+      v = t.goTo;
+    S.useEffect(
       function () {
         var e = (n || []).length;
-        e !== u().count && l(e);
+        e !== f().count && c(e);
       },
-      [n, u, l],
+      [n, f, c],
     ),
-      p.useEffect(
+      S.useEffect(
         function () {
-          i && JSON.stringify(i) !== JSON.stringify(u().locations) && g(i);
+          i && JSON.stringify(i) !== JSON.stringify(f().locations) && m(i);
         },
         [i],
       ),
-      p.useEffect(
+      S.useEffect(
         function () {
-          s && s !== u().location && m({ location: s });
+          s && s !== f().location && v({ location: s });
         },
         [s],
       );
-    var v = p.useCallback(function (e) {
+    var y = S.useCallback(function (e) {
       if (null === e) return null;
-      a(e);
+      u(e);
       function t(e) {
-        f(u().targetIndex);
+        l(f().targetIndex);
       }
       return (
         e.addEventListener('transitionend', t),
@@ -78,26 +79,26 @@
         }
       );
     }, []);
-    p.useEffect(
+    S.useEffect(
       function () {
         var e;
-        !r || ((e = getComputedStyle(r).direction) !== u().direction && c(e));
+        !a || ((e = getComputedStyle(a).direction) !== f().direction && d(e));
       },
       [e],
     );
-    o = S.useEffectRef(function (e) {
-      return v(e);
+    r = E.useEffectRef(function (e) {
+      return y(e);
     });
     if (!n) return null;
-    (t = y.getSliderStyle(u())), (e = t.className), (t = t.style);
-    return E.default.createElement(
+    (t = p.getSliderStyle(f())), (e = t.className), (t = t.style);
+    return h.default.createElement(
       'div',
-      { className: 'glissando' },
-      E.default.createElement(
+      { className: ['glissando', o].join(' ') },
+      h.default.createElement(
         'div',
-        { className: 'glissando-slider ' + e, style: t, ref: o },
-        d().map(function (e) {
-          return E.default.createElement(
+        { className: 'glissando-slider ' + e, style: t, ref: r },
+        g().map(function (e) {
+          return h.default.createElement(
             'div',
             { key: e, className: 'glissando-page' },
             n[e],
@@ -107,7 +108,7 @@
     );
   }),
     (e.useGlissandoModel = function (e) {
-      var t = p.useState(y.GlissandoModel(e))[0];
+      var t = S.useState(p.GlissandoModel(e))[0];
       return (
         n.useStream({
           model: function () {

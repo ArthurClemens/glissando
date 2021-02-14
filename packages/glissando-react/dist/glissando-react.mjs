@@ -16,7 +16,7 @@ const useGlissandoModel = (initialState) => {
 };
 
 const GlissandoSlider = (props) => {
-    const { model, children, locations, location } = props;
+    const { model, children, locations, location, className: sliderClassName, } = props;
     const [sliderNode, setSliderNode] = useState();
     const { getState, finalize, setCount, setDirection, getViewIndices, setLocations, goTo, } = model;
     // Child count
@@ -74,7 +74,7 @@ const GlissandoSlider = (props) => {
         return null;
     }
     const { className, style } = getSliderStyle(getState());
-    return (React.createElement("div", { className: "glissando" },
+    return (React.createElement("div", { className: ['glissando', sliderClassName].join(' ') },
         React.createElement("div", { className: `glissando-slider ${className}`, style: style, ref: sliderRef }, getViewIndices().map(viewIndex => (React.createElement("div", { key: viewIndex, className: "glissando-page" }, children[viewIndex]))))));
 };
 

@@ -99,126 +99,118 @@ export const GlissandoModel = (
 
   const glissandoState = {
     initialState,
-    actions: (update: Stream<PatchFn>) => {
-      return {
-        previous: ({ animate }: { animate?: boolean } = { animate: true }) => {
-          update((state: Glissando.State) => {
-            return setIndex(state)({
-              index: state.index - 1,
-              animate: animate !== false,
-            });
-          });
-        },
-        next: ({ animate }: { animate?: boolean } = { animate: true }) => {
-          update((state: Glissando.State) => {
-            return setIndex(state)({
-              index: state.index + 1,
-              animate: animate !== false,
-            });
-          });
-        },
-        goTo: ({
-          index,
-          location,
-          animate,
-        }: {
-          index?: number;
-          location?: string;
-          animate?: boolean;
-        }) => {
-          update((state: Glissando.State) => {
-            if (location) {
-              const change: Glissando.LocationChange = {
-                location,
-                animate,
-              };
-              return setLocation(state)(change);
-            }
-            if (index === undefined) {
-              return state;
-            }
-            const change: Glissando.IndexChange = {
-              index,
+    actions: (update: Stream<PatchFn>) => ({
+      previous: ({ animate }: { animate?: boolean } = { animate: true }) => {
+        update((state: Glissando.State) =>
+          setIndex(state)({
+            index: state.index - 1,
+            animate: animate !== false,
+          }),
+        );
+      },
+      next: ({ animate }: { animate?: boolean } = { animate: true }) => {
+        update((state: Glissando.State) =>
+          setIndex(state)({
+            index: state.index + 1,
+            animate: animate !== false,
+          }),
+        );
+      },
+      goTo: ({
+        index,
+        location,
+        animate,
+      }: {
+        index?: number;
+        location?: string;
+        animate?: boolean;
+      }) => {
+        update((state: Glissando.State) => {
+          if (location) {
+            const change: Glissando.LocationChange = {
+              location,
               animate,
             };
-            return setIndex(state)(change);
-          });
-        },
-        finalize: (index: number) => {
-          update((state: Glissando.State) => {
-            return setIndex(state)({
-              index,
-              animate: false,
-            });
-          });
-        },
-        setCount: (count: number) => {
-          update((state: Glissando.State) => {
-            return setIndex({
-              ...state,
-              count,
-            })({ index: state.index });
-          });
-        },
-        setDirection: (direction: Glissando.Direction) => {
-          update((state: Glissando.State) => {
-            return {
-              ...state,
-              direction,
-            };
-          });
-        },
-        setLocations: (locations: string[]) => {
-          update((state: Glissando.State) => {
-            return {
-              ...state,
-              locations,
-            };
-          });
-        },
-      };
-    },
+            return setLocation(state)(change);
+          }
+          if (index === undefined) {
+            return state;
+          }
+          const change: Glissando.IndexChange = {
+            index,
+            animate,
+          };
+          return setIndex(state)(change);
+        });
+      },
+      finalize: (index: number) => {
+        update((state: Glissando.State) =>
+          setIndex(state)({
+            index,
+            animate: false,
+          }),
+        );
+      },
+      setCount: (count: number) => {
+        update((state: Glissando.State) =>
+          setIndex({
+            ...state,
+            count,
+          })({ index: state.index }),
+        );
+      },
+      setDirection: (direction: Glissando.Direction) => {
+        update((state: Glissando.State) => ({
+          ...state,
+          direction,
+        }));
+      },
+      setLocations: (locations: string[]) => {
+        update((state: Glissando.State) => ({
+          ...state,
+          locations,
+        }));
+      },
+    }),
 
-    selectors: (states: Stream<Glissando.State>) => {
-      return {
-        hasNext: () => {
-          const state = states();
-          return state.index < state.count - 1;
-        },
-        hasPrevious: () => {
-          const state = states();
-          return state.index > 0;
-        },
-        isAnimating: () => {
-          const state = states();
-          return state.isAnimating;
-        },
-        getViewIndices: () => {
-          const state = states();
-          return slots.map(slotIndex => {
-            let index = slotIndex + state.index + 0;
-            if (slotIndex < 0 && state.targetIndex < state.index) {
-              index = slotIndex + state.targetIndex + 1;
-            } else if (slotIndex > 0 && state.targetIndex > state.index) {
-              index = slotIndex + state.targetIndex - 1;
-            }
-            return index;
-          });
-        },
-        getLocation: () => {
-          const state = states();
-          return lookupLocation(state)(index => index);
-        },
-        getNextLocation: () => {
-          const state = states();
-          return lookupLocation(state)(index => index + 1);
-        },
-        getPreviousLocation: () => {
-          const state = states();
-          return lookupLocation(state)(index => index - 1);
-        },
-      };
-    },
+    selectors: (states: Stream<Glissando.State>) => ({
+      hasNext: () => {
+        const state = states();
+        return state.index < state.count - 1;
+      },
+      hasPrevious: () => {
+        const state = states();
+        return state.index > 0;
+      },
+      isAnimating: () => {
+        const state = states();
+        return state.isAnimating;
+      },
+      getViewIndices: () => {
+        const state = states();
+        return slots.map(slotIndex => {
+          let index = slotIndex + state.index + 0;
+          if (slotIndex < 0 && state.targetIndex < state.index) {
+            index = slotIndex + state.targetIndex + 1;
+          } else if (slotIndex > 0 && state.targetIndex > state.index) {
+            index = slotIndex + state.targetIndex - 1;
+          }
+          return index;
+        });
+      },
+      getLocation: () => {
+        const state = states();
+        return lookupLocation(state)(index => index);
+      },
+      getNextLocation: () => {
+        const state = states();
+        return lookupLocation(state)(index => index + 1);
+      },
+      getPreviousLocation: () => {
+        const state = states();
+        return lookupLocation(state)(index => index - 1);
+      },
+    }),
   };
 
   const update: Stream<PatchFn> = Stream<PatchFn>();

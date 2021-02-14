@@ -222,7 +222,10 @@
           : n.targetIndex < n.index && (r = i * e * (n.sideViews - 1)),
         {
           style: u(
-            { width: 100 * t + '%', transform: 'translateX(' + r + '%)' },
+            {
+              width: 'calc(' + t + ' * calc(100%))',
+              transform: 'translateX(' + r + '%)',
+            },
             n.isAnimating ? void 0 : { transitionDuration: '0ms' },
           ),
           className: n.isAnimating ? 'glissando-animating' : '',

@@ -2,11 +2,7 @@
 import './styles.css';
 import 'glissando-react/dist/glissando.min.css';
 
-import {
-  // Glissando,
-  GlissandoSlider,
-  useGlissandoModel,
-} from 'glissando-react';
+import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
 import React from 'react';
 
 import { Page } from './Page';

@@ -38,12 +38,13 @@ const GlissandoSlider = initialVnode => {
                 setDirection(direction);
             }
         },
-        view: ({ children }) => {
+        view: ({ children, attrs }) => {
             if (!children) {
                 return null;
             }
+            const { className: sliderClassName } = attrs;
             const { className, style } = getSliderStyle(getState());
-            return m('.glissando', m('.glissando-slider', {
+            return m(`.glissando ${sliderClassName}`, m('.glissando-slider', {
                 oncreate: (vnode) => {
                     vnode.dom.addEventListener('transitionend', onTransitionEnd);
                 },

@@ -76,118 +76,102 @@ const GlissandoModel = (props = {}) => {
     };
     const glissandoState = {
         initialState,
-        actions: (update) => {
-            return {
-                previous: ({ animate } = { animate: true }) => {
-                    update((state) => {
-                        return setIndex(state)({
-                            index: state.index - 1,
-                            animate: animate !== false,
-                        });
-                    });
-                },
-                next: ({ animate } = { animate: true }) => {
-                    update((state) => {
-                        return setIndex(state)({
-                            index: state.index + 1,
-                            animate: animate !== false,
-                        });
-                    });
-                },
-                goTo: ({ index, location, animate, }) => {
-                    update((state) => {
-                        if (location) {
-                            const change = {
-                                location,
-                                animate,
-                            };
-                            return setLocation(state)(change);
-                        }
-                        if (index === undefined) {
-                            return state;
-                        }
+        actions: (update) => ({
+            previous: ({ animate } = { animate: true }) => {
+                update((state) => setIndex(state)({
+                    index: state.index - 1,
+                    animate: animate !== false,
+                }));
+            },
+            next: ({ animate } = { animate: true }) => {
+                update((state) => setIndex(state)({
+                    index: state.index + 1,
+                    animate: animate !== false,
+                }));
+            },
+            goTo: ({ index, location, animate, }) => {
+                update((state) => {
+                    if (location) {
                         const change = {
-                            index,
+                            location,
                             animate,
                         };
-                        return setIndex(state)(change);
-                    });
-                },
-                finalize: (index) => {
-                    update((state) => {
-                        return setIndex(state)({
-                            index,
-                            animate: false,
-                        });
-                    });
-                },
-                setCount: (count) => {
-                    update((state) => {
-                        return setIndex({
-                            ...state,
-                            count,
-                        })({ index: state.index });
-                    });
-                },
-                setDirection: (direction) => {
-                    update((state) => {
-                        return {
-                            ...state,
-                            direction,
-                        };
-                    });
-                },
-                setLocations: (locations) => {
-                    update((state) => {
-                        return {
-                            ...state,
-                            locations,
-                        };
-                    });
-                },
-            };
-        },
-        selectors: (states) => {
-            return {
-                hasNext: () => {
-                    const state = states();
-                    return state.index < state.count - 1;
-                },
-                hasPrevious: () => {
-                    const state = states();
-                    return state.index > 0;
-                },
-                isAnimating: () => {
-                    const state = states();
-                    return state.isAnimating;
-                },
-                getViewIndices: () => {
-                    const state = states();
-                    return slots.map(slotIndex => {
-                        let index = slotIndex + state.index + 0;
-                        if (slotIndex < 0 && state.targetIndex < state.index) {
-                            index = slotIndex + state.targetIndex + 1;
-                        }
-                        else if (slotIndex > 0 && state.targetIndex > state.index) {
-                            index = slotIndex + state.targetIndex - 1;
-                        }
-                        return index;
-                    });
-                },
-                getLocation: () => {
-                    const state = states();
-                    return lookupLocation(state)(index => index);
-                },
-                getNextLocation: () => {
-                    const state = states();
-                    return lookupLocation(state)(index => index + 1);
-                },
-                getPreviousLocation: () => {
-                    const state = states();
-                    return lookupLocation(state)(index => index - 1);
-                },
-            };
-        },
+                        return setLocation(state)(change);
+                    }
+                    if (index === undefined) {
+                        return state;
+                    }
+                    const change = {
+                        index,
+                        animate,
+                    };
+                    return setIndex(state)(change);
+                });
+            },
+            finalize: (index) => {
+                update((state) => setIndex(state)({
+                    index,
+                    animate: false,
+                }));
+            },
+            setCount: (count) => {
+                update((state) => setIndex({
+                    ...state,
+                    count,
+                })({ index: state.index }));
+            },
+            setDirection: (direction) => {
+                update((state) => ({
+                    ...state,
+                    direction,
+                }));
+            },
+            setLocations: (locations) => {
+                update((state) => ({
+                    ...state,
+                    locations,
+                }));
+            },
+        }),
+        selectors: (states) => ({
+            hasNext: () => {
+                const state = states();
+                return state.index < state.count - 1;
+            },
+            hasPrevious: () => {
+                const state = states();
+                return state.index > 0;
+            },
+            isAnimating: () => {
+                const state = states();
+                return state.isAnimating;
+            },
+            getViewIndices: () => {
+                const state = states();
+                return slots.map(slotIndex => {
+                    let index = slotIndex + state.index + 0;
+                    if (slotIndex < 0 && state.targetIndex < state.index) {
+                        index = slotIndex + state.targetIndex + 1;
+                    }
+                    else if (slotIndex > 0 && state.targetIndex > state.index) {
+                        index = slotIndex + state.targetIndex - 1;
+                    }
+                    return index;
+                });
+            },
+            getLocation: () => {
+                const state = states();
+                return lookupLocation(state)(index => index);
+            },
+            getNextLocation: () => {
+                const state = states();
+                return lookupLocation(state)(index => index + 1);
+            },
+            getPreviousLocation: () => {
+                const state = states();
+                return lookupLocation(state)(index => index - 1);
+            },
+        }),
     };
     const update = Stream();
     const states = Stream.scan((state, patch) => patch(state), {
@@ -223,7 +207,7 @@ const getSliderStyle = (state) => {
         sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
     }
     const style = {
-        width: `${slotCount * 100}%`,
+        width: `calc(${slotCount} * calc(100%))`,
         transform: `translateX(${sliderTranslateX}%)`,
         ...(!state.isAnimating
             ? {
