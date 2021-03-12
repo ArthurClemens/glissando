@@ -39,43 +39,33 @@ export const AppModel = (props: TAppState) => {
 
   const appState = {
     initialState,
-    actions: (update: Stream<PatchFn>) => {
-      return {
-        setIsVisible: (isVisible: boolean) => {
-          update((state: TAppState) => {
-            return {
-              ...state,
-              isVisible,
-            };
-          });
-        },
-        setIsAnimated: (isAnimated: boolean) => {
-          update((state: TAppState) => {
-            return {
-              ...state,
-              isAnimated,
-            };
-          });
-        },
-        setIsRtl: (isRtl: boolean) => {
-          update((state: TAppState) => {
-            return {
-              ...state,
-              isRtl,
-            };
-          });
-        },
-        setCount: (count: number) => {
-          update((state: TAppState) => {
-            return {
-              ...state,
-              count,
-              selectIndices: createSelectIndices(count),
-            };
-          });
-        },
-      };
-    },
+    actions: (update: Stream<PatchFn>) => ({
+      setIsVisible: (isVisible: boolean) => {
+        update((state: TAppState) => ({
+          ...state,
+          isVisible,
+        }));
+      },
+      setIsAnimated: (isAnimated: boolean) => {
+        update((state: TAppState) => ({
+          ...state,
+          isAnimated,
+        }));
+      },
+      setIsRtl: (isRtl: boolean) => {
+        update((state: TAppState) => ({
+          ...state,
+          isRtl,
+        }));
+      },
+      setCount: (count: number) => {
+        update((state: TAppState) => ({
+          ...state,
+          count,
+          selectIndices: createSelectIndices(count),
+        }));
+      },
+    }),
   };
 
   const update: Stream<PatchFn> = Stream<PatchFn>();

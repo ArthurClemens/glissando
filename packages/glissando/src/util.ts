@@ -1,4 +1,4 @@
-import { Glissando } from '../index';
+import { Glissando } from './types';
 
 export const getSliderStyle = (state: Glissando.State) => {
   const slotCount = 2 * state.sideViews + 1;

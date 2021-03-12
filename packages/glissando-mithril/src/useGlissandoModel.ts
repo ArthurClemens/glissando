@@ -1,8 +1,8 @@
-import { GlissandoModel } from 'glissando';
+import { Glissando, GlissandoModel } from 'glissando';
 import m from 'mithril';
 
-export const useGlissandoModel = () => {
-  const model = GlissandoModel();
+export const useGlissandoModel = (initialState?: Glissando.InitialState) => {
+  const model = GlissandoModel(initialState);
 
   // Subscribe to changes
   model.getState.map(m.redraw);

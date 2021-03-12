@@ -1,7 +1,14 @@
 import { getSliderStyle, Glissando } from 'glissando';
-import m from 'mithril';
+import m, { ClosureComponent } from 'mithril';
 
-import type { TGlissandoSlider } from '../index';
+interface Attrs {
+  model: Glissando.Model;
+  location?: string;
+  locations?: string[];
+  className?: string;
+}
+
+type TGlissandoSlider = ClosureComponent<Attrs>;
 
 export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   const { model } = initialVnode.attrs;

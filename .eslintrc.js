@@ -1,5 +1,5 @@
 const OFF = 0;
-const WARN = 1;
+// const WARN = 1;
 const ERROR = 2;
 
 module.exports = {
@@ -18,6 +18,7 @@ module.exports = {
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
+    JSX: 'readonly',
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -55,12 +56,13 @@ module.exports = {
     ],
 
     // Sorting rules
-    'simple-import-sort/sort': ERROR,
     'sort-imports': OFF,
     'import/order': OFF,
     'import/first': ERROR,
-    'import/newline-after-import': ERROR,
     'import/no-duplicates': ERROR,
+    'simple-import-sort/imports': ERROR,
+    'simple-import-sort/exports': ERROR,
+    'import/newline-after-import': ['error', { count: 1 }],
 
     // TypeScript rules
     'no-unused-vars': 'off', // disable the native no-unused-vars so that only the TS one is enabled

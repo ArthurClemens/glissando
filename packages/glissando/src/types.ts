@@ -1,25 +1,9 @@
-// eslint-disable-next-line import/no-unresolved
 import Stream from 'mithril/stream';
-
-export const GlissandoModel: (
-  props?: Partial<Glissando.Props>,
-) => Glissando.Model;
-
-export const getSliderStyle: (
-  state: Glissando.State,
-) => {
-  style: {
-    transitionDuration?: string;
-    width: string;
-    transform: string;
-  };
-  className: string;
-};
 
 export { Stream };
 
 export namespace Glissando {
-  type State = {
+  export type State = {
     /**
      * The current location index.
      */
@@ -66,52 +50,66 @@ export namespace Glissando {
     direction: Direction;
   };
 
-  type InitialState = {
+  export type InitialState = {
+    /**
+     * The current location index.
+     */
     index: number;
+
+    /**
+     * The number of side views; default: 1.
+     */
     sideViews: number;
   };
 
-  type Props = {
+  export type Props = {
+    /**
+     * The current location index.
+     */
     index: number;
+
+    /**
+     * The number of side views; default: 1.
+     */
     sideViews: number;
   };
 
-  type States = Stream<State>;
+  export type States = Stream<State>;
 
   /**
    * Only returns a changed state.
    */
-  type ChangedState = Glissando.State | typeof Stream.SKIP;
+  export type ChangedState = Glissando.State | typeof Stream.SKIP;
 
   /**
    * Accumulation of changed states only.
    */
-  type ChangedStates = Stream<ChangedState>;
+  export type ChangedStates = Stream<ChangedState>;
 
-  type Direction = 'rtl' | 'ltr';
+  export type Direction = 'rtl' | 'ltr';
 
-  type IndexChange = {
+  export type IndexChange = {
     index: number;
     animate?: boolean;
   };
 
-  type LocationChange = {
+  export type LocationChange = {
     location: string;
     animate?: boolean;
   };
 
-  type Actions = {
+  export type Actions = {
     /**
      * Go to the previous location.
      * @param animate Optionally animate the transition. Default `true`.
      */
-    previous: ({ animate }?: { animate?: boolean }) => void;
+    previous: (props: { animate?: boolean }) => void;
 
     /**
      * Go to the next location.
      * @param animate Optionally animate the transition. Default `true`.
      */
-    next: ({ animate }?: { animate?: boolean }) => void;
+    next: (props: { animate?: boolean }) => void;
 
     /**
      * Go to a location.
@@ -147,7 +145,7 @@ export namespace Glissando {
     finalize: (index: number) => void;
   };
 
-  type Selectors = {
+  export type Selectors = {
     /**
      * Returns true if a previous location if available.
      */
@@ -184,7 +182,7 @@ export namespace Glissando {
     getViewIndices: () => number[];
   };
 
-  type Model = {
+  export type Model = {
     /**
      * State stream.
      */

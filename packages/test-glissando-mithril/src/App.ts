@@ -52,8 +52,6 @@ const Slider = () => {
   };
 };
 
-export const App = () => {
-  return {
-    view: () => m(Slider),
-  };
-};
+export const App = () => ({
+  view: () => m(Slider),
+});

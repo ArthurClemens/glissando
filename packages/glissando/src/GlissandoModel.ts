@@ -1,7 +1,6 @@
-// eslint-disable-next-line import/no-unresolved
 import Stream from 'mithril/stream';
 
-import { Glissando } from '../index';
+import { Glissando } from './types';
 
 type PatchFn = (state: Glissando.State) => Glissando.State;
 

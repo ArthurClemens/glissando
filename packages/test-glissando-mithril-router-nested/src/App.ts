@@ -106,8 +106,6 @@ export const App = () => {
   const model = useGlissandoModel();
 
   return {
-    view: () => {
-      return [m(Header, { model }), m(Slider, { model })];
-    },
+    view: () => [m(Header, { model }), m(Slider, { model })],
   };
 };

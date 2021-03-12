@@ -343,7 +343,7 @@ Children can be changed dynamically.
 | **children**  | required     | Component children | The elements to slide                                                       |
 | **locations** | optional     | `string[]`         | (directed use) List of location ids, for example: possible route paths      |
 | **location**  | optional     | `string`           | (directed use) The current location id, for example: the current route path |
-| **className** | optional     | `string`           | Extra className                                                             |
+| **className** | optional     | `string`           | Extra class name                                                            |
 
 
 #### With React

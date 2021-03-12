@@ -65,9 +65,7 @@ var RoutedSlider = function (_a) {
     var model = _a.model;
     var match = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useRouteMatch)();
     var currentPage = match.params.page;
-    return (react__WEBPACK_IMPORTED_MODULE_3__.createElement(glissando_react__WEBPACK_IMPORTED_MODULE_2__.GlissandoSlider, { model: model, locations: pages, location: currentPage }, pages.map(function (id) {
-        return react__WEBPACK_IMPORTED_MODULE_3__.createElement(_Page__WEBPACK_IMPORTED_MODULE_5__.Page, { key: id, location: id });
-    })));
+    return (react__WEBPACK_IMPORTED_MODULE_3__.createElement(glissando_react__WEBPACK_IMPORTED_MODULE_2__.GlissandoSlider, { model: model, locations: pages, location: currentPage }, pages.map(function (id) { return (react__WEBPACK_IMPORTED_MODULE_3__.createElement(_Page__WEBPACK_IMPORTED_MODULE_5__.Page, { key: id, location: id })); })));
 };
 function App() {
     var model = (0,glissando_react__WEBPACK_IMPORTED_MODULE_2__.useGlissandoModel)();
@@ -178,91 +176,130 @@ react_dom__WEBPACK_IMPORTED_MODULE_1__.render(react__WEBPACK_IMPORTED_MODULE_0__
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getSliderStyle": function() { return /* reexport safe */ glissando__WEBPACK_IMPORTED_MODULE_1__.getSliderStyle; },
+/* harmony export */   "GlissandoModel": function() { return /* reexport safe */ glissando__WEBPACK_IMPORTED_MODULE_1__.GlissandoModel; },
 /* harmony export */   "GlissandoSlider": function() { return /* binding */ GlissandoSlider; },
 /* harmony export */   "useGlissandoModel": function() { return /* binding */ useGlissandoModel; }
 /* harmony export */ });
-/* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.mjs");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
-/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! use-stream */ "../../glissando-react/node_modules/use-stream/dist/use-stream.mjs");
-/* harmony import */ var _huse_effect_ref__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @huse/effect-ref */ "../../glissando-react/node_modules/@huse/effect-ref/es/index.js");
+/* harmony import */ var _huse_effect_ref__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @huse/effect-ref */ "../../glissando-react/node_modules/@huse/effect-ref/es/index.js");
+/* harmony import */ var glissando__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! glissando */ "../../glissando/dist/glissando.mjs");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "../node_modules/react/index.js");
+/* harmony import */ var use_stream__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! use-stream */ "../../glissando-react/node_modules/use-stream/dist/use-stream.mjs");
 
 
 
 
 
-const useGlissandoModel = (initialState) => {
-    const [model] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)((0,glissando__WEBPACK_IMPORTED_MODULE_0__.GlissandoModel)(initialState));
-    // Subscribe to changes
-    (0,use_stream__WEBPACK_IMPORTED_MODULE_2__.useStream)({
-        model: () => ({
-            _: model.getState,
-        }),
-        defer: true,
-    });
-    return model;
+
+
+const useGlissandoModel = initialState => {
+  const [model] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)((0,glissando__WEBPACK_IMPORTED_MODULE_1__.GlissandoModel)(initialState));
+  // Subscribe to changes
+  (0,use_stream__WEBPACK_IMPORTED_MODULE_3__.useStream)({
+    model: () => ({
+      _: model.getState,
+    }),
+    defer: true,
+  });
+  return model;
 };
 
-const GlissandoSlider = (props) => {
-    const { model, children, locations, location } = props;
-    const [sliderNode, setSliderNode] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)();
-    const { getState, finalize, setCount, setDirection, getViewIndices, setLocations, goTo, } = model;
-    // Child count
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        const count = (children || []).length;
-        if (count !== getState().count) {
-            setCount(count);
-        }
-    }, [children, getState, setCount]);
-    // Locations
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        if (locations &&
-            JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
-            setLocations(locations);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [locations]);
-    // Location
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        if (location && location !== getState().location) {
-            goTo({ location });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location]);
-    // Event listener: transitionend
-    const observeTransitionEnd = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((node) => {
-        if (node === null) {
-            return null;
-        }
-        setSliderNode(node);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const onTransitionEnd = (evt) => {
-            finalize(getState().targetIndex);
-        };
-        node.addEventListener('transitionend', onTransitionEnd);
-        return () => {
-            node.removeEventListener('transitionend', onTransitionEnd);
-        };
-    }, 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
-    // Reading direction
-    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-        if (!sliderNode) {
-            return;
-        }
-        const { direction } = getComputedStyle(sliderNode);
-        if (direction !== getState().direction) {
-            setDirection(direction);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props]);
-    const sliderRef = (0,_huse_effect_ref__WEBPACK_IMPORTED_MODULE_3__.useEffectRef)((node) => observeTransitionEnd(node));
-    if (!children) {
-        return null;
+const GlissandoSlider = props => {
+  const {
+    model,
+    children,
+    locations,
+    location,
+    className: sliderClassName,
+  } = props;
+  const [sliderNode, setSliderNode] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)();
+  const {
+    getState,
+    finalize,
+    setCount,
+    setDirection,
+    getViewIndices,
+    setLocations,
+    goTo,
+  } = model;
+  // Child count
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    const count = (children || []).length;
+    if (count !== getState().count) {
+      setCount(count);
     }
-    const { className, style } = (0,glissando__WEBPACK_IMPORTED_MODULE_0__.getSliderStyle)(getState());
-    return (react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", { className: "glissando" },
-        react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", { className: `glissando-slider ${className}`, style: style, ref: sliderRef }, getViewIndices().map(viewIndex => (react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", { key: viewIndex, className: "glissando-page" }, children[viewIndex]))))));
+  }, [children, getState, setCount]);
+  // Locations
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (
+      locations &&
+      JSON.stringify(locations) !== JSON.stringify(getState().locations)
+    ) {
+      setLocations(locations);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locations]);
+  // Location
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (location && location !== getState().location) {
+      goTo({ location });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+  // Event listener: transitionend
+  const observeTransitionEnd = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(
+    node => {
+      if (node === null) {
+        return react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null);
+      }
+      setSliderNode(node);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const onTransitionEnd = evt => {
+        finalize(getState().targetIndex);
+      };
+      node.addEventListener('transitionend', onTransitionEnd);
+      return () => {
+        node.removeEventListener('transitionend', onTransitionEnd);
+      };
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+  // Reading direction
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (!sliderNode) {
+      return;
+    }
+    const { direction } = getComputedStyle(sliderNode);
+    if (direction !== getState().direction) {
+      setDirection(direction);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+  const sliderRef = (0,_huse_effect_ref__WEBPACK_IMPORTED_MODULE_0__.useEffectRef)(node => observeTransitionEnd(node));
+  if (!children) {
+    return react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null);
+  }
+  const { className, style } = (0,glissando__WEBPACK_IMPORTED_MODULE_1__.getSliderStyle)(getState());
+  return react__WEBPACK_IMPORTED_MODULE_2__.createElement(
+    'div',
+    { className: ['glissando', sliderClassName].join(' ') },
+    react__WEBPACK_IMPORTED_MODULE_2__.createElement(
+      'div',
+      {
+        className: `glissando-slider ${className}`,
+        style,
+        ref: sliderRef,
+      },
+      getViewIndices().map(viewIndex =>
+        react__WEBPACK_IMPORTED_MODULE_2__.createElement(
+          'div',
+          { key: viewIndex, className: 'glissando-page' },
+          children[viewIndex],
+        ),
+      ),
+    ),
+  );
 };
 
 
@@ -440,246 +477,246 @@ var useStream = function (_a) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Stream": function() { return /* reexport default from dynamic */ mithril_stream__WEBPACK_IMPORTED_MODULE_0___default.a; },
-/* harmony export */   "GlissandoModel": function() { return /* binding */ GlissandoModel; },
-/* harmony export */   "getSliderStyle": function() { return /* binding */ getSliderStyle; }
+/* harmony export */   "getSliderStyle": function() { return /* binding */ getSliderStyle; },
+/* harmony export */   "GlissandoModel": function() { return /* binding */ GlissandoModel; }
 /* harmony export */ });
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mithril/stream */ "../node_modules/mithril/stream/stream.js");
 /* harmony import */ var mithril_stream__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mithril_stream__WEBPACK_IMPORTED_MODULE_0__);
 
 
 
-// eslint-disable-next-line import/no-unresolved
+
 const calculateNewIndex = (state, index) => {
-    if (index === undefined || Number.isNaN(index)) {
-        return {
-            newIndex: state.index,
-            shouldUpdate: false,
-        };
-    }
-    const newIndex = Math.min(index, state.count - 1);
-    const isValid = newIndex >= 0 && newIndex < state.count;
-    const shouldUpdate = isValid && newIndex !== state.index;
+  if (index === undefined || Number.isNaN(index)) {
     return {
-        newIndex,
-        shouldUpdate,
+      newIndex: state.index,
+      shouldUpdate: false,
     };
+  }
+  const newIndex = Math.min(index, state.count - 1);
+  const isValid = newIndex >= 0 && newIndex < state.count;
+  const shouldUpdate = isValid && newIndex !== state.index;
+  return {
+    newIndex,
+    shouldUpdate,
+  };
 };
-const setIndex = (state) => (change) => {
-    const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
-    return shouldUpdate
-        ? {
-            ...state,
-            ...(change.animate ? undefined : { index: newIndex }),
-            targetIndex: newIndex,
-            isAnimating: !!change.animate,
-        }
-        : state;
-};
-const setLocation = (state) => (change) => {
-    if (!state.locations || state.locations.length === 0) {
-        return state;
-    }
-    let locationStr = change.location.toString();
-    let index = state.locations.indexOf(locationStr);
-    if (index === -1) {
-        // Location does not exist; default to first index
-        index = 0;
-        locationStr = state.locations[index];
-    }
-    const shouldAnimate = state.location === undefined
-        ? false // don't animate if we are setting the first location
-        : change.animate !== false;
-    const newState = {
+const setIndex = state => change => {
+  const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+  return shouldUpdate
+    ? {
         ...state,
-        location: locationStr,
-    };
-    const indexChange = {
-        index,
-        animate: shouldAnimate,
-    };
-    return setIndex(newState)(indexChange);
+        ...(change.animate ? undefined : { index: newIndex }),
+        targetIndex: newIndex,
+        isAnimating: !!change.animate,
+      }
+    : state;
 };
-const lookupLocation = (state) => (changeFn) => {
-    if (!state.locations || !state.location) {
-        return undefined;
-    }
-    const index = state.locations.indexOf(state.location);
-    if (index === -1) {
-        return undefined;
-    }
-    return state.locations[changeFn(index)];
+const setLocation = state => change => {
+  if (!state.locations || state.locations.length === 0) {
+    return state;
+  }
+  let locationStr = change.location.toString();
+  let index = state.locations.indexOf(locationStr);
+  if (index === -1) {
+    // Location does not exist; default to first index
+    index = 0;
+    locationStr = state.locations[index];
+  }
+  const shouldAnimate =
+    state.location === undefined
+      ? false // don't animate if we are setting the first location
+      : change.animate !== false;
+  const newState = {
+    ...state,
+    location: locationStr,
+  };
+  const indexChange = {
+    index,
+    animate: shouldAnimate,
+  };
+  return setIndex(newState)(indexChange);
+};
+const lookupLocation = state => changeFn => {
+  if (!state.locations || !state.location) {
+    return undefined;
+  }
+  const index = state.locations.indexOf(state.location);
+  if (index === -1) {
+    return undefined;
+  }
+  return state.locations[changeFn(index)];
 };
 const GlissandoModel = (props = {}) => {
-    const sideViews = props.sideViews || 1;
-    const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
-    const initialState = {
-        index: props.index || 0,
-        targetIndex: props.index || 0,
-        isAnimating: false,
-        count: 0,
-        direction: 'ltr',
-        slots,
-        sideViews,
-    };
-    const glissandoState = {
-        initialState,
-        actions: (update) => {
-            return {
-                previous: ({ animate } = { animate: true }) => {
-                    update((state) => {
-                        return setIndex(state)({
-                            index: state.index - 1,
-                            animate: animate !== false,
-                        });
-                    });
-                },
-                next: ({ animate } = { animate: true }) => {
-                    update((state) => {
-                        return setIndex(state)({
-                            index: state.index + 1,
-                            animate: animate !== false,
-                        });
-                    });
-                },
-                goTo: ({ index, location, animate, }) => {
-                    update((state) => {
-                        if (location) {
-                            const change = {
-                                location,
-                                animate,
-                            };
-                            return setLocation(state)(change);
-                        }
-                        if (index === undefined) {
-                            return state;
-                        }
-                        const change = {
-                            index,
-                            animate,
-                        };
-                        return setIndex(state)(change);
-                    });
-                },
-                finalize: (index) => {
-                    update((state) => {
-                        return setIndex(state)({
-                            index,
-                            animate: false,
-                        });
-                    });
-                },
-                setCount: (count) => {
-                    update((state) => {
-                        return setIndex({
-                            ...state,
-                            count,
-                        })({ index: state.index });
-                    });
-                },
-                setDirection: (direction) => {
-                    update((state) => {
-                        return {
-                            ...state,
-                            direction,
-                        };
-                    });
-                },
-                setLocations: (locations) => {
-                    update((state) => {
-                        return {
-                            ...state,
-                            locations,
-                        };
-                    });
-                },
+  const sideViews = props.sideViews || 1;
+  const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
+  const initialState = {
+    index: props.index || 0,
+    targetIndex: props.index || 0,
+    isAnimating: false,
+    count: 0,
+    direction: 'ltr',
+    slots,
+    sideViews,
+  };
+  const glissandoState = {
+    initialState,
+    actions: update => ({
+      previous: ({ animate } = { animate: true }) => {
+        update(state =>
+          setIndex(state)({
+            index: state.index - 1,
+            animate: animate !== false,
+          }),
+        );
+      },
+      next: ({ animate } = { animate: true }) => {
+        update(state =>
+          setIndex(state)({
+            index: state.index + 1,
+            animate: animate !== false,
+          }),
+        );
+      },
+      goTo: ({ index, location, animate }) => {
+        update(state => {
+          if (location) {
+            const change = {
+              location,
+              animate,
             };
-        },
-        selectors: (states) => {
-            return {
-                hasNext: () => {
-                    const state = states();
-                    return state.index < state.count - 1;
-                },
-                hasPrevious: () => {
-                    const state = states();
-                    return state.index > 0;
-                },
-                isAnimating: () => {
-                    const state = states();
-                    return state.isAnimating;
-                },
-                getViewIndices: () => {
-                    const state = states();
-                    return slots.map(slotIndex => {
-                        let index = slotIndex + state.index + 0;
-                        if (slotIndex < 0 && state.targetIndex < state.index) {
-                            index = slotIndex + state.targetIndex + 1;
-                        }
-                        else if (slotIndex > 0 && state.targetIndex > state.index) {
-                            index = slotIndex + state.targetIndex - 1;
-                        }
-                        return index;
-                    });
-                },
-                getLocation: () => {
-                    const state = states();
-                    return lookupLocation(state)(index => index);
-                },
-                getNextLocation: () => {
-                    const state = states();
-                    return lookupLocation(state)(index => index + 1);
-                },
-                getPreviousLocation: () => {
-                    const state = states();
-                    return lookupLocation(state)(index => index - 1);
-                },
-            };
-        },
-    };
-    const update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
-    const states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().scan((state, patch) => patch(state), {
-        ...glissandoState.initialState,
-    }, update);
-    const actions = {
-        ...glissandoState.actions(update),
-    };
-    const selectors = {
-        ...glissandoState.selectors(states),
-    };
-    const changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().scan((state, value) => JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
+            return setLocation(state)(change);
+          }
+          if (index === undefined) {
+            return state;
+          }
+          const change = {
+            index,
+            animate,
+          };
+          return setIndex(state)(change);
+        });
+      },
+      finalize: index => {
+        update(state =>
+          setIndex(state)({
+            index,
+            animate: false,
+          }),
+        );
+      },
+      setCount: count => {
+        update(state =>
+          setIndex({
+            ...state,
+            count,
+          })({ index: state.index }),
+        );
+      },
+      setDirection: direction => {
+        update(state => ({
+          ...state,
+          direction,
+        }));
+      },
+      setLocations: locations => {
+        update(state => ({
+          ...state,
+          locations,
+        }));
+      },
+    }),
+    selectors: states => ({
+      hasNext: () => {
+        const state = states();
+        return state.index < state.count - 1;
+      },
+      hasPrevious: () => {
+        const state = states();
+        return state.index > 0;
+      },
+      isAnimating: () => {
+        const state = states();
+        return state.isAnimating;
+      },
+      getViewIndices: () => {
+        const state = states();
+        return slots.map(slotIndex => {
+          let index = slotIndex + state.index + 0;
+          if (slotIndex < 0 && state.targetIndex < state.index) {
+            index = slotIndex + state.targetIndex + 1;
+          } else if (slotIndex > 0 && state.targetIndex > state.index) {
+            index = slotIndex + state.targetIndex - 1;
+          }
+          return index;
+        });
+      },
+      getLocation: () => {
+        const state = states();
+        return lookupLocation(state)(index => index);
+      },
+      getNextLocation: () => {
+        const state = states();
+        return lookupLocation(state)(index => index + 1);
+      },
+      getPreviousLocation: () => {
+        const state = states();
+        return lookupLocation(state)(index => index - 1);
+      },
+    }),
+  };
+  const update = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default()();
+  const states = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().scan(
+    (state, patch) => patch(state),
+    {
+      ...glissandoState.initialState,
+    },
+    update,
+  );
+  const actions = {
+    ...glissandoState.actions(update),
+  };
+  const selectors = {
+    ...glissandoState.selectors(states),
+  };
+  const changedStates = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().scan(
+    (state, value) =>
+      JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
         ? (mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().SKIP)
-        : value, (mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().SKIP), states);
-    const getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().lift(value => value, changedStates);
-    return {
-        getState: states,
-        getChanges,
-        ...actions,
-        ...selectors,
-    };
+        : value,
+    (mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().SKIP),
+    states,
+  );
+  const getChanges = mithril_stream__WEBPACK_IMPORTED_MODULE_0___default().lift(value => value, changedStates);
+  return {
+    getState: states,
+    getChanges,
+    ...actions,
+    ...selectors,
+  };
 };
 
-const getSliderStyle = (state) => {
-    const slotCount = 2 * state.sideViews + 1;
-    const slotWidth = 100 / slotCount;
-    const direction = state.direction === 'rtl' ? 1 : -1;
-    let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
-    if (state.targetIndex > state.index) {
-        sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
-    }
-    else if (state.targetIndex < state.index) {
-        sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
-    }
-    const style = {
-        width: `${slotCount * 100}%`,
-        transform: `translateX(${sliderTranslateX}%)`,
-        ...(!state.isAnimating
-            ? {
-                transitionDuration: '0ms',
-            }
-            : undefined),
-    };
-    const className = state.isAnimating ? 'glissando-animating' : '';
-    return { style, className };
+const getSliderStyle = state => {
+  const slotCount = 2 * state.sideViews + 1;
+  const slotWidth = 100 / slotCount;
+  const direction = state.direction === 'rtl' ? 1 : -1;
+  let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
+  if (state.targetIndex > state.index) {
+    sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
+  } else if (state.targetIndex < state.index) {
+    sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
+  }
+  const style = {
+    width: `calc(${slotCount} * calc(100%))`,
+    transform: `translateX(${sliderTranslateX}%)`,
+    ...(!state.isAnimating
+      ? {
+          transitionDuration: '0ms',
+        }
+      : undefined),
+  };
+  const className = state.isAnimating ? 'glissando-animating' : '';
+  return { style, className };
 };
 
 
