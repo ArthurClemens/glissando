@@ -31,7 +31,7 @@
     "dist",
     "README.md"
   ],
-  "types": "dist/index.d.ts",
+  "types": "dist",
   "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",

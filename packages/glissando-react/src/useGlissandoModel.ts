@@ -6,6 +6,9 @@ type TModel = {
   _: Glissando.States;
 };
 
+/**
+ * Wrapper around GlissandoModel that subscribes to changes and causes React to redraw on each change.
+ */
 export const useGlissandoModel = (initialState?: Glissando.InitialState) => {
   const [model] = useState<Glissando.Model>(GlissandoModel(initialState));
 

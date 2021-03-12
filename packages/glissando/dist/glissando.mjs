@@ -63,18 +63,43 @@ const lookupLocation = state => changeFn => {
   }
   return state.locations[changeFn(index)];
 };
-const GlissandoModel = (props = {}) => {
-  const sideViews = props.sideViews || 1;
+const getInitialState = ({
+  index = 0,
+  count = 0,
+  sideViews = 1,
+  location,
+  locations,
+} = {}) => {
   const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
   const initialState = {
-    index: props.index || 0,
-    targetIndex: props.index || 0,
+    targetIndex: index,
+    index,
+    count,
+    ...(Array.isArray(locations)
+      ? {
+          locations,
+          count: locations ? locations.length : 0,
+          location: locations[0],
+        }
+      : undefined),
+    ...(location
+      ? {
+          location,
+          index: Array.isArray(locations)
+            ? locations.indexOf(location) || index
+            : index,
+        }
+      : undefined),
     isAnimating: false,
-    count: 0,
     direction: 'ltr',
     slots,
     sideViews,
   };
+  initialState.targetIndex = initialState.index;
+  return initialState;
+};
+const GlissandoModel = (props = {}) => {
+  const initialState = getInitialState(props);
   const glissandoState = {
     initialState,
     actions: update => ({
@@ -139,6 +164,7 @@ const GlissandoModel = (props = {}) => {
         update(state => ({
           ...state,
           locations,
+          count: locations.length,
         }));
       },
     }),
@@ -157,7 +183,7 @@ const GlissandoModel = (props = {}) => {
       },
       getViewIndices: () => {
         const state = states();
-        return slots.map(slotIndex => {
+        return state.slots.map(slotIndex => {
           let index = slotIndex + state.index + 0;
           if (slotIndex < 0 && state.targetIndex < state.index) {
             index = slotIndex + state.targetIndex + 1;
@@ -189,6 +215,8 @@ const GlissandoModel = (props = {}) => {
     },
     update,
   );
+  // Debugging:
+  // states.map(state => console.log(JSON.stringify(state, null, 2)));
   const actions = {
     ...glissandoState.actions(update),
   };

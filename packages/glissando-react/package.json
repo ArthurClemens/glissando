@@ -26,7 +26,7 @@
     "dist",
     "README.md"
   ],
-  "types": "dist/index.d.ts",
+  "types": "dist",
   "size-limit": [
     {
       "path": "dist/glissando-react.js"

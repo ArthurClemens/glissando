@@ -1,6 +1,6 @@
 # Glissando
 
-A simple content slider for anything that needs to move.
+A simple content slider for anything that needs to slide.
 
 For React and Mithril.
 
@@ -12,6 +12,18 @@ For React and Mithril.
     - [Directed use](#directed-use)
   - [Slider model](#slider-model)
     - [Initial state](#initial-state)
+      - [Standalone use](#standalone-use-1)
+      - [Directed use](#directed-use-1)
+  - [Slider component](#slider-component)
+    - [Options](#options)
+    - [With React](#with-react)
+      - [Standalone use](#standalone-use-2)
+      - [Directed use](#directed-use-2)
+      - [CSS](#css)
+    - [With Mithril](#with-mithril)
+      - [Standalone use](#standalone-use-3)
+      - [Directed use](#directed-use-3)
+      - [CSS](#css-1)
   - [Model methods](#model-methods)
     - [next](#next)
     - [previous](#previous)
@@ -24,26 +36,17 @@ For React and Mithril.
     - [getPreviousLocation](#getpreviouslocation)
     - [getNextLocation](#getnextlocation)
     - [getChanges](#getchanges)
-  - [Slider component](#slider-component)
-    - [Options](#options)
-    - [With React](#with-react)
-      - [Standalone use](#standalone-use-1)
-      - [Directed use](#directed-use-1)
-      - [CSS](#css)
-    - [With Mithril](#with-mithril)
-      - [Standalone use](#standalone-use-2)
-      - [Directed use](#directed-use-2)
-      - [CSS](#css-1)
 - [RTL support](#rtl-support)
 - [Supported browsers](#supported-browsers)
 - [License](#license)
+- [Size](#size)
 - [Shout out](#shout-out)
 
 
 
 ## Features
 
-- Efficient rendering: only 3 elements are rendered at a single time (the previous, current and next element).
+- Efficient rendering: by default only 3 elements are rendered at a single time (the previous, current and next element) (this can be changed).
 - This results in a minimal memory footprint, so safe for mobile.
 - Can be controlled with next/previous actions, jump to page action, with or without animation.
 - Use with a router: use the router location to control the slider. Or use other app state.
@@ -74,7 +77,7 @@ The slider component can be used standalone or directed.
 
 #### Standalone use
 
-This is the simplest setup. Use control methods: `next()`, `goTo(0)`, etcetera to update the model state.
+This is the simplest setup. Use control methods: `next()`, `goTo({ index: 1 })`, etcetera to update the model state.
  
 
 #### Directed use
@@ -105,18 +108,175 @@ const model: Glissando.Model = useGlissandoModel();
 
 #### Initial state
 
+##### Standalone use
+
 ```typescript
 const initalState: Glissando.InitialState = {
+  // default values:
   index: 0,
   sideViews: 1,
 };
 const model: Glissando.Model = useGlissandoModel(initalState);
 ```
 
+| **Parameter** | **Required** | **Type** | **Description**                                                                                                                 |
+| ------------- | ------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **sideViews** | optional     | `number` | Defines how many items are rendered. For value 1: the current, previous and next item. For value 2: one more item at each side. |
+| **index**     | optional     | `number` | The initial location index.                                                                                                     |
 
-`index` can be set to another value than 0. Its value will be changed automatically when the number of children of the slider component does not match the index.
 
-`sideViews` defines how many items are rendered. For value 1: the current, previous and next item. For value 2: one more item at each side.
+##### Directed use
+
+```typescript
+const initalState: Glissando.InitialState = {
+  locations: ['a', 'b', 'c'],
+  location: 'a',
+};
+const model: Glissando.Model = useGlissandoModel(initalState);
+```
+
+| **Parameter** | **Required** | **Type**   | **Description**                                                                                                                 |
+| ------------- | ------------ | ---------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **sideViews** | optional     | `number`   | Defines how many items are rendered. For value 1: the current, previous and next item. For value 2: one more item at each side. |
+| **locations** | optional     | `string[]` | A list of location ids, for example: possible route paths.                                                                      |
+| **location**  | optional     | `string`   | The current location id, for example: the current route path.                                                                   |
+
+
+
+
+
+### Slider component
+
+The GlissandoSlider component receives the model and child elements: the items to slide.
+
+There is no limit to the number of children. By default only the current, previous and next items are rendered. This can be expanded with initial state attribute `sideViews`.
+
+Children can be changed dynamically.
+
+#### Options
+
+| **Parameter** | **Required** | **Type**           | **Description**                                                             |
+| ------------- | ------------ | ------------------ | --------------------------------------------------------------------------- |
+| **model**     | required     | `GlissandoModel`   | The slider model                                                            |
+| **children**  | required     | Component children | The elements to slide                                                       |
+| **locations** | optional     | `string[]`         | (directed use) List of location ids, for example: possible route paths      |
+| **location**  | optional     | `string`           | (directed use) The current location id, for example: the current route path |
+| **className** | optional     | `string`           | Extra class name                                                            |
+
+
+#### With React
+
+##### Standalone use
+
+```jsx
+import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
+
+const model = useGlissandoModel();
+
+<GlissandoSlider model={model}>
+  <Page1 />
+  <Page2 />
+  <Page3 />
+</GlissandoSlider>
+```
+
+##### Directed use
+
+```tsx
+const pages = ["page-1", "page-2", "page-3"];
+
+const Slider = () => {
+  const match = useRouteMatch();
+  const currentPage = match.params.page;
+
+  return (
+    <GlissandoSlider model={model} locations={pages} location={currentPage}>
+      {pages.map(id => {
+        return <Page key={id} location={id} />;
+      })}
+    </GlissandoSlider>
+  );
+};
+```
+
+See also: [Glissando usage with React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md)
+
+##### CSS
+
+Import GlissandoSlider CSS in your project: 
+
+```jsx
+import 'glissando-react/dist/glissando.min.css'
+```
+
+Or when using PostCSS:
+
+```jsx
+import 'glissando-react/dist/glissando.global.min.css'
+```
+
+
+#### With Mithril
+
+##### Standalone use
+
+```javascript
+import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril';
+
+const model = useGlissandoModel();
+
+m(GlissandoSlider, { model }, [
+  m(Page1),
+  m(Page2),
+  m(Page3),
+]);
+```
+
+##### Directed use
+
+```ts
+const pages = ["page-1", "page-2", "page-3"];
+
+const Slider = {
+  view: ({ attrs }) => {
+    const { model } = attrs;
+    const currentPage = m.route.param('page');
+
+    return m(
+      GlissandoSlider,
+      {
+        model,
+        locations: pages,
+        location: currentPage,
+      },
+      pages.map(id =>
+        m(Page, {
+          key: id,
+          location: id,
+        }),
+      ),
+    );
+  },
+};
+```
+
+See also: [Glissando usage with Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md)
+
+##### CSS
+
+Import GlissandoSlider CSS in your project: 
+
+```js
+import 'glissando-mithril/dist/glissando.min.css'
+```
+
+Or when using PostCSS:
+
+```js
+import 'glissando-mithril/dist/glissando.global.min.css'
+```
+
+
 
 
 ### Model methods
@@ -326,142 +486,9 @@ model.getChanges
 When calling `getChanges` in Mithril's closure component (outside of `view`), do not end the stream.
 
 
-
-### Slider component
-
-The GlissandoSlider receives the model and child elements: the items to slide.
-
-There is no limit to the number of children. By default only the current, previous and next items are rendered. This can be expanded with initial state attribute `sideViews`.
-
-Children can be changed dynamically.
-
-#### Options
-
-| **Parameter** | **Required** | **Type**           | **Description**                                                             |
-| ------------- | ------------ | ------------------ | --------------------------------------------------------------------------- |
-| **model**     | required     | `GlissandoModel`   | The slider model                                                            |
-| **children**  | required     | Component children | The elements to slide                                                       |
-| **locations** | optional     | `string[]`         | (directed use) List of location ids, for example: possible route paths      |
-| **location**  | optional     | `string`           | (directed use) The current location id, for example: the current route path |
-| **className** | optional     | `string`           | Extra class name                                                            |
-
-
-#### With React
-
-##### Standalone use
-
-```jsx
-import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
-
-const model = useGlissandoModel();
-
-<GlissandoSlider model={model}>
-  <Page1 />
-  <Page2 />
-  <Page3 />
-</GlissandoSlider>
-```
-
-##### Directed use
-
-```tsx
-const pages = ["page-1", "page-2", "page-3"];
-
-const Slider = () => {
-  const match = useRouteMatch();
-  const currentPage = match.params.page;
-
-  return (
-    <GlissandoSlider model={model} locations={pages} location={currentPage}>
-      {pages.map(id => {
-        return <Page key={id} location={id} />;
-      })}
-    </GlissandoSlider>
-  );
-};
-```
-
-See also: [Glissando usage with React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md)
-
-##### CSS
-
-Import GlissandoSlider CSS in your project: 
-
-```jsx
-import 'glissando-react/dist/glissando.min.css'
-```
-
-Or when using PostCSS:
-
-```jsx
-import 'glissando-react/dist/glissando.global.min.css'
-```
-
-
-#### With Mithril
-
-##### Standalone use
-
-```javascript
-import { GlissandoSlider, useGlissandoModel } from 'glissando-mithril';
-
-const model = useGlissandoModel();
-
-m(GlissandoSlider, { model }, [
-  m(Page1),
-  m(Page2),
-  m(Page3),
-]);
-```
-
-##### Directed use
-
-```ts
-const pages = ["page-1", "page-2", "page-3"];
-
-const Slider = {
-  view: ({ attrs }) => {
-    const { model } = attrs;
-    const currentPage = m.route.param('page');
-
-    return m(
-      GlissandoSlider,
-      {
-        model,
-        locations: pages,
-        location: currentPage,
-      },
-      pages.map(id =>
-        m(Page, {
-          key: id,
-          location: id,
-        }),
-      ),
-    );
-  },
-};
-```
-
-See also: [Glissando usage with Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md)
-
-##### CSS
-
-Import GlissandoSlider CSS in your project: 
-
-```js
-import 'glissando-mithril/dist/glissando.min.css'
-```
-
-Or when using PostCSS:
-
-```js
-import 'glissando-mithril/dist/glissando.global.min.css'
-```
-
 ## RTL support
 
 Glissando automatically detects the reading direction. Set one of the parent's HTML attribute `direction` to `"rtl"`.
-
 
 
 ## Supported browsers
@@ -474,6 +501,12 @@ Glissando is tested on major browsers, Edge and Internet Explorer 11.
 
 MIT
 
+
+## Size
+
+(Glissando core library)
+
+2.08 KB with all dependencies, minified and gzipped
 
 
 ## Shout out

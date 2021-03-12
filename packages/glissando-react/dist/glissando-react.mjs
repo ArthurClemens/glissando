@@ -103,6 +103,9 @@ const GlissandoSlider = props => {
   );
 };
 
+/**
+ * Wrapper around GlissandoModel that subscribes to changes and causes React to redraw on each change.
+ */
 const useGlissandoModel = initialState => {
   const [model] = useState(GlissandoModel(initialState));
   // Subscribe to changes

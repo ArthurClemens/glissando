@@ -80,21 +80,48 @@ const lookupLocation = (state: Glissando.State) => (
   return state.locations[changeFn(index)];
 };
 
-export const GlissandoModel = (
-  props: Glissando.InitialState = {} as Glissando.InitialState,
+const getInitialState = (
+  {
+    index = 0,
+    count = 0,
+    sideViews = 1,
+    location,
+    locations,
+  }: Glissando.InitialState = {} as Glissando.InitialState,
 ) => {
-  const sideViews = props.sideViews || 1;
   const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
-
   const initialState: Glissando.State = {
-    index: props.index || 0,
-    targetIndex: props.index || 0,
+    targetIndex: index,
+    index,
+    count,
+    ...(Array.isArray(locations)
+      ? {
+          locations,
+          count: locations ? locations.length : 0,
+          location: locations[0],
+        }
+      : undefined),
+    ...(location
+      ? {
+          location,
+          index: Array.isArray(locations)
+            ? locations.indexOf(location) || index
+            : index,
+        }
+      : undefined),
     isAnimating: false,
-    count: 0,
     direction: 'ltr', // set by libs glissando-mithril etc
     slots,
     sideViews,
   };
+  initialState.targetIndex = initialState.index;
+  return initialState;
+};
+
+export const GlissandoModel = (
+  props: Glissando.InitialState = {} as Glissando.InitialState,
+) => {
+  const initialState = getInitialState(props);
 
   const glissandoState = {
     initialState,
@@ -168,6 +195,7 @@ export const GlissandoModel = (
         update((state: Glissando.State) => ({
           ...state,
           locations,
+          count: locations.length,
         }));
       },
     }),
@@ -187,7 +215,7 @@ export const GlissandoModel = (
       },
       getViewIndices: () => {
         const state = states();
-        return slots.map(slotIndex => {
+        return state.slots.map(slotIndex => {
           let index = slotIndex + state.index + 0;
           if (slotIndex < 0 && state.targetIndex < state.index) {
             index = slotIndex + state.targetIndex + 1;
@@ -221,6 +249,9 @@ export const GlissandoModel = (
     },
     update,
   );
+
+  // Debugging:
+  // states.map(state => console.log(JSON.stringify(state, null, 2)));
 
   const actions = {
     ...glissandoState.actions(update),

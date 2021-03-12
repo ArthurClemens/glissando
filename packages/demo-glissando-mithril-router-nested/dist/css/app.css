@@ -1,4 +1,3 @@
-.glissando{width:100%;height:100%;overflow-x:hidden;-ms-overflow-y:scroll;-ms-overflow-style:none}.glissando-slider{display:flex;height:100%;animation-timing-function:ease-in-out;transition-duration:.3s}.glissando-slider.glissando-animating{pointer-events:none}.glissando-page{width:100%;height:100%;overflow-y:auto;-ms-overflow-style:auto}
 *:focus {
   outline: none;
 }

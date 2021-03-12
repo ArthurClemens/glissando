@@ -42,24 +42,36 @@ export declare namespace Glissando {
   };
   type InitialState = {
     /**
-     * The current location index.
-     */
-    index: number;
-    /**
      * The number of side views; default: 1.
      */
-    sideViews: number;
-  };
-  type Props = {
-    /**
-     * The current location index.
-     */
-    index: number;
-    /**
-     * The number of side views; default: 1.
-     */
-    sideViews: number;
-  };
+    sideViews?: number;
+  } & (
+    | {
+        /**
+         * The current location id.
+         */
+        location?: string;
+        /**
+         * Locations ids.
+         * If no location is passed in the initial state, it is set to the first element of locations.
+         */
+        locations?: string[];
+        index?: never;
+        count?: never;
+      }
+    | {
+        /**
+         * The current location index.
+         */
+        index?: number;
+        /**
+         * The number of pages / locations. Default 0.
+         */
+        count?: number;
+        location?: never;
+        locations?: never;
+      }
+  );
   type States = Stream<State>;
   /**
    * Only returns a changed state.
@@ -83,12 +95,12 @@ export declare namespace Glissando {
      * Go to the previous location.
      * @param animate Optionally animate the transition. Default `true`.
      */
-    previous: ({ animate }?: { animate?: boolean }) => void;
+    previous: (props?: { animate?: boolean }) => void;
     /**
      * Go to the next location.
      * @param animate Optionally animate the transition. Default `true`.
      */
-    next: ({ animate }?: { animate?: boolean }) => void;
+    next: (props?: { animate?: boolean }) => void;
     /**
      * Go to a location.
      * @param index Location index.
@@ -97,23 +109,24 @@ export declare namespace Glissando {
      */
     goTo: (change: IndexChange | LocationChange) => void;
     /**
-     * For internal use. Sets the number of locations (commonly the number of child elements of the slider).
+     * Sets the number of locations (commonly the number of child elements of the slider).
      */
     setCount: (count: number) => void;
     /**
-     * For internal use. Sets the location ids.
+     * Sets the location ids.
+     * Also updates the count with the number of ids.
      */
-    setLocations: (ids: string[]) => void;
+    setLocations: (locations: string[]) => void;
     /**
-     * For internal use. Sets the index to the matching location id. If no matching id is found, defaults to 0.
+     * Sets the index to the matching location id. If no matching id is found, defaults to 0.
      */
     setLocation: (change: LocationChange) => void;
     /**
-     * For internal use. Set to 'rtl to change the slider's reading/sliding direction to right-to-left.
+     * Set to 'rtl to change the slider's reading/sliding direction to right-to-left.
      */
     setDirection: (direction: Direction) => void;
     /**
-     * For internal use. Finalizes animated transitions.
+     * Finalizes animated transitions.
      */
     finalize: (index: number) => void;
   };
