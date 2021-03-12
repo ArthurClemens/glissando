@@ -1,6 +1,7 @@
 import { useEffectRef } from '@huse/effect-ref';
 import { getSliderStyle, GlissandoModel } from 'glissando';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Fragment, jsx } from 'react/jsx-runtime';
 import { useStream } from 'use-stream';
 
 export { getSliderStyle, GlissandoModel } from 'glissando';
@@ -51,7 +52,7 @@ const GlissandoSlider = props => {
   const observeTransitionEnd = useCallback(
     node => {
       if (node === null) {
-        return React.createElement(React.Fragment, null);
+        return jsx(Fragment, {}, void 0);
       }
       setSliderNode(node);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -79,27 +80,34 @@ const GlissandoSlider = props => {
   }, [props]);
   const sliderRef = useEffectRef(node => observeTransitionEnd(node));
   if (!children) {
-    return React.createElement(React.Fragment, null);
+    return jsx(Fragment, {}, void 0);
   }
   const { className, style } = getSliderStyle(getState());
-  return React.createElement(
+  return jsx(
     'div',
-    { className: ['glissando', sliderClassName].join(' ') },
-    React.createElement(
-      'div',
-      {
-        className: `glissando-slider ${className}`,
-        style,
-        ref: sliderRef,
-      },
-      getViewIndices().map(viewIndex =>
-        React.createElement(
-          'div',
-          { key: viewIndex, className: 'glissando-page' },
-          children[viewIndex],
-        ),
+    {
+      className: ['glissando', sliderClassName].join(' '),
+      children: jsx(
+        'div',
+        {
+          className: `glissando-slider ${className}`,
+          style,
+          ref: sliderRef,
+          children: getViewIndices().map(viewIndex =>
+            jsx(
+              'div',
+              {
+                className: 'glissando-page',
+                children: children[viewIndex],
+              },
+              viewIndex,
+            ),
+          ),
+        },
+        void 0,
       ),
-    ),
+    },
+    void 0,
   );
 };
 

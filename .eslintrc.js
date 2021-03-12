@@ -7,14 +7,7 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  extends: [
-    'airbnb',
-    'airbnb/hooks',
-    'prettier',
-    'prettier/standard',
-    'prettier/@typescript-eslint',
-    'prettier/react',
-  ],
+  extends: ['airbnb', 'airbnb/hooks', 'prettier'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
@@ -36,8 +29,9 @@ module.exports = {
   },
   rules: {
     // note you must disable the base rule as it can report incorrect errors
-    'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': ['error'],
+    'no-use-before-define': OFF,
+    'no-void': OFF,
+    '@typescript-eslint/no-use-before-define': ERROR,
 
     'prettier/prettier': ERROR,
     // ESLint rules
@@ -81,5 +75,6 @@ module.exports = {
     ],
     'react/jsx-curly-newline': OFF,
     'react/jsx-uses-react': [ERROR],
+    'react/react-in-jsx-scope': OFF,
   },
 };

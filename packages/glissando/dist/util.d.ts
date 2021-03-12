@@ -4,7 +4,7 @@ export declare const getSliderStyle: (
   state: Glissando.State,
 ) => {
   style: {
-    transitionDuration?: string;
+    transitionDuration?: string | undefined;
     width: string;
     transform: string;
   };

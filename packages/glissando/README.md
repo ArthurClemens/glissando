@@ -6,3 +6,8 @@ This package contains base functions to create Glissando components.
 
 [Main documentation](https://github.com/ArthurClemens/glissando)
 
+
+
+## Size
+
+1.93 KB with all dependencies, minified and gzipped

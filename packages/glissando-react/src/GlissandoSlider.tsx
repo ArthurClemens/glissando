@@ -1,6 +1,6 @@
 import { useEffectRef } from '@huse/effect-ref';
 import { getSliderStyle, Glissando } from 'glissando';
-import React, {
+import {
   ReactNode,
   RefCallback,
   useCallback,
@@ -53,6 +53,8 @@ export const GlissandoSlider = (props: Props) => {
     setLocations,
     goTo,
   } = model;
+
+  /* SIDE EFFECTS */
 
   // Child count
   useEffect(() => {
@@ -117,6 +119,8 @@ export const GlissandoSlider = (props: Props) => {
   const sliderRef = useEffectRef((node: HTMLDivElement) =>
     observeTransitionEnd(node),
   );
+
+  /* END SIDE EFFECTS */
 
   if (!children) {
     return <></>;

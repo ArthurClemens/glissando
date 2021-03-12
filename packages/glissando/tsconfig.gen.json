@@ -1,10 +1,3 @@
 {
-  "extends": "./tsconfig.json",
-
-  "compilerOptions": {
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "outDir": "dist",
-    "noEmit": false
-  }
+  "extends": "../../tsconfig.gen.json"
 }

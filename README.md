@@ -39,7 +39,6 @@ For React and Mithril.
 - [RTL support](#rtl-support)
 - [Supported browsers](#supported-browsers)
 - [License](#license)
-- [Size](#size)
 - [Shout out](#shout-out)
 
 
@@ -501,12 +500,6 @@ Glissando is tested on major browsers, Edge and Internet Explorer 11.
 
 MIT
 
-
-## Size
-
-(Glissando core library)
-
-2.08 KB with all dependencies, minified and gzipped
 
 
 ## Shout out

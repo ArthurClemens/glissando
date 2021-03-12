@@ -1,5 +1,4 @@
 import { Glissando } from 'glissando-react';
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 type HeaderProps = {
@@ -24,8 +23,8 @@ export const Header = ({ model }: HeaderProps) => {
       <button
         type="button"
         className="btn btn-link btn-nav pull-left"
-        onClick={() => history.push(previousLocation)}
-        onKeyUp={() => history.push(previousLocation)}
+        onClick={() => previousLocation && history.push(previousLocation)}
+        onKeyUp={() => previousLocation && history.push(previousLocation)}
         tabIndex={0}
         disabled={!previousLocation || isAnimating()}
       >
@@ -37,8 +36,8 @@ export const Header = ({ model }: HeaderProps) => {
       <button
         type="button"
         className="btn btn-link btn-nav pull-right"
-        onClick={() => history.push(nextLocation)}
-        onKeyUp={() => history.push(nextLocation)}
+        onClick={() => nextLocation && history.push(nextLocation)}
+        onKeyUp={() => nextLocation && history.push(nextLocation)}
         tabIndex={0}
         disabled={!nextLocation || isAnimating()}
       >

@@ -218,4 +218,4 @@ const Header: m.Component<TProps> = {
 
 ## Size
 
-1.43 KB with all dependencies, minified and gzipped
+1.41 KB with all dependencies, minified and gzipped
