@@ -1,5 +1,5 @@
 {
-  "name": "test-glissando-react",
+  "name": "demo-glissando-react-router",
   "version": "0.7.4",
   "private": true,
   "description": "",
@@ -19,10 +19,12 @@
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "dependencies": {
+    "@types/react-router-dom": "^5.1.7",
     "glissando-react": "^0.7.4",
     "mithril": "2.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-router-dom": "5.2.0",
     "use-stream": "0.3.7"
   },
   "devDependencies": {

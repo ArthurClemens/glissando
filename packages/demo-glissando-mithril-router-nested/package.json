@@ -1,5 +1,5 @@
 {
-  "name": "test-glissando-mithril",
+  "name": "demo-glissando-mithril-router-nested",
   "version": "0.7.4",
   "private": true,
   "description": "",
@@ -19,6 +19,7 @@
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "dependencies": {
+    "@types/ramda": "^0.27.38",
     "glissando-mithril": "^0.7.4",
     "mithril": "2.0.4"
   },
