@@ -1,6 +1,6 @@
 {
   "name": "demo-glissando-mithril-router-nested",
-  "version": "0.7.4",
+  "version": "0.8.0",
   "private": true,
   "description": "",
   "keywords": [],
@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@types/ramda": "^0.27.38",
-    "glissando-helpers": "^0.7.4",
-    "glissando-mithril": "^0.7.4",
+    "glissando-helpers": "^0.8.0",
+    "glissando-mithril": "^0.8.0",
     "mithril": "2.0.4"
   },
   "devDependencies": {
