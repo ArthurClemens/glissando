@@ -1,5 +1,16 @@
-import { Glissando } from './types';
+import type { Glissando } from './types';
 
+/**
+ * Returns the classname and style object for the current model state.
+ * Usage:
+ *
+ * const { className, style } = getSliderStyle(getState());
+ * ...
+ * <div
+ *   className={`glissando-slider ${className}`}
+ *   style={style}
+ * >
+ */
 export const getSliderStyle = (state: Glissando.State) => {
   const slotCount = 2 * state.sideViews + 1;
   const slotWidth = 100 / slotCount;

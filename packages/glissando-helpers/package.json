@@ -1,0 +1,44 @@
+{
+  "name": "glissando-helpers",
+  "version": "0.7.4",
+  "description": "A simple content slider for anything that needs to move. Helper functions for Glissando.",
+  "main": "dist/glissando-helpers",
+  "module": "dist/glissando-helpers.mjs",
+  "type": "module",
+  "scripts": {
+    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
+    "build:clean": "rm -rf dist/*.js && rm -rf dist/*.css",
+    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
+    "build:module": "MODULE=1 MODULE_NAME=glissandoHelpers ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
+    "build:umd": "MODULE=0 MODULE_NAME=glissandoHelpers ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
+    "build:lint": "eslint --fix --ext .mjs,.d.ts ./dist",
+    "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
+    "test": "true",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
+    "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{ts,tsx,css}\"",
+    "fix": "yarn run lint --fix && yarn run prettier",
+    "size": "size-limit",
+    "size:why": "size-limit --why",
+    "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "types": "dist",
+  "size-limit": [
+    {
+      "path": "dist/glissando-helpers.js"
+    }
+  ],
+  "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
+  "homepage": "https://github.com/ArthurClemens/glissando",
+  "license": "MIT",
+  "dependencies": {
+    "glissando": "0.7.4"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.10.1",
+    "size-limit": "^4.10.1"
+  }
+}

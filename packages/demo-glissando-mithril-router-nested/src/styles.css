@@ -8,7 +8,6 @@
 
 .content {
   width: 100%;
-  padding-top: 44px;
 }
 
 .user-page {
@@ -28,5 +27,17 @@
 
 .details {
   padding: 20px;
+  color: #999;
+}
+
+.bar {
+  position: absolute;
+}
+
+.status {
+  margin-top: 44px;
+  padding: 10px 15px;
+  background: rgba(247, 247, 247, 0.98);
+  font-size: 14px;
   color: #999;
 }

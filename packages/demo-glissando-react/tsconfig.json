@@ -1,15 +1,7 @@
 {
-  "include": ["src/*"],
-  "exclude": ["node_modules/*"],
+  "extends": "../../tsconfig.json",
+  "include": ["src/**/*"],
   "compilerOptions": {
-    "target": "es5",
-    "module": "ESNEXT",
-    "strict": true,
-    "jsx": "react",
-    "noUnusedLocals": false,
-    "moduleResolution": "node",
-    "types": [],
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "jsx": "react-jsx"
   }
 }

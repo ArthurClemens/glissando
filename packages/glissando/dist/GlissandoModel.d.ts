@@ -1,4 +1,4 @@
-import { Glissando } from './types';
+import type { Glissando } from './types';
 
 export declare const GlissandoModel: (
   props?: Glissando.InitialState,

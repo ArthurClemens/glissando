@@ -1,3 +1,4 @@
+import { createLocationsFromPath } from 'glissando-helpers';
 import {
   Glissando,
   GlissandoSlider,
@@ -10,32 +11,6 @@ import { Listing } from './Listing';
 import { User } from './User';
 import { UserDetails } from './UserDetails';
 import users from './users';
-
-// Store indices to facilitate merging
-type TBreadCrumb = {
-  [key: string]: string;
-};
-
-const trailToBreadCrumb = (trail: string[]) =>
-  trail.reduce(
-    (acc, path, index) => ({
-      ...acc,
-      [index.toString()]: path,
-    }),
-    {} as TBreadCrumb,
-  );
-
-const createBreadCrumb = (route: string) =>
-  route
-    .slice(1)
-    .split('/')
-    .map(fragment => `/${fragment}`)
-    .reduce((acc, fragment) => {
-      const previousPath = acc[acc.length - 1];
-      const path = previousPath ? previousPath + fragment : fragment;
-
-      return [...acc, path];
-    }, [] as string[]);
 
 type TSliderProps = {
   model: Glissando.Model;
@@ -54,34 +29,20 @@ const Slider: m.ClosureComponent<TSliderProps> = () => {
         localState.user = m.route.param('user');
       }
 
-      /*
-      Support starting from a deeper route (a User or UserDetails page).
-      When starting from there, we don't have any locations stored in the Glissando model yet.
-      To know which pages come before we create a breadcrumb from the current route to know which pages should be shown.
-      */
-      const breadcrumb = createBreadCrumb(m.route.get());
-
-      /*
-      We use the stored locations to know which pages should be shown after
-      (so that when sliding back the pages don't disappear).
-      Then combine all collected data.
-      */
-      const storedLocations = model.getState().locations || [];
-      const merged = {
-        ...trailToBreadCrumb(storedLocations),
-        ...trailToBreadCrumb(breadcrumb),
-      };
-      const pages = Object.keys(merged).map(key => merged[key]);
-      const currentPage = pages[breadcrumb.length - 1];
+      const location = m.route.get();
+      const locations = createLocationsFromPath(
+        location,
+        model.getState().locations,
+      );
 
       return m(
         GlissandoSlider,
         {
           model,
-          locations: pages,
-          location: currentPage,
+          locations,
+          location,
         },
-        pages.map((_, index) => {
+        locations.map((_, index) => {
           switch (index) {
             case 0:
               return m(Listing, { users });

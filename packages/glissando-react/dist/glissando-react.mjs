@@ -24,6 +24,7 @@ const GlissandoSlider = props => {
     setLocations,
     goTo,
   } = model;
+  /* SIDE EFFECTS */
   // Child count
   useEffect(() => {
     const count = (children || []).length;
@@ -79,6 +80,7 @@ const GlissandoSlider = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
   const sliderRef = useEffectRef(node => observeTransitionEnd(node));
+  /* END SIDE EFFECTS */
   if (!children) {
     return jsx(Fragment, {}, void 0);
   }

@@ -50,7 +50,10 @@ const GlissandoSlider = initialVnode => {
       const { className: sliderClassName } = attrs;
       const { className, style } = getSliderStyle(getState());
       return m(
-        `.glissando ${sliderClassName}`,
+        'div',
+        {
+          className: ['glissando', sliderClassName].join(' '),
+        },
         m(
           '.glissando-slider',
           {

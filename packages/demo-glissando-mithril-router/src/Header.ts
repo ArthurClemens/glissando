@@ -1,4 +1,4 @@
-import { Glissando } from 'glissando-mithril';
+import type { Glissando } from 'glissando-mithril';
 import m from 'mithril';
 
 type TProps = {

@@ -1,4 +1,4 @@
-import { Glissando } from 'glissando-react';
+import type { Glissando } from 'glissando-react';
 import { useHistory } from 'react-router-dom';
 
 type HeaderProps = {

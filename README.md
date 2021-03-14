@@ -36,6 +36,10 @@ For React and Mithril.
     - [getPreviousLocation](#getpreviouslocation)
     - [getNextLocation](#getnextlocation)
     - [getChanges](#getchanges)
+- [Helper functions](#helper-functions)
+  - [createLocationsFromPath](#createlocationsfrompath)
+    - [With React](#with-react-1)
+    - [With Mithril](#with-mithril-1)
 - [RTL support](#rtl-support)
 - [Supported browsers](#supported-browsers)
 - [License](#license)
@@ -484,6 +488,71 @@ model.getChanges
 
 When calling `getChanges` in Mithril's closure component (outside of `view`), do not end the stream.
 
+
+## Helper functions
+
+Helper functions are provided in separate package `glissando-helpers`.
+
+
+### createLocationsFromPath
+
+Helper function to create the list of locations (and the current location) from a path.
+This is useful when traversing a hierarchical path, such as a master detail pattern (for example a list of posts each linked to a post page, and possibly deeper levels).
+
+`createLocationsFromPath` creates a breadcrumb trail from a given path and returns a new list of locations based on the merge of the breadcrumb trail and the current model locations.
+
+From path: `"/users/Ferdinand/details"`, the generated locations will be: `["/users", "/users/Ferdinand", "/users/Ferdinand/details"]`. When this list of locations is fed to the Glissando component, back and forward links will be set automatically. 
+  
+#### With React
+
+```typescript
+import {
+  Glissando,
+  GlissandoSlider,
+  useGlissandoModel,
+} from 'glissando-react';
+import {
+  createLocationsFromPath
+} from 'glissando-helpers';
+import { useRouteMatch } from 'react-router-dom';
+
+// in component:
+const model = useGlissandoModel();
+
+const match = useRouteMatch();
+
+const location = match.url;
+const locations = createLocationsFromPath(
+  location,
+  model.getState().locations,
+);
+
+// Call GlissandoSlider component with locations and location
+```
+#### With Mithril
+
+```typescript
+import {
+  Glissando,
+  GlissandoSlider,
+  useGlissandoModel,
+} from 'glissando-mithril';
+import {
+  createLocationsFromPath
+} from 'glissando-helpers';
+
+// in component:
+const model = useGlissandoModel();
+
+const location = m.route.get();
+
+const locations = createLocationsFromPath(
+  location,
+  model.getState().locations,
+);
+
+// Call GlissandoSlider component with locations and location
+```
 
 ## RTL support
 

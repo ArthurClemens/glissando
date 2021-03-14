@@ -1,7 +1,5 @@
 import Stream from 'mithril/stream';
 
-export { default as Stream } from 'mithril/stream';
-
 const calculateNewIndex = (state, index) => {
   if (index === undefined || Number.isNaN(index)) {
     return {
@@ -240,6 +238,17 @@ const GlissandoModel = (props = {}) => {
   };
 };
 
+/**
+ * Returns the classname and style object for the current model state.
+ * Usage:
+ *
+ * const { className, style } = getSliderStyle(getState());
+ * ...
+ * <div
+ *   className={`glissando-slider ${className}`}
+ *   style={style}
+ * >
+ */
 const getSliderStyle = state => {
   const slotCount = 2 * state.sideViews + 1;
   const slotWidth = 100 / slotCount;

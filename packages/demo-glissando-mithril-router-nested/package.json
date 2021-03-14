@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@types/ramda": "^0.27.38",
+    "glissando-helpers": "^0.7.4",
     "glissando-mithril": "^0.7.4",
     "mithril": "2.0.4"
   },

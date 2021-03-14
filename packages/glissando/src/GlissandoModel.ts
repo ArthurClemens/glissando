@@ -1,6 +1,6 @@
 import Stream from 'mithril/stream';
 
-import { Glissando } from './types';
+import type { Glissando } from './types';
 
 type PatchFn = (state: Glissando.State) => Glissando.State;
 
@@ -148,7 +148,7 @@ export const GlissandoModel = (
         animate,
       }: {
         index?: number;
-        location?: string;
+        location?: Glissando.Location;
         animate?: boolean;
       }) => {
         update((state: Glissando.State) => {
@@ -191,7 +191,7 @@ export const GlissandoModel = (
           direction,
         }));
       },
-      setLocations: (locations: string[]) => {
+      setLocations: (locations: Glissando.Location[]) => {
         update((state: Glissando.State) => ({
           ...state,
           locations,

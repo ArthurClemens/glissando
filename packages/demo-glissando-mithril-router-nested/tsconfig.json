@@ -1,15 +1,8 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*"],
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "es5",
     "module": "ESNEXT",
-    "lib": ["es2015", "dom"],
-    "strict": true,
-    "noUnusedLocals": false,
-    "moduleResolution": "node",
-    "types": [],
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "lib": ["es2015", "dom"]
   }
 }

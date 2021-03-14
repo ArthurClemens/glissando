@@ -3,6 +3,8 @@ import Stream from 'mithril/stream';
 export type { Stream };
 
 export namespace Glissando {
+  export type Location = string;
+
   export type State = {
     /**
      * The current location index.
@@ -12,12 +14,12 @@ export namespace Glissando {
     /**
      * The current location id.
      */
-    location?: string;
+    location?: Location;
 
     /**
      * Locations ids.
      */
-    locations?: string[];
+    locations?: Location[];
 
     /**
      * The target location index.
@@ -60,13 +62,13 @@ export namespace Glissando {
         /**
          * The current location id.
          */
-        location?: string;
+        location?: Location;
 
         /**
          * Locations ids.
          * If no location is passed in the initial state, it is set to the first element of locations.
          */
-        locations?: string[];
+        locations?: Location[];
 
         index?: never;
         count?: never;
@@ -107,7 +109,7 @@ export namespace Glissando {
   };
 
   export type LocationChange = {
-    location: string;
+    location: Location;
     animate?: boolean;
   };
 
@@ -141,7 +143,7 @@ export namespace Glissando {
      * Sets the location ids.
      * Also updates the count with the number of ids.
      */
-    setLocations: (locations: string[]) => void;
+    setLocations: (locations: Location[]) => void;
 
     /**
      * Sets the index to the matching location id. If no matching id is found, defaults to 0.
@@ -178,17 +180,17 @@ export namespace Glissando {
     /**
      * Returns the current location id. If no next location exist returns undefined.
      */
-    getLocation: () => string | undefined;
+    getLocation: () => Location | undefined;
 
     /**
      * Returns the next location id. If no next location exist returns undefined.
      */
-    getNextLocation: () => string | undefined;
+    getNextLocation: () => Location | undefined;
 
     /**
      * Returns the previous location id. If no previous location exist returns undefined.
      */
-    getPreviousLocation: () => string | undefined;
+    getPreviousLocation: () => Location | undefined;
 
     /**
      * For internal use.

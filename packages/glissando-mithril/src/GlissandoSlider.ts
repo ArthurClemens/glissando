@@ -64,7 +64,10 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
       const { className, style } = getSliderStyle(getState());
 
       return m(
-        `.glissando ${sliderClassName}`,
+        'div',
+        {
+          className: ['glissando', sliderClassName].join(' '),
+        },
         m(
           '.glissando-slider',
           {
