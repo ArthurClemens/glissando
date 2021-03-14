@@ -25,6 +25,7 @@ See: [Main documentation](https://github.com/ArthurClemens/glissando)
 
 * [Simple example](https://codesandbox.io/s/glissando-for-mithril-mbhli)
 * [Kitchen sink](https://codesandbox.io/s/glissando-for-mithril-kitchensink-z3ddm)
+* [Variable number of images per page](https://codesandbox.io/s/glissando-for-mithril-example-with-3-images-per-page-93ofg)
 
 ### Directed use 
 
