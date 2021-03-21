@@ -1,6 +1,5 @@
 import Stream from 'mithril/stream';
 
-export type { Stream };
 export declare namespace Glissando {
   type Location = string;
   type State = {

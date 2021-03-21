@@ -19,7 +19,7 @@
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "dependencies": {
-    "@types/ramda": "^0.27.38",
+    "@types/ramda": "^0.27.39",
     "glissando-helpers": "^0.8.0",
     "glissando-mithril": "^0.8.0",
     "mithril": "2.0.4"
