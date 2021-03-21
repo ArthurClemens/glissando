@@ -38,11 +38,11 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "@types/mithril": "2.0.6",
     "mithril": "2.0.4"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.10.1",
+    "@types/mithril": "2.0.6",
     "size-limit": "^4.10.1"
   }
 }
