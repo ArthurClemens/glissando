@@ -1,6 +1,6 @@
 {
   "name": "demo-glissando-mithril-router",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "description": "",
   "keywords": [],
@@ -19,7 +19,7 @@
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
   },
   "dependencies": {
-    "glissando-mithril": "^0.8.0",
+    "glissando-mithril": "^0.8.1",
     "mithril": "2.0.4"
   },
   "devDependencies": {
