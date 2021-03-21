@@ -1,7 +1,5 @@
 import Stream from 'mithril/stream';
 
-export type { Stream };
-
 export namespace Glissando {
   export type Location = string;
 
