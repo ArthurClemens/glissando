@@ -11,10 +11,10 @@
     "prettier": "prettier --config ../../.prettierrc.json --write \"./test/*.ts\""
   },
   "dependencies": {
-    "@ava/babel": "1.0.1",
-    "ava": "3.15.0",
-    "browser-env": "3.3.0",
+    "@ava/babel": "^1.0.1",
+    "ava": "^3.15.0",
+    "browser-env": "^3.3.0",
     "glissando": "^0.8.1",
-    "ts-node": "9.1.1"
+    "ts-node": "^9.1.1"
   }
 }

@@ -9,8 +9,8 @@
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
     "build:clean": "rm -rf dist/*.js && rm -rf dist/*.css",
     "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
-    "build:module": "MODULE=1 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
-    "build:umd": "MODULE=0 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
+    "build:module": "MODULE=1 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
+    "build:umd": "MODULE=0 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
     "build:css": "npm run build:css:copy && npm run build:css:minify",
     "build:css:copy": "cp ./styles/*.css dist/",
     "build:css:minify": "../../node_modules/postcss-cli/bin/postcss ./styles/glissando.css > dist/glissando.min.css && ../../node_modules/postcss-cli/bin/postcss ./styles/glissando.global.css > dist/glissando.global.min.css",
@@ -38,11 +38,11 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "mithril": "2.0.4"
+    "mithril": "^2.0.4"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.10.1",
-    "@types/mithril": "2.0.6",
+    "@types/mithril": "^2.0.7",
     "size-limit": "^4.10.1"
   }
 }

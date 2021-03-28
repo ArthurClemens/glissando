@@ -1,12 +1,12 @@
 import typescript from '@rollup/plugin-typescript';
 import fs from 'fs';
 import cleanup from 'rollup-plugin-cleanup';
-import { uglify } from 'rollup-plugin-uglify';
+import { terser } from 'rollup-plugin-terser';
 
 const { env } = process;
-const pkg = JSON.parse(fs.readFileSync('./package.json'));
+const pkg = JSON.parse(fs.readFileSync('./package.json').toString());
 
-const isModule = !!parseInt(env.MODULE, 10);
+const isModule = !!parseInt(env.MODULE || '', 10);
 const format = isModule ? 'es' : 'umd';
 const target = isModule ? 'ESNEXT' : 'es2015';
 const file = isModule
@@ -27,6 +27,6 @@ export default {
     cleanup({
       comments: 'none',
     }),
-    !isModule && uglify(),
+    !isModule && terser(),
   ],
 };

@@ -9,8 +9,8 @@
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
     "build:clean": "rm -rf dist/*.js && rm -rf dist/*.css",
     "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
-    "build:module": "MODULE=1 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
-    "build:umd": "MODULE=0 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.js",
+    "build:module": "MODULE=1 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
+    "build:umd": "MODULE=0 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
     "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
     "build:lint": "eslint --fix --ext .mjs,.d.ts ./dist",
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
@@ -39,12 +39,12 @@
     "glissando": "^0.8.1"
   },
   "peerDependencies": {
-    "mithril": ">=2.0.4"
+    "mithril": "^2.0.4"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.10.1",
-    "@types/mithril": "^2.0.6",
-    "mithril": ">=2.0.4",
+    "@types/mithril": "^2.0.7",
+    "mithril": "^2.0.4",
     "size-limit": "^4.10.1"
   }
 }

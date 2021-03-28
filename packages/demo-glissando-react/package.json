@@ -6,9 +6,9 @@
   "keywords": [],
   "scripts": {
     "dev": "npm-run-all --parallel dev:watch dev:serve",
-    "dev:serve": "ENTRY=./src/index.tsx ../../node_modules/.bin/webpack serve --config ../../scripts/webpack.config.dev.js --port 3000 --host 0.0.0.0",
-    "dev:watch": "ENTRY=./src/index.tsx ../../node_modules/webpack/bin/webpack.js --watch --config ../../scripts/webpack.config.dev.js",
-    "webpack": "ENTRY=./src/index.tsx ../../node_modules/webpack/bin/webpack.js --config ../../scripts/webpack.config.prod.js",
+    "dev:serve": "ENTRY=./src/index.tsx ../../node_modules/.bin/webpack serve --config ../../scripts/webpack.config.dev.ts --port 3000 --host 0.0.0.0",
+    "dev:watch": "ENTRY=./src/index.tsx ../../node_modules/webpack/bin/webpack.js --watch --config ../../scripts/webpack.config.dev.ts",
+    "webpack": "ENTRY=./src/index.tsx ../../node_modules/webpack/bin/webpack.js --config ../../scripts/webpack.config.prod.ts",
     "build": "npm run build:clean && npm run webpack",
     "build:clean": "rm -rf dist/js/*",
     "serve": "http-server -c-1 -p 8080 dist",
@@ -20,17 +20,17 @@
   },
   "dependencies": {
     "glissando-react": "^0.8.1",
-    "mithril": "2.0.4",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "use-stream": "0.3.7"
+    "mithril": "^2.0.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "use-stream": "^0.3.7"
   },
   "devDependencies": {
-    "@types/mithril": "^2.0.6",
-    "@types/react": "17.0.3",
+    "@types/mithril": "^2.0.7",
+    "@types/react": "^17.0.3",
     "http-server": "^0.12.3",
     "npm-run-all": "^4.1.5",
-    "typescript": "4.2.3"
+    "typescript": "^4.2.3"
   },
   "browserslist": [
     "defaults",

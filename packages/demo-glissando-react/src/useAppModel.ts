@@ -3,7 +3,7 @@ import { useStream } from 'use-stream';
 
 import { AppModel, TAppModel, TAppState, TAppStates } from './AppModel';
 
-export { TAppState };
+export type { TAppState };
 
 type TModel = {
   _: TAppStates;

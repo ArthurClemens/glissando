@@ -1,11 +1,10 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WebpackModules = require('webpack-modules');
+import path from 'path';
+import webpack from 'webpack';
 
 const baseDir = process.cwd();
-const { env } = process; // eslint-disable-line no-undef
+const { env } = process;
 
-module.exports = {
+export const config: webpack.Configuration = {
   context: path.resolve(baseDir, './src'),
 
   entry: {
@@ -66,20 +65,14 @@ module.exports = {
         test: /\.css$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: 'css-loader',
           },
-          'css-loader',
         ],
       },
     ],
   },
 
-  plugins: [
-    new WebpackModules(),
-    new MiniCssExtractPlugin({
-      filename: 'css/app.css',
-    }),
-  ],
+  plugins: [],
 
   devtool: 'source-map',
 };
