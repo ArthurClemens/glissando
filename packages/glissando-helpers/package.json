@@ -1,6 +1,6 @@
 {
   "name": "glissando-helpers",
-  "version": "0.8.4",
+  "version": "0.8.5",
   "description": "A simple content slider for anything that needs to move. Helper functions for Glissando.",
   "main": "dist/glissando-helpers",
   "module": "dist/glissando-helpers.module.js",
@@ -34,7 +34,7 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "glissando": "^0.8.4"
+    "glissando": "^0.8.5"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.10.2",
