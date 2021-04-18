@@ -19,6 +19,7 @@ export default {
     name: env.MODULE_NAME,
     format,
     file,
+    sourcemap: !isModule,
   },
   plugins: [
     typescript({

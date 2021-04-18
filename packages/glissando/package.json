@@ -3,7 +3,7 @@
   "version": "0.8.2",
   "description": "A simple content slider for anything that needs to move. Base functions to create Glissando components.",
   "main": "dist/glissando",
-  "module": "dist/glissando.mjs",
+  "module": "dist/glissando.module.js",
   "type": "module",
   "scripts": {
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
@@ -14,7 +14,7 @@
     "build:css": "npm run build:css:copy && npm run build:css:minify",
     "build:css:copy": "cp ./styles/*.css dist/",
     "build:css:minify": "../../node_modules/postcss-cli/bin/postcss ./styles/glissando.css > dist/glissando.min.css && ../../node_modules/postcss-cli/bin/postcss ./styles/glissando.global.css > dist/glissando.global.min.css",
-    "build:lint": "eslint --fix --ext .mjs,.d.ts ./dist",
+    "build:lint": "eslint --fix --ext .module.js,.d.ts ./dist",
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
     "test": "true",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
@@ -41,8 +41,8 @@
     "mithril": "^2.0.4"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.1",
+    "@size-limit/preset-small-lib": "^4.10.2",
     "@types/mithril": "^2.0.7",
-    "size-limit": "^4.10.1"
+    "size-limit": "^4.10.2"
   }
 }

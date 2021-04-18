@@ -3,7 +3,7 @@
   "version": "0.8.2",
   "description": "A simple content slider for anything that needs to move. React version.",
   "main": "dist/glissando-react",
-  "module": "dist/glissando-react.mjs",
+  "module": "dist/glissando-react.module.js",
   "type": "module",
   "scripts": {
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
@@ -12,7 +12,7 @@
     "build:module": "MODULE=1 MODULE_NAME=glissandoReact ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
     "build:umd": "MODULE=0 MODULE_NAME=glissandoReact ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
     "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
-    "build:lint": "eslint --fix --ext .mjs,.d.ts ./dist",
+    "build:lint": "eslint --fix --ext .module.js,.d.ts ./dist",
     "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
     "test": "true",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
@@ -38,16 +38,16 @@
   "dependencies": {
     "@huse/effect-ref": "^1.0.3",
     "glissando": "^0.8.2",
-    "use-stream": "^0.3.7"
+    "use-stream": "^0.4.1"
   },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.1",
+    "@size-limit/preset-small-lib": "^4.10.2",
     "@types/react": "^17.0.3",
     "react": "^17.0.2",
-    "size-limit": "^4.10.1"
+    "size-limit": "^4.10.2"
   }
 }
