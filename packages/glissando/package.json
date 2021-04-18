@@ -4,7 +4,6 @@
   "description": "A simple content slider for anything that needs to move. Base functions to create Glissando components.",
   "main": "dist/glissando",
   "module": "dist/glissando.module.js",
-  "type": "module",
   "scripts": {
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
     "build:clean": "rm -rf dist/*.js && rm -rf dist/*.css",

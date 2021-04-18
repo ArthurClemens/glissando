@@ -4,7 +4,6 @@
   "description": "A simple content slider for anything that needs to move. Helper functions for Glissando.",
   "main": "dist/glissando-helpers",
   "module": "dist/glissando-helpers.module.js",
-  "type": "module",
   "scripts": {
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
     "build:clean": "rimraf dist/*",

@@ -4,7 +4,6 @@
   "description": "A simple content slider for anything that needs to move. React version.",
   "main": "dist/glissando-react",
   "module": "dist/glissando-react.module.js",
-  "type": "module",
   "scripts": {
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
     "build:clean": "rimraf dist/*",

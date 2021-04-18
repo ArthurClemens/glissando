@@ -4,7 +4,6 @@
   "description": "A simple content slider for anything that needs to move. Mitril version.",
   "main": "dist/glissando-mithril",
   "module": "dist/glissando-mithril.module.js",
-  "type": "module",
   "scripts": {
     "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
     "build:clean": "rimraf dist/*",
