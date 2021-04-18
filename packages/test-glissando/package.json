@@ -2,7 +2,7 @@
   "name": "test-glissando",
   "private": true,
   "description": "Test Glissando",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "license": "MIT",
   "scripts": {
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u",
@@ -14,7 +14,7 @@
     "@ava/babel": "^1.0.1",
     "ava": "^3.15.0",
     "browser-env": "^3.3.0",
-    "glissando": "^0.8.3",
+    "glissando": "^0.8.4",
     "ts-node": "^9.1.1"
   }
 }
