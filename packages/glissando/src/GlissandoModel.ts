@@ -89,7 +89,9 @@ const getInitialState = (
     locations,
   }: Glissando.InitialState = {} as Glissando.InitialState,
 ) => {
-  const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
+  const slots = Array.from({ length: 1 + sideViews * 2 }, (_, i) => i).map(
+    (_, i) => i - sideViews,
+  );
   const initialState: Glissando.State = {
     targetIndex: index,
     index,

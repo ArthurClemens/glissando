@@ -68,7 +68,9 @@ const getInitialState = ({
   location,
   locations,
 } = {}) => {
-  const slots = [...Array(1 + sideViews * 2)].map((_, i) => i - sideViews);
+  const slots = Array.from({ length: 1 + sideViews * 2 }, (_, i) => i).map(
+    (_, i) => i - sideViews,
+  );
   const initialState = {
     targetIndex: index,
     index,
