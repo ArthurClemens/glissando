@@ -31,7 +31,7 @@ export const Header: m.Component<TProps> = {
             value: '1',
             checked: appModel.getState().isRtl,
             onclick: (e: Event) => {
-              appModel.setIsRtl((e.target as HTMLInputElement).checked);
+              appModel.setIsRtl((<HTMLInputElement>e.target).checked);
             },
           }),
           m(
@@ -49,7 +49,7 @@ export const Header: m.Component<TProps> = {
             value: '1',
             checked: appModel.getState().isAnimated,
             onclick: (e: Event) => {
-              appModel.setIsAnimated((e.target as HTMLInputElement).checked);
+              appModel.setIsAnimated((<HTMLInputElement>e.target).checked);
             },
           }),
           m(
@@ -85,7 +85,7 @@ export const Header: m.Component<TProps> = {
             disabled: getState().isAnimating || getState().count < 2,
             value: getState().index,
             onchange: (e: InputEvent) => {
-              const element = e.target as HTMLInputElement;
+              const element = <HTMLInputElement>e.target;
               if (element) {
                 goTo({
                   index: parseInt(element.value, 10),
