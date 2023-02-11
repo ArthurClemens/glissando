@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@ava/babel": "^1.0.1",
-    "ava": "^3.15.0",
+    "ava": "^5.2.0",
     "browser-env": "^3.3.0",
     "glissando": "^0.8.5",
     "ts-node": "^9.1.1"
