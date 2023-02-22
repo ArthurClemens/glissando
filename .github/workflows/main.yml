@@ -26,10 +26,11 @@ jobs:
 
       # Install dependencies
       - name: Dependencies
-        with:
-          start: npm install && npm run lerna:install
+        run: |
+          npm install
+          npm run lerna:install
       
       # Run tests
       - name: Ava tests
-        with:
-          start: npm run lerna:test
+        run: |
+          npm run lerna:test
