@@ -4,7 +4,7 @@
   "workspaces": ["packages/*"],
   "scripts": {
     "lerna:install": "lerna exec npm install",
-    "lerna:test": "lerna run test",
+    "lerna:test": "lerna run test --scope test-*",
     "deps": "npm run npm-check-updates && npm install && npm audit fix && lerna run npm-check-updates --stream && lerna clean -y && lerna bootstrap",
     "npm-check-updates": "./node_modules/npm-check-updates/bin/cli.js -u",
     "build": "lerna run build --stream",
