@@ -1,103 +1,35 @@
-name: Install and test AVA
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    paths-ignore:
-      - "*.md"
-      - "docs/**"
-      - "media/**"
+# GitHub Actions
+# https://help.github.com/en/articles/configuring-a-workflow
+name: Unit tests
+
+on: push
+
 jobs:
-  nodejs:
-    name: Node.js
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [^14.19]
-        os: [ubuntu-latest]
+  test1:
+    name: Unit test
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
-      - name: Enable symlinks
-        if: matrix.os == 'windows-latest'
+
+      # install a specific version of Node using
+      # https://github.com/actions/setup-node
+      - name: Use Node.js v14
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+
+      # just so we learn about available environment variables GitHub provides
+      - name: Print env variables
         run: |
-          git config core.symlinks true
-          git reset --hard
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-      - name: Install npm@8 for Node.js 14
-        if: matrix.node-version == '^14.19'
-        run: npm install --global npm@^8
-      - run: npm install --no-audit
-      - run: npm run cover
-      - uses: codecov/codecov-action@v2
-        with:
-          files: coverage/lcov.info
-          name: ${{ matrix.os }}/${{ matrix.node-version }}
+          npm i -g @bahmutov/print-env
+          print-env GITHUB
 
-  typescript:
-    name: TypeScript compatibility
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ts-version: [~4.7, ~4.8, ~4.9]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      # Install dependencies
+      - name: Dependencies
         with:
-          node-version-file: package.json
-          cache: npm
-      - run: npm install --no-audit
-      - run: npm i typescript@${TS_VERSION}
-        env:
-          TS_VERSION: ${{ matrix.ts-version }}
-      - run: ./node_modules/typescript/bin/tsc --version
-      - run: ./node_modules/typescript/bin/tsc --noEmit
-
-  lockfile_churn:
-    name: Test package-lock for unexpected modifications
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+          start: npm install && npm run lerna:install
+      
+      # Run tests
+      - name: Ava tests
         with:
-          node-version-file: package.json
-          cache: npm
-      - name: Pin npm
-        run: npm install --global npm@9.3.0
-      - run: npm install --no-audit
-      - name: Test package-lock for unexpected modifications
-        run: |
-          npm -v
-          checksum=$(sha512sum package-lock.json)
-          npm install --package-lock-only --no-audit
-          if ! echo ${checksum} | sha512sum --quiet -c -; then
-            echo "package-lock.json was modified unexpectedly. Please rebuild it using npm@$(npm -v) and commit the changes."
-            exit 1
-          fi
-
-  without_lockfile:
-    name: Install dependencies without using a lockfile
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: package.json
-      - run: npm install --no-package-lock --no-audit
-      - run: npm run cover
-
-  xo:
-    name: Lint source files
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: package.json
-          cache: npm
-      - run: npm install --no-audit
-      - run: npx xo
+          start: npm run lerna:test
