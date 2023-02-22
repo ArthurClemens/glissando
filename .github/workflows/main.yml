@@ -1,66 +1,103 @@
-# GitHub Actions
-# https://help.github.com/en/articles/configuring-a-workflow
-name: Unit tests
-
-on: push
-
+name: Install and test AVA
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths-ignore:
+      - "*.md"
+      - "docs/**"
+      - "media/**"
 jobs:
-  test1:
-    name: Unit test
-    runs-on: ubuntu-20.04
+  nodejs:
+    name: Node.js
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [^14.19, ^16.15, ^18]
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v3
-
-      # install a specific version of Node using
-      # https://github.com/actions/setup-node
-      - name: Use Node.js v14
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
-
-      # just so we learn about available environment variables GitHub provides
-      - name: Print env variables
+      - name: Enable symlinks
+        if: matrix.os == 'windows-latest'
         run: |
-          npm i -g @bahmutov/print-env
-          print-env GITHUB
-
-      # Restore the previous NPM modules and Cypress binary archives.
-      # Any updated archives will be saved automatically after the entire
-      # workflow successfully finishes.
-      # See https://github.com/actions/cache
-      - name: Cache node modules
-        uses: actions/cache@v3
+          git config core.symlinks true
+          git reset --hard
+      - uses: actions/setup-node@v3
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Cache Cypress binary
-        uses: actions/cache@v3
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: Install npm@8 for Node.js 14
+        if: matrix.node-version == '^14.19'
+        run: npm install --global npm@^8
+      - run: npm install --no-audit
+      - run: npm run cover
+      - uses: codecov/codecov-action@v2
         with:
-          path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-cypress-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            cypress-${{ runner.os }}-cypress-
+          files: coverage/lcov.info
+          name: ${{ matrix.os }}/${{ matrix.node-version }}
 
-      - name: install dependencies and verify Cypress
+  typescript:
+    name: TypeScript compatibility
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ts-version: [~4.7, ~4.8, ~4.9]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: package.json
+          cache: npm
+      - run: npm install --no-audit
+      - run: npm i typescript@${TS_VERSION}
         env:
-          # make sure every Cypress install prints minimal information
-          CI: 1
-        # print Cypress and OS info
-        run: |
-          npm ci
-          npx cypress verify
-          npx cypress info
-          npx cypress version
-          npx cypress version --component package
-          npx cypress version --component binary
-          npx cypress version --component electron
-          npx cypress version --component node
+          TS_VERSION: ${{ matrix.ts-version }}
+      - run: ./node_modules/typescript/bin/tsc --version
+      - run: ./node_modules/typescript/bin/tsc --noEmit
 
-      # Starts local server, then runs Cypress tests and records results on the dashboard
-      - name: Cypress tests
-        uses: cypress-io/github-action@v4
+  lockfile_churn:
+    name: Test package-lock for unexpected modifications
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          start: npm run test
+          node-version-file: package.json
+          cache: npm
+      - name: Pin npm
+        run: npm install --global npm@9.3.0
+      - run: npm install --no-audit
+      - name: Test package-lock for unexpected modifications
+        run: |
+          npm -v
+          checksum=$(sha512sum package-lock.json)
+          npm install --package-lock-only --no-audit
+          if ! echo ${checksum} | sha512sum --quiet -c -; then
+            echo "package-lock.json was modified unexpectedly. Please rebuild it using npm@$(npm -v) and commit the changes."
+            exit 1
+          fi
+
+  without_lockfile:
+    name: Install dependencies without using a lockfile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: package.json
+      - run: npm install --no-package-lock --no-audit
+      - run: npm run cover
+
+  xo:
+    name: Lint source files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: package.json
+          cache: npm
+      - run: npm install --no-audit
+      - run: npx xo
