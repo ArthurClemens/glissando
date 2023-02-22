@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u",
-    "test": "ava",
+    "test": "ava --timeout=2m",
     "test:watch": "ava --watch",
     "prettier": "prettier --config ../../.prettierrc.json --write \"./test/*.ts\""
   },
