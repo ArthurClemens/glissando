@@ -58,12 +58,10 @@ For React and Mithril.
 - Written in TypeScript.
 
 
-
 ## Usage, demos and examples
 
 * [Glissando for React](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-react/README.md)
 * [Glissando for Mithril](https://github.com/ArthurClemens/glissando/blob/master/packages/glissando-mithril/README.md)
-
 
 
 ## API
@@ -208,13 +206,13 @@ See also: [Glissando usage with React](https://github.com/ArthurClemens/glissand
 Import GlissandoSlider CSS in your project: 
 
 ```jsx
-import 'glissando-react/dist/glissando.min.css'
+import 'glissando-react/glissando.min.css'
 ```
 
 Or when using PostCSS:
 
 ```jsx
-import 'glissando-react/dist/glissando.global.min.css'
+import 'glissando-react/glissando.global.min.css'
 ```
 
 
@@ -269,13 +267,13 @@ See also: [Glissando usage with Mithril](https://github.com/ArthurClemens/glissa
 Import GlissandoSlider CSS in your project: 
 
 ```js
-import 'glissando-mithril/dist/glissando.min.css'
+import 'glissando-mithril/glissando.min.css'
 ```
 
 Or when using PostCSS:
 
 ```js
-import 'glissando-mithril/dist/glissando.global.min.css'
+import 'glissando-mithril/glissando.global.min.css'
 ```
 
 
