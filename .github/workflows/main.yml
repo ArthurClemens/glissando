@@ -28,9 +28,9 @@ jobs:
       - name: Dependencies
         run: |
           npm install
-          npm run lerna:install
+          npm run deps
       
       # Run tests
-      - name: Ava tests
+      - name: Mocha
         run: |
-          npm run lerna:test
+          npm run test
