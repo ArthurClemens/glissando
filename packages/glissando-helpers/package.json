@@ -1,6 +1,6 @@
 {
   "name": "glissando-helpers",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "A simple content slider for anything that needs to move. Helper functions for Glissando.",
   "type": "module",
   "files": [
