@@ -1,4 +1,4 @@
-import test from 'ava';
+import { deepStrictEqual } from 'assert';
 import { Glissando, GlissandoModel } from 'glissando';
 
 const defaultState: Glissando.State = {
@@ -11,13 +11,13 @@ const defaultState: Glissando.State = {
   targetIndex: 0,
 };
 
-test('Model state of a new model without an initial state', t => {
+it('Model state of a new model without an initial state', () => {
   const model = GlissandoModel();
   const expected = defaultState;
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('Model state of a new model with an initial state (index)', t => {
+it('Model state of a new model with an initial state (index)', () => {
   const model = GlissandoModel({
     index: 1,
     sideViews: 3,
@@ -29,10 +29,10 @@ test('Model state of a new model with an initial state (index)', t => {
     slots: [-3, -2, -1, 0, 1, 2, 3],
     targetIndex: 1,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('Model state of a new model with an initial state (locations - location automatically set)', t => {
+it('Model state of a new model with an initial state (locations - location automatically set)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
     sideViews: 3,
@@ -45,10 +45,10 @@ test('Model state of a new model with an initial state (locations - location aut
     sideViews: 3,
     slots: [-3, -2, -1, 0, 1, 2, 3],
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('Model state of a new model with an initial state (location)', t => {
+it('Model state of a new model with an initial state (location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
     location: 'b',
@@ -61,10 +61,10 @@ test('Model state of a new model with an initial state (location)', t => {
     targetIndex: 1,
     count: 3,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('setLocations', t => {
+it('setLocations', () => {
   const model = GlissandoModel();
   model.setLocations(['a', 'b', 'c']);
   const expected = {
@@ -72,10 +72,10 @@ test('setLocations', t => {
     locations: ['a', 'b', 'c'],
     count: 3,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('setLocations when location is set before', t => {
+it('setLocations when location is set before', () => {
   const model = GlissandoModel({
     location: 'b',
   });
@@ -86,10 +86,10 @@ test('setLocations when location is set before', t => {
     location: 'b',
     count: 3,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('setCount', t => {
+it('setCount', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -100,20 +100,20 @@ test('setCount', t => {
     location: 'a',
     count: 2,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('setDirection', t => {
+it('setDirection', () => {
   const model = GlissandoModel();
   model.setDirection('rtl');
   const expected = {
     ...defaultState,
     direction: 'rtl',
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('goTo index with animate', t => {
+it('goTo index with animate', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -127,10 +127,10 @@ test('goTo index with animate', t => {
     index: 0, // <= still current index
     isAnimating: true,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('goTo index without animate (default)', t => {
+it('goTo index without animate (default)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -143,10 +143,10 @@ test('goTo index without animate (default)', t => {
     index: 1,
     targetIndex: 1,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('goTo location with animate', t => {
+it('goTo location with animate', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -160,10 +160,10 @@ test('goTo location with animate', t => {
     index: 0, // <= still current index
     isAnimating: true,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('goTo location without animate', t => {
+it('goTo location without animate', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -176,10 +176,10 @@ test('goTo location without animate', t => {
     index: 1,
     targetIndex: 1,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('next with animate (default)', t => {
+it('next with animate (default)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -193,10 +193,10 @@ test('next with animate (default)', t => {
     index: 0, // <= still current index
     isAnimating: true,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('next without animate', t => {
+it('next without animate', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -209,10 +209,10 @@ test('next without animate', t => {
     index: 1,
     targetIndex: 1,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('previous with animate (default)', t => {
+it('previous with animate (default)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -227,10 +227,10 @@ test('previous with animate (default)', t => {
     index: 1, // <= still current index
     isAnimating: true,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('previous without animate', t => {
+it('previous without animate', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
@@ -244,198 +244,198 @@ test('previous without animate', t => {
     index: 0,
     targetIndex: 0,
   };
-  return t.deepEqual(model.getState(), expected);
+  return deepStrictEqual(model.getState(), expected);
 });
 
-test('hasPrevious (defaults, no count or locations)', t => {
+it('hasPrevious (defaults, no count or locations)', () => {
   const model = GlissandoModel();
-  return t.deepEqual(model.hasPrevious(), false);
+  return deepStrictEqual(model.hasPrevious(), false);
 });
 
-test('hasPrevious (locations, first location)', t => {
+it('hasPrevious (locations, first location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
-  return t.deepEqual(model.hasPrevious(), false);
+  return deepStrictEqual(model.hasPrevious(), false);
 });
 
-test('hasPrevious (locations, last location)', t => {
+it('hasPrevious (locations, last location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
     location: 'c',
   });
-  return t.deepEqual(model.hasPrevious(), true);
+  return deepStrictEqual(model.hasPrevious(), true);
 });
 
-test('hasPrevious (count, first index)', t => {
+it('hasPrevious (count, first index)', () => {
   const model = GlissandoModel({
     count: 3,
   });
-  return t.deepEqual(model.hasPrevious(), false);
+  return deepStrictEqual(model.hasPrevious(), false);
 });
 
-test('hasPrevious (count, last index)', t => {
+it('hasPrevious (count, last index)', () => {
   const model = GlissandoModel({
     count: 3,
     index: 2,
   });
-  return t.deepEqual(model.hasPrevious(), true);
+  return deepStrictEqual(model.hasPrevious(), true);
 });
 
-test('hasNext (defaults, no count or locations)', t => {
+it('hasNext (defaults, no count or locations)', () => {
   const model = GlissandoModel();
-  return t.deepEqual(model.hasNext(), false);
+  return deepStrictEqual(model.hasNext(), false);
 });
 
-test('hasNext (locations, first location)', t => {
+it('hasNext (locations, first location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
-  return t.deepEqual(model.hasNext(), true);
+  return deepStrictEqual(model.hasNext(), true);
 });
 
-test('hasNext (locations, last location)', t => {
+it('hasNext (locations, last location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
     location: 'c',
   });
-  return t.deepEqual(model.hasNext(), false);
+  return deepStrictEqual(model.hasNext(), false);
 });
 
-test('hasNext (count, first index)', t => {
+it('hasNext (count, first index)', () => {
   const model = GlissandoModel({
     count: 3,
   });
-  return t.deepEqual(model.hasNext(), true);
+  return deepStrictEqual(model.hasNext(), true);
 });
 
-test('hasNext (count, last index)', t => {
-  const model = GlissandoModel({
-    count: 3,
-    index: 2,
-  });
-  return t.deepEqual(model.hasNext(), false);
-});
-
-test('isAnimating (next - default animating)', t => {
-  const model = GlissandoModel({
-    count: 3,
-  });
-  model.next();
-  return t.deepEqual(model.isAnimating(), true);
-});
-
-test('isAnimating (next - last index, default animating)', t => {
+it('hasNext (count, last index)', () => {
   const model = GlissandoModel({
     count: 3,
     index: 2,
   });
-  model.next();
-  return t.deepEqual(model.isAnimating(), false);
+  return deepStrictEqual(model.hasNext(), false);
 });
 
-test('isAnimating (next - animate false)', t => {
+it('isAnimating (next - default animating)', () => {
+  const model = GlissandoModel({
+    count: 3,
+  });
+  model.next();
+  return deepStrictEqual(model.isAnimating(), true);
+});
+
+it('isAnimating (next - last index, default animating)', () => {
+  const model = GlissandoModel({
+    count: 3,
+    index: 2,
+  });
+  model.next();
+  return deepStrictEqual(model.isAnimating(), false);
+});
+
+it('isAnimating (next - animate false)', () => {
   const model = GlissandoModel({
     count: 3,
   });
   model.next({ animate: false });
-  return t.deepEqual(model.isAnimating(), false);
+  return deepStrictEqual(model.isAnimating(), false);
 });
 
-test('isAnimating (previous - default animating)', t => {
+it('isAnimating (previous - default animating)', () => {
   const model = GlissandoModel({
     count: 3,
     index: 2,
   });
   model.previous();
-  return t.deepEqual(model.isAnimating(), true);
+  return deepStrictEqual(model.isAnimating(), true);
 });
 
-test('isAnimating (previous - first index, default animating)', t => {
+it('isAnimating (previous - first index, default animating)', () => {
   const model = GlissandoModel({
     count: 3,
   });
   model.previous();
-  return t.deepEqual(model.isAnimating(), false);
+  return deepStrictEqual(model.isAnimating(), false);
 });
 
-test('isAnimating (previous - animate false)', t => {
+it('isAnimating (previous - animate false)', () => {
   const model = GlissandoModel({
     count: 3,
     index: 2,
   });
   model.previous({ animate: false });
-  return t.deepEqual(model.isAnimating(), false);
+  return deepStrictEqual(model.isAnimating(), false);
 });
 
-test('isAnimating (finalize)', t => {
+it('isAnimating (finalize)', () => {
   const model = GlissandoModel({
     count: 3,
   });
   model.next();
   model.finalize(1);
-  return t.deepEqual(model.isAnimating(), false);
+  return deepStrictEqual(model.isAnimating(), false);
 });
 
-test('getViewIndices', t => {
+it('getViewIndices', () => {
   const model = GlissandoModel({
     count: 3,
   });
-  return t.deepEqual(model.getViewIndices(), [-1, 0, 1]);
+  return deepStrictEqual(model.getViewIndices(), [-1, 0, 1]);
 });
 
-test('getViewIndices (sideViews)', t => {
+it('getViewIndices (sideViews)', () => {
   const model = GlissandoModel({
     count: 3,
     sideViews: 3,
   });
-  return t.deepEqual(model.getViewIndices(), [-3, -2, -1, 0, 1, 2, 3]);
+  return deepStrictEqual(model.getViewIndices(), [-3, -2, -1, 0, 1, 2, 3]);
 });
 
-test('getLocation', t => {
+it('getLocation', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
   model.goTo({ location: 'b' });
-  return t.deepEqual(model.getLocation(), 'b');
+  return deepStrictEqual(model.getLocation(), 'b');
 });
 
-test('getLocation (animate)', t => {
+it('getLocation (animate)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
   model.goTo({ location: 'b', animate: true });
-  return t.deepEqual(model.getLocation(), 'b');
+  return deepStrictEqual(model.getLocation(), 'b');
 });
 
-test('getNextLocation', t => {
+it('getNextLocation', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
   model.goTo({ location: 'b' });
-  return t.deepEqual(model.getNextLocation(), 'c');
+  return deepStrictEqual(model.getNextLocation(), 'c');
 });
 
-test('getNextLocation (last location)', t => {
+it('getNextLocation (last location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
     location: 'c',
   });
-  return t.deepEqual(model.getNextLocation(), undefined);
+  return deepStrictEqual(model.getNextLocation(), undefined);
 });
 
-test('getPreviousLocation', t => {
+it('getPreviousLocation', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
     location: 'c',
   });
   model.goTo({ location: 'b' });
-  return t.deepEqual(model.getPreviousLocation(), 'a');
+  return deepStrictEqual(model.getPreviousLocation(), 'a');
 });
 
-test('getPreviousLocation (first location)', t => {
+it('getPreviousLocation (first location)', () => {
   const model = GlissandoModel({
     locations: ['a', 'b', 'c'],
   });
-  return t.deepEqual(model.getPreviousLocation(), undefined);
+  return deepStrictEqual(model.getPreviousLocation(), undefined);
 });

@@ -1,17 +1,17 @@
-import test from 'ava';
+import { deepStrictEqual } from 'assert';
 import { GlissandoModel } from 'glissando';
 import { createLocationsFromPath } from 'glissando-helpers';
 
-test('createLocationsFromPath, model without locations, empty path', t => {
+it('createLocationsFromPath, model without locations, empty path', () => {
   const model = GlissandoModel();
   const path = '';
   const locations = createLocationsFromPath(path, model.getState().locations);
   const expectedLocations = [''];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
 
-test('createLocationsFromPath, model without locations', t => {
+it('createLocationsFromPath, model without locations', () => {
   const model = GlissandoModel();
   const path = '/users/Ferdinand/details';
   const locations = createLocationsFromPath(path, model.getState().locations);
@@ -21,10 +21,10 @@ test('createLocationsFromPath, model without locations', t => {
     '/users/Ferdinand/details',
   ];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
 
-test('createLocationsFromPath, model with locations, first path', t => {
+it('createLocationsFromPath, model with locations, first path', () => {
   const model = GlissandoModel({
     locations: ['/users', '/users/Ferdinand'],
   });
@@ -32,10 +32,10 @@ test('createLocationsFromPath, model with locations, first path', t => {
   const locations = createLocationsFromPath(path, model.getState().locations);
   const expectedLocations = ['/users', '/users/Ferdinand'];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
 
-test('createLocationsFromPath, model with locations, deepest path', t => {
+it('createLocationsFromPath, model with locations, deepest path', () => {
   const model = GlissandoModel({
     locations: ['/users', '/users/Ferdinand'],
   });
@@ -47,10 +47,10 @@ test('createLocationsFromPath, model with locations, deepest path', t => {
     '/users/Ferdinand/details',
   ];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
 
-test('createLocationsFromPath, model with flat location ids, path at start', t => {
+it('createLocationsFromPath, model with flat location ids, path at start', () => {
   const model = GlissandoModel({
     locations: ['/1', '/2', '/3', '/4', '/5', '/6', '/7', '/8', '/9', '/10'],
   });
@@ -58,10 +58,10 @@ test('createLocationsFromPath, model with flat location ids, path at start', t =
   const locations = createLocationsFromPath(path, model.getState().locations);
   const expectedLocations = ['/1'];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
 
-test('createLocationsFromPath, model with flat location ids, path in middle', t => {
+it('createLocationsFromPath, model with flat location ids, path in middle', () => {
   const model = GlissandoModel({
     locations: ['/1', '/2', '/3', '/4', '/5', '/6', '/7', '/8', '/9', '/10'],
   });
@@ -69,10 +69,10 @@ test('createLocationsFromPath, model with flat location ids, path in middle', t 
   const locations = createLocationsFromPath(path, model.getState().locations);
   const expectedLocations = ['/1', '/2', '/3', '/4', '/5'];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
 
-test('createLocationsFromPath, model with some hierarchy, path in middle', t => {
+it('createLocationsFromPath, model with some hierarchy, path in middle', () => {
   const model = GlissandoModel({
     locations: [
       '/1',
@@ -94,5 +94,5 @@ test('createLocationsFromPath, model with some hierarchy, path in middle', t => 
   const locations = createLocationsFromPath(path, model.getState().locations);
   const expectedLocations = ['/1', '/2', '/3', '/4', '/4/1'] as string[];
 
-  t.deepEqual(locations, expectedLocations);
+  deepStrictEqual(locations, expectedLocations);
 });
