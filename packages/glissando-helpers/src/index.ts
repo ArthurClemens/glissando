@@ -31,7 +31,7 @@ const consolidateTrails = (
     paths: string[];
   };
   const result = longest.reduce(
-    (acc, p, i) => {
+    (acc, _p, i) => {
       const { pathTrailIndex, foundMatch, invalidate, foundMatchDepth } = acc;
       if (invalidate) {
         return acc;

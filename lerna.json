@@ -1,9 +1,0 @@
-{
-  "packages": [
-    "packages/*"
-  ],
-  "npmClient": "npm",
-  "version": "0.8.5",
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "useWorkspaces": true
-}

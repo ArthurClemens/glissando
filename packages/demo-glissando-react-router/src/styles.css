@@ -2,6 +2,10 @@
   outline: none;
 }
 
+body {
+  font-family: sans-serif;
+}
+
 .content {
   width: 100%;
 }
@@ -15,3 +19,4 @@
   overflow: auto;
   font-size: 18px;
 }
+

@@ -69,7 +69,7 @@ export const Header: m.Component<TProps> = {
               previous({ animate: appModel.getState().isAnimated }),
             disabled: !hasPrevious() || isAnimating(),
           },
-          'Previous',
+          'Prev',
         ),
         m(
           'button',
@@ -101,7 +101,7 @@ export const Header: m.Component<TProps> = {
                 key: i,
                 value: i,
               },
-              `Go to page ${i + 1}`,
+              `Page ${i + 1}`,
             ),
           ),
         ),

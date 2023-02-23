@@ -6,3 +6,4 @@ npm-debug.log*
 .rpt2_cache
 react-app-env.d.ts
 index.js.LICENSE.txt*
+demo-*/dist
