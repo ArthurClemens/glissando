@@ -35,7 +35,7 @@
   "devDependencies": {
     "cssnano": "^5.1.15",
     "mithril-stream-standalone": "0.1.6",
-    "postcss": "^8.4.21",
+    "postcss": "^8.2.13",
     "typescript": "^4.9.5",
     "vite": "^4.1.4"
   }
