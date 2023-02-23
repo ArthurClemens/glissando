@@ -10,13 +10,11 @@ import type { Glissando } from './types';
  *   style={style}
  * >
  */
-export declare const getSliderStyle: (
-  state: Glissando.State,
-) => {
-  style: {
-    transitionDuration?: string | undefined;
-    width: string;
-    transform: string;
-  };
-  className: string;
+export declare const getSliderStyle: (state: Glissando.State) => {
+    style: {
+        transitionDuration?: string | undefined;
+        width: string;
+        transform: string;
+    };
+    className: string;
 };
