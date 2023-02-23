@@ -40,7 +40,7 @@ Import the component and model factory and slider CSS:
 
 ```js
 import { GlissandoSlider, useGlissandoModel } from 'glissando-react'
-import 'glissando-react/dist/glissando.global.min.css'
+import 'glissando-react/glissando.global.min.css'
 ```
 
 Create a new model instance:

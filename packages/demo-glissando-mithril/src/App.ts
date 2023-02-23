@@ -20,8 +20,8 @@ const Slider = () => {
     return null;
   });
 
-  // getChanges.map((state: Glissando.State) => {
-  //   console.log('model.getChanges', state);
+  // Optionally listen for changes
+  // model.getChanges.map((state: Glissando.State) => {
   //   return null;
   // });
 
