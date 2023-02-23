@@ -91,7 +91,7 @@ export const GlissandoSlider = (props: Props) => {
       }
       setSliderNode(node);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const onTransitionEnd = (evt: Event) => {
+      const onTransitionEnd = () => {
         finalize(getState().targetIndex);
       };
       node.addEventListener('transitionend', onTransitionEnd);

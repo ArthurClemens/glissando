@@ -2,46 +2,41 @@
   "name": "glissando",
   "version": "0.8.5",
   "description": "A simple content slider for anything that needs to move. Base functions to create Glissando components.",
-  "main": "dist/glissando",
-  "module": "dist/glissando.module.js",
-  "scripts": {
-    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
-    "build:clean": "rm -rf dist/*.js && rm -rf dist/*.css",
-    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
-    "build:module": "MODULE=1 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
-    "build:umd": "MODULE=0 MODULE_NAME=glissando ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
-    "build:css": "npm run build:css:copy && npm run build:css:minify",
-    "build:css:copy": "cp ./styles/*.css dist/",
-    "build:css:minify": "../../node_modules/postcss-cli/bin/postcss ./styles/glissando.css > dist/glissando.min.css && ../../node_modules/postcss-cli/bin/postcss ./styles/glissando.global.css > dist/glissando.global.min.css",
-    "build:lint": "eslint --fix --ext .module.js,.d.ts ./dist",
-    "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
-    "test": "true",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{ts,tsx,css}\"",
-    "fix": "yarn run lint --fix && yarn run prettier",
-    "size": "size-limit",
-    "size:why": "size-limit --why",
-    "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
-  },
+  "type": "module",
   "files": [
     "dist",
     "README.md"
   ],
   "types": "dist",
-  "size-limit": [
-    {
-      "path": "dist/glissando.js"
+  "main": "./dist/glissando.umd",
+  "module": "./dist/glissando.module.js",
+  "exports": {
+    ".": {
+      "require": "./dist/glissando.cjs",
+      "import": "./dist/glissando.module.js",
+      "default": "./dist/glissando.umd.js"
     }
-  ],
+  },
+  "scripts": {
+    "deps": "../../node_modules/npm-check-updates/build/src/bin/cli.js -u",
+    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
+    "build:vite": "vite build",
+    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
+    "build:css": "npm run build:css:copy && npm run build:css:minify",
+    "build:css:copy": "cp ./styles/*.css dist/",
+    "build:css:minify": "postcss ./styles/glissando.css > dist/glissando.min.css && postcss ./styles/glissando.global.css > dist/glissando.global.min.css"
+  },
   "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "mithril": "^2.0.4"
+    "mithril": "^2.2.2"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.2",
-    "@types/mithril": "^2.0.7",
-    "size-limit": "^4.10.2"
+    "cssnano": "^5.1.15",
+    "mithril-stream-standalone": "0.1.6",
+    "postcss": "^8.4.21",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
   }
 }

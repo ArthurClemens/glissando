@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './styles.css';
-import 'glissando-react/dist/glissando.min.css';
+import 'glissando-react/glissando.css';
 
 import { GlissandoSlider, useGlissandoModel } from 'glissando-react';
 import React from 'react';
@@ -50,39 +50,45 @@ export const App = () => {
   return (
     <div className="demo-container">
       <div className="demo-meta-controls">
-        <input
-          id="visible"
-          type="checkbox"
-          value="1"
-          checked={appModel.getState().isVisible}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            e.persist();
-            appModel.setIsVisible(e.target.checked);
-          }}
-        />
-        <label htmlFor="visible">Show</label>
-        <input
-          id="rtl"
-          type="checkbox"
-          value="1"
-          checked={appModel.getState().isRtl}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            e.persist();
-            appModel.setIsRtl(e.target.checked);
-          }}
-        />
-        <label htmlFor="rtl">Right to left</label>
-        <input
-          id="animate"
-          type="checkbox"
-          value="1"
-          checked={appModel.getState().isAnimated}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            e.persist();
-            appModel.setIsAnimated(e.target.checked);
-          }}
-        />
-        <label htmlFor="animate">Animate</label>
+        <div>
+          <input
+            id="visible"
+            type="checkbox"
+            value="1"
+            checked={appModel.getState().isVisible}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.persist();
+              appModel.setIsVisible(e.target.checked);
+            }}
+          />
+          <label htmlFor="visible">Show</label>
+        </div>
+        <div>
+          <input
+            id="rtl"
+            type="checkbox"
+            value="1"
+            checked={appModel.getState().isRtl}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.persist();
+              appModel.setIsRtl(e.target.checked);
+            }}
+          />
+          <label htmlFor="rtl">Right to left</label>
+        </div>
+        <div>
+          <input
+            id="animate"
+            type="checkbox"
+            value="1"
+            checked={appModel.getState().isAnimated}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              e.persist();
+              appModel.setIsAnimated(e.target.checked);
+            }}
+          />
+          <label htmlFor="animate">Animate</label>
+        </div>
       </div>
       {appModel.getState().isVisible && (
         <div dir={appModel.getState().isRtl ? 'rtl' : ''}>
