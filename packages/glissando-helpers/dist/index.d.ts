@@ -15,7 +15,4 @@
  *   model.getState().locations,
  * );
  */
-export declare const createLocationsFromPath: (
-  path?: string,
-  modelTrail?: string[],
-) => string[];
+export declare const createLocationsFromPath: (path?: string, modelTrail?: string[]) => string[];

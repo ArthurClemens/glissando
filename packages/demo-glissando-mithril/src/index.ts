@@ -1,4 +1,4 @@
-import 'glissando-mithril/dist/glissando.min.css';
+import 'glissando-mithril/glissando.css';
 import './styles.css';
 
 import m from 'mithril';

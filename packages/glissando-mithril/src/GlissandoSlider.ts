@@ -23,7 +23,7 @@ export const GlissandoSlider: TGlissandoSlider = initialVnode => {
   } = model;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onTransitionEnd = (evt: Event) => {
+  const onTransitionEnd = () => {
     finalize(getState().targetIndex);
   };
 

@@ -1,4 +1,4 @@
-import Stream from 'mithril/stream';
+import Stream from 'mithril-stream-standalone';
 
 import type { Glissando } from './types';
 
