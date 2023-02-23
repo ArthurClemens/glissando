@@ -1,10 +1,9 @@
-import Stream from 'mithril/stream';
-
+import Stream from "mithril-stream-standalone";
 const calculateNewIndex = (state, index) => {
-  if (index === undefined || Number.isNaN(index)) {
+  if (index === void 0 || Number.isNaN(index)) {
     return {
       newIndex: state.index,
-      shouldUpdate: false,
+      shouldUpdate: false
     };
   }
   const newIndex = Math.min(index, state.count - 1);
@@ -12,52 +11,46 @@ const calculateNewIndex = (state, index) => {
   const shouldUpdate = isValid && newIndex !== state.index;
   return {
     newIndex,
-    shouldUpdate,
+    shouldUpdate
   };
 };
-const setIndex = state => change => {
+const setIndex = (state) => (change) => {
   const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
-  return shouldUpdate
-    ? {
-        ...state,
-        ...(change.animate ? undefined : { index: newIndex }),
-        targetIndex: newIndex,
-        isAnimating: !!change.animate,
-      }
-    : state;
+  return shouldUpdate ? {
+    ...state,
+    ...change.animate ? void 0 : { index: newIndex },
+    targetIndex: newIndex,
+    isAnimating: !!change.animate
+  } : state;
 };
-const setLocation = state => change => {
+const setLocation = (state) => (change) => {
   if (!state.locations || state.locations.length === 0) {
     return state;
   }
   let locationStr = change.location.toString();
   let index = state.locations.indexOf(locationStr);
   if (index === -1) {
-    // Location does not exist; default to first index
     index = 0;
     locationStr = state.locations[index];
   }
-  const shouldAnimate =
-    state.location === undefined
-      ? false // don't animate if we are setting the first location
-      : change.animate !== false;
+  const shouldAnimate = state.location === void 0 ? false : change.animate !== false;
   const newState = {
     ...state,
-    location: locationStr,
+    location: locationStr
   };
   const indexChange = {
     index,
-    animate: shouldAnimate,
+    animate: shouldAnimate
   };
   return setIndex(newState)(indexChange);
 };
-const lookupLocation = state => changeFn => {
+const lookupLocation = (state) => (changeFn) => {
   if (!state.locations || !state.location) {
-    return undefined;
+    return void 0;
   }
   const index = state.locations.indexOf(state.location);
   if (index === -1) {
-    return undefined;
+    return void 0;
   }
   return state.locations[changeFn(index)];
 };
@@ -66,34 +59,29 @@ const getInitialState = ({
   count = 0,
   sideViews = 1,
   location,
-  locations,
+  locations
 } = {}) => {
   const slots = Array.from({ length: 1 + sideViews * 2 }, (_, i) => i).map(
-    (_, i) => i - sideViews,
+    (_, i) => i - sideViews
   );
   const initialState = {
     targetIndex: index,
     index,
     count,
-    ...(Array.isArray(locations)
-      ? {
-          locations,
-          count: locations ? locations.length : 0,
-          location: locations[0],
-        }
-      : undefined),
-    ...(location
-      ? {
-          location,
-          index: Array.isArray(locations)
-            ? locations.indexOf(location) || index
-            : index,
-        }
-      : undefined),
+    ...Array.isArray(locations) ? {
+      locations,
+      count: locations ? locations.length : 0,
+      location: locations[0]
+    } : void 0,
+    ...location ? {
+      location,
+      index: Array.isArray(locations) ? locations.indexOf(location) || index : index
+    } : void 0,
     isAnimating: false,
-    direction: 'ltr',
+    direction: "ltr",
+    // set by libs glissando-mithril etc
     slots,
-    sideViews,
+    sideViews
   };
   initialState.targetIndex = initialState.index;
   return initialState;
@@ -102,88 +90,92 @@ const GlissandoModel = (props = {}) => {
   const initialState = getInitialState(props);
   const glissandoState = {
     initialState,
-    actions: update => ({
+    actions: (update2) => ({
       previous: ({ animate } = { animate: true }) => {
-        update(state =>
-          setIndex(state)({
+        update2(
+          (state) => setIndex(state)({
             index: state.index - 1,
-            animate: animate !== false,
-          }),
+            animate: animate !== false
+          })
         );
       },
       next: ({ animate } = { animate: true }) => {
-        update(state =>
-          setIndex(state)({
+        update2(
+          (state) => setIndex(state)({
             index: state.index + 1,
-            animate: animate !== false,
-          }),
+            animate: animate !== false
+          })
         );
       },
-      goTo: ({ index, location, animate }) => {
-        update(state => {
+      goTo: ({
+        index,
+        location,
+        animate
+      }) => {
+        update2((state) => {
           if (location) {
-            const change = {
+            const change2 = {
               location,
-              animate,
+              animate
             };
-            return setLocation(state)(change);
+            return setLocation(state)(change2);
           }
-          if (index === undefined) {
+          if (index === void 0) {
             return state;
           }
           const change = {
             index,
-            animate,
+            animate
           };
           return setIndex(state)(change);
         });
       },
-      finalize: index => {
-        update(state =>
-          setIndex(state)({
+      finalize: (index) => {
+        update2(
+          (state) => setIndex(state)({
             index,
-            animate: false,
-          }),
+            animate: false
+          })
         );
       },
-      setCount: count => {
-        update(state =>
-          setIndex({
+      setCount: (count) => {
+        update2(
+          (state) => setIndex({
             ...state,
-            count,
-          })({ index: state.index }),
+            count
+          })({ index: state.index })
         );
       },
-      setDirection: direction => {
-        update(state => ({
+      setDirection: (direction) => {
+        update2((state) => ({
           ...state,
-          direction,
+          direction
         }));
       },
-      setLocations: locations => {
-        update(state => ({
+      setLocations: (locations) => {
+        update2((state) => ({
           ...state,
           locations,
-          count: locations.length,
+          count: locations.length
         }));
-      },
+      }
     }),
-    selectors: states => ({
+    selectors: (states2) => ({
       hasNext: () => {
-        const state = states();
+        const state = states2();
         return state.index < state.count - 1;
       },
       hasPrevious: () => {
-        const state = states();
+        const state = states2();
         return state.index > 0;
       },
       isAnimating: () => {
-        const state = states();
+        const state = states2();
         return state.isAnimating;
       },
       getViewIndices: () => {
-        const state = states();
-        return state.slots.map(slotIndex => {
+        const state = states2();
+        return state.slots.map((slotIndex) => {
           let index = slotIndex + state.index + 0;
           if (slotIndex < 0 && state.targetIndex < state.index) {
             index = slotIndex + state.targetIndex + 1;
@@ -194,67 +186,53 @@ const GlissandoModel = (props = {}) => {
         });
       },
       getLocation: () => {
-        const state = states();
-        return lookupLocation(state)(index => index);
+        const state = states2();
+        return lookupLocation(state)((index) => index);
       },
       getNextLocation: () => {
-        const state = states();
-        return lookupLocation(state)(index => index + 1);
+        const state = states2();
+        return lookupLocation(state)((index) => index + 1);
       },
       getPreviousLocation: () => {
-        const state = states();
-        return lookupLocation(state)(index => index - 1);
-      },
-    }),
+        const state = states2();
+        return lookupLocation(state)((index) => index - 1);
+      }
+    })
   };
   const update = Stream();
   const states = Stream.scan(
     (state, patch) => patch(state),
     {
-      ...glissandoState.initialState,
+      ...glissandoState.initialState
     },
-    update,
+    update
   );
-  // Debugging:
-  // states.map(state => console.log(JSON.stringify(state, null, 2)));
   const actions = {
-    ...glissandoState.actions(update),
+    ...glissandoState.actions(update)
   };
   const selectors = {
-    ...glissandoState.selectors(states),
+    ...glissandoState.selectors(states)
   };
   const changedStates = Stream.scan(
-    (state, value) =>
-      JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2)
-        ? Stream.SKIP
-        : value,
+    (state, value) => JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2) ? Stream.SKIP : value,
     Stream.SKIP,
-    states,
+    states
   );
-  const getChanges = Stream.lift(value => value, changedStates);
+  const getChanges = Stream.lift(
+    (value) => value,
+    changedStates
+  );
   return {
     getState: states,
     getChanges,
     ...actions,
-    ...selectors,
+    ...selectors
   };
 };
-
-/**
- * Returns the classname and style object for the current model state.
- * Usage:
- *
- * const { className, style } = getSliderStyle(getState());
- * ...
- * <div
- *   className={`glissando-slider ${className}`}
- *   style={style}
- * >
- */
-const getSliderStyle = state => {
+const getSliderStyle = (state) => {
   const slotCount = 2 * state.sideViews + 1;
   const slotWidth = 100 / slotCount;
-  const direction = state.direction === 'rtl' ? 1 : -1;
+  const direction = state.direction === "rtl" ? 1 : -1;
   let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
   if (state.targetIndex > state.index) {
     sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
@@ -264,14 +242,15 @@ const getSliderStyle = state => {
   const style = {
     width: `calc(${slotCount} * calc(100%))`,
     transform: `translateX(${sliderTranslateX}%)`,
-    ...(!state.isAnimating
-      ? {
-          transitionDuration: '0ms',
-        }
-      : undefined),
+    ...!state.isAnimating ? {
+      transitionDuration: "0ms"
+    } : void 0
   };
-  const className = state.isAnimating ? 'glissando-animating' : '';
+  const className = state.isAnimating ? "glissando-animating" : "";
   return { style, className };
 };
-
-export { getSliderStyle, GlissandoModel };
+export {
+  GlissandoModel,
+  getSliderStyle
+};
+//# sourceMappingURL=glissando.module.js.map

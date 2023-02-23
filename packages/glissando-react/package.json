@@ -2,51 +2,62 @@
   "name": "glissando-react",
   "version": "0.8.5",
   "description": "A simple content slider for anything that needs to move. React version.",
-  "main": "dist/glissando-react",
-  "module": "dist/glissando-react.module.js",
-  "scripts": {
-    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
-    "build:clean": "rimraf dist/*",
-    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
-    "build:module": "MODULE=1 MODULE_NAME=glissandoReact ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
-    "build:umd": "MODULE=0 MODULE_NAME=glissandoReact ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
-    "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
-    "build:lint": "eslint --fix --ext .module.js,.d.ts ./dist",
-    "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
-    "test": "true",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{ts,tsx,css}\"",
-    "fix": "yarn run lint --fix && yarn run prettier",
-    "size": "size-limit",
-    "size:why": "size-limit --why",
-    "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
-  },
+  "type": "module",
   "files": [
     "dist",
     "README.md"
   ],
   "types": "dist",
-  "size-limit": [
-    {
-      "path": "dist/glissando-react.js"
+  "main": "./dist/glissando-react.umd",
+  "module": "./dist/glissando-react.module.js",
+  "exports": {
+    ".": {
+      "import": "./dist/glissando-react.module.js",
+      "default": "./dist/glissando-react.umd.js"
+    },
+    "./glissando.css": {
+      "import": "./dist/glissando.css",
+      "default": "./dist/glissando.css"
+    },
+    "./glissando.min.css": {
+      "import": "./dist/glissando.min.css",
+      "default": "./dist/glissando.min.css"
+    },
+    "./glissando.global.css": {
+      "import": "./dist/glissando.global.css",
+      "default": "./dist/glissando.global.css"
+    },
+    "./glissando.global.min.css": {
+      "import": "./dist/glissando.global.min.css",
+      "default": "./dist/glissando.global.min.css"
     }
-  ],
+  },
+  "scripts": {
+    "deps": "../../node_modules/npm-check-updates/build/src/bin/cli.js -u",
+    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
+    "build:vite": "vite build",
+    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
+    "build:css": "cp ../glissando/dist/*.css dist/",
+    "test": "true"
+  },
   "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "@huse/effect-ref": "^1.0.3",
+    "@huse/effect-ref": "^1.1.1",
     "glissando": "^0.8.5",
-    "use-stream": "^0.4.1"
+    "use-stream": "^0.4.2"
   },
   "peerDependencies": {
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.2",
-    "@types/react": "^17.0.3",
-    "react": "^17.0.2",
-    "size-limit": "^4.10.2"
+    "@size-limit/preset-small-lib": "^8.2.4",
+    "@types/debug": "^4.1.7",
+    "@types/react": "^18.0.28",
+    "react": "^18.2.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4"
   }
 }
