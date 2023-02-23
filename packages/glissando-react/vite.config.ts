@@ -25,7 +25,7 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'glissando', 'use-stream'],
+      external: ['react', 'react-dom'],
     },
   },
 });

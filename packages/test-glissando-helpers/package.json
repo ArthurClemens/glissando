@@ -2,7 +2,7 @@
   "name": "test-glissando-helpers",
   "private": true,
   "description": "Test Glissando Helpers",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "assert": "^2.0.0",
-    "glissando": "^0.8.6"
+    "glissando": "^0.8.7"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",

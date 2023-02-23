@@ -26,5 +26,8 @@ export default defineConfig({
         }
       },
     },
+    rollupOptions: {
+      external: ['glissando'],
+    },
   },
 });
