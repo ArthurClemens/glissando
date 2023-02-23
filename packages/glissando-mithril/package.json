@@ -2,35 +2,44 @@
   "name": "glissando-mithril",
   "version": "0.8.5",
   "description": "A simple content slider for anything that needs to move. Mitril version.",
-  "main": "dist/glissando-mithril",
-  "module": "dist/glissando-mithril.module.js",
-  "scripts": {
-    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
-    "build:clean": "rimraf dist/*",
-    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
-    "build:module": "MODULE=1 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
-    "build:umd": "MODULE=0 MODULE_NAME=glissandoMithril ../../node_modules/rollup/dist/bin/rollup -c ../../scripts/rollup.config.ts",
-    "build:css": "cp ./node_modules/glissando/dist/*.css dist/",
-    "build:lint": "eslint --fix --ext .module.js,.d.ts ./dist",
-    "typecheck": "../../node_modules/typescript/bin/tsc --p tsconfig.json",
-    "test": "true",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./src",
-    "prettier": "../../node_modules/prettier/bin-prettier.js --config ../../.prettierrc.json --write \"./src/**/*.{ts,tsx,css}\"",
-    "fix": "yarn run lint --fix && yarn run prettier",
-    "size": "size-limit",
-    "size:why": "size-limit --why",
-    "npm-check-updates": "../../node_modules/npm-check-updates/bin/cli.js -u"
-  },
-  "size-limit": [
-    {
-      "path": "dist/glissando-mithril.js"
-    }
-  ],
+  "type": "module",
   "files": [
     "dist",
     "README.md"
   ],
   "types": "dist",
+  "main": "./dist/glissando-mithril.umd",
+  "module": "./dist/glissando-mithril.module.js",
+  "exports": {
+    ".": {
+      "import": "./dist/glissando-mithril.module.js",
+      "default": "./dist/glissando-mithril.umd.js"
+    },
+    "./glissando.css": {
+      "import": "./dist/glissando.css",
+      "default": "./dist/glissando.css"
+    },
+    "./glissando.min.css": {
+      "import": "./dist/glissando.min.css",
+      "default": "./dist/glissando.min.css"
+    },
+    "./glissando.global.css": {
+      "import": "./dist/glissando.global.css",
+      "default": "./dist/glissando.global.css"
+    },
+    "./glissando.global.min.css": {
+      "import": "./dist/glissando.global.min.css",
+      "default": "./dist/glissando.global.min.css"
+    }
+  },
+  "scripts": {
+    "deps": "../../node_modules/npm-check-updates/build/src/bin/cli.js -u",
+    "build": "node ../../node_modules/npm-run-all/bin/run-s/index.js build:*",
+    "build:vite": "vite build",
+    "build:types": "../../node_modules/typescript/bin/tsc --p tsconfig.gen.json",
+    "build:css": "cp ../glissando/dist/*.css dist/",
+    "test": "true"
+  },
   "author": "Arthur Clemens <arthurclemens@gmail.com> (http://visiblearea.com)",
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
@@ -41,9 +50,9 @@
     "mithril": "^2.0.4"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^4.10.2",
-    "@types/mithril": "^2.0.7",
-    "mithril": "^2.0.4",
-    "size-limit": "^4.10.2"
+    "@types/mithril": "^2.0.12",
+    "typescript": "^4.9.5",
+    "vite": "^4.1.4",
+    "mithril": "^2.2.2"
   }
 }

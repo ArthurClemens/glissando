@@ -1,17 +1,7 @@
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
-
+import React from 'react';
 import App from './App';
+import ReactDOM from 'react-dom/client';
 
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  ReactDOM.render(
-    <Router>
-      <Route exact path="/">
-        <Redirect to="/1" />
-      </Route>
-      <App />
-    </Router>,
-    rootElement,
-  );
-}
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <App />,
+);
