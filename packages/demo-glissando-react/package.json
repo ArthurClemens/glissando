@@ -1,6 +1,6 @@
 {
   "name": "demo-glissando-react",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "private": true,
   "description": "",
   "keywords": [],
@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "glissando-react": "^0.8.5",
+    "glissando-react": "^0.8.6",
     "mithril": "^2.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
