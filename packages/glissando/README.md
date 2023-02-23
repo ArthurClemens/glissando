@@ -10,4 +10,4 @@ This package contains base functions to create Glissando components.
 
 ## Size
 
-1.92 KB with all dependencies, minified and gzipped
+2.0 KB with all dependencies, minified and gzipped

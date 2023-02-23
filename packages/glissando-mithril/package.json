@@ -47,7 +47,7 @@
     "glissando": "^0.8.6"
   },
   "peerDependencies": {
-    "mithril": "^2.0.4"
+    "mithril": "^2.2.2"
   },
   "devDependencies": {
     "@types/mithril": "^2.0.12",

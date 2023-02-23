@@ -1,6 +1,6 @@
 (function(global, factory) {
-  typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("react"), require("glissando"), require("use-stream")) : typeof define === "function" && define.amd ? define(["exports", "react", "glissando", "use-stream"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.glissandoReact = {}, global.require$$0, global.glissando, global.useStream));
-})(this, function(exports2, require$$0, glissando, useStream) {
+  typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("react")) : typeof define === "function" && define.amd ? define(["exports", "react"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global.glissandoReact = {}, global.React));
+})(this, function(exports2, React) {
   "use strict";
   var jsxRuntimeExports = {};
   var jsxRuntime = {
@@ -26,20 +26,20 @@
     if (hasRequiredReactJsxRuntime_production_min)
       return reactJsxRuntime_production_min;
     hasRequiredReactJsxRuntime_production_min = 1;
-    var f = require$$0, k = Symbol.for("react.element"), l = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p = { key: true, ref: true, __self: true, __source: true };
-    function q(c, a, g) {
-      var b, d = {}, e = null, h = null;
-      void 0 !== g && (e = "" + g);
+    var f = React, k = Symbol.for("react.element"), l2 = Symbol.for("react.fragment"), m = Object.prototype.hasOwnProperty, n = f.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, p2 = { key: true, ref: true, __self: true, __source: true };
+    function q(c, a, g2) {
+      var b, d2 = {}, e = null, h2 = null;
+      void 0 !== g2 && (e = "" + g2);
       void 0 !== a.key && (e = "" + a.key);
-      void 0 !== a.ref && (h = a.ref);
+      void 0 !== a.ref && (h2 = a.ref);
       for (b in a)
-        m.call(a, b) && !p.hasOwnProperty(b) && (d[b] = a[b]);
+        m.call(a, b) && !p2.hasOwnProperty(b) && (d2[b] = a[b]);
       if (c && c.defaultProps)
         for (b in a = c.defaultProps, a)
-          void 0 === d[b] && (d[b] = a[b]);
-      return { $$typeof: k, type: c, key: e, ref: h, props: d, _owner: n.current };
+          void 0 === d2[b] && (d2[b] = a[b]);
+      return { $$typeof: k, type: c, key: e, ref: h2, props: d2, _owner: n.current };
     }
-    reactJsxRuntime_production_min.Fragment = l;
+    reactJsxRuntime_production_min.Fragment = l2;
     reactJsxRuntime_production_min.jsx = q;
     reactJsxRuntime_production_min.jsxs = q;
     return reactJsxRuntime_production_min;
@@ -61,7 +61,7 @@
     hasRequiredReactJsxRuntime_development = 1;
     if (process.env.NODE_ENV !== "production") {
       (function() {
-        var React = require$$0;
+        var React$1 = React;
         var REACT_ELEMENT_TYPE = Symbol.for("react.element");
         var REACT_PORTAL_TYPE = Symbol.for("react.portal");
         var REACT_FRAGMENT_TYPE = Symbol.for("react.fragment");
@@ -87,7 +87,7 @@
           }
           return null;
         }
-        var ReactSharedInternals = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React$1.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         function error(format) {
           {
             {
@@ -367,19 +367,19 @@
             if (sample && control && typeof sample.stack === "string") {
               var sampleLines = sample.stack.split("\n");
               var controlLines = control.stack.split("\n");
-              var s = sampleLines.length - 1;
+              var s2 = sampleLines.length - 1;
               var c = controlLines.length - 1;
-              while (s >= 1 && c >= 0 && sampleLines[s] !== controlLines[c]) {
+              while (s2 >= 1 && c >= 0 && sampleLines[s2] !== controlLines[c]) {
                 c--;
               }
-              for (; s >= 1 && c >= 0; s--, c--) {
-                if (sampleLines[s] !== controlLines[c]) {
-                  if (s !== 1 || c !== 1) {
+              for (; s2 >= 1 && c >= 0; s2--, c--) {
+                if (sampleLines[s2] !== controlLines[c]) {
+                  if (s2 !== 1 || c !== 1) {
                     do {
-                      s--;
+                      s2--;
                       c--;
-                      if (c < 0 || sampleLines[s] !== controlLines[c]) {
-                        var _frame = "\n" + sampleLines[s].replace(" at new ", " at ");
+                      if (c < 0 || sampleLines[s2] !== controlLines[c]) {
+                        var _frame = "\n" + sampleLines[s2].replace(" at new ", " at ");
                         if (fn.displayName && _frame.includes("<anonymous>")) {
                           _frame = _frame.replace("<anonymous>", fn.displayName);
                         }
@@ -390,7 +390,7 @@
                         }
                         return _frame;
                       }
-                    } while (s >= 1 && c >= 0);
+                    } while (s2 >= 1 && c >= 0);
                   }
                   break;
                 }
@@ -780,8 +780,8 @@
               return;
             }
             if (isArray(node)) {
-              for (var i = 0; i < node.length; i++) {
-                var child = node[i];
+              for (var i2 = 0; i2 < node.length; i2++) {
+                var child = node[i2];
                 if (isValidElement(child)) {
                   validateExplicitKey(child, parentType);
                 }
@@ -838,8 +838,8 @@
         function validateFragmentProps(fragment) {
           {
             var keys = Object.keys(fragment.props);
-            for (var i = 0; i < keys.length; i++) {
-              var key = keys[i];
+            for (var i2 = 0; i2 < keys.length; i2++) {
+              var key = keys[i2];
               if (key !== "children" && key !== "key") {
                 setCurrentlyValidatingElement$1(fragment);
                 error("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", key);
@@ -890,8 +890,8 @@
               if (children !== void 0) {
                 if (isStaticChildren) {
                   if (isArray(children)) {
-                    for (var i = 0; i < children.length; i++) {
-                      validateChildKeys(children[i], type);
+                    for (var i2 = 0; i2 < children.length; i2++) {
+                      validateChildKeys(children[i2], type);
                     }
                     if (Object.freeze) {
                       Object.freeze(children);
@@ -941,8 +941,8 @@
   const noop = () => {
   };
   function useEffectRef(callback) {
-    const disposeRef = require$$0.useRef(noop);
-    const effect = require$$0.useCallback((element) => {
+    const disposeRef = React.useRef(noop);
+    const effect = React.useCallback((element) => {
       disposeRef.current();
       disposeRef.current = noop;
       if (element) {
@@ -956,6 +956,366 @@
     }, [callback]);
     return effect;
   }
+  function g(t) {
+    return p(function() {
+      return t.map(function(e) {
+        return e();
+      });
+    }, t);
+  }
+  function h(t, e, u) {
+    var n = u.map(function(c) {
+      var f = t(e, c);
+      return f !== i.SKIP && (e = f), f;
+    });
+    return n(e), n;
+  }
+  function l(t, e) {
+    var u = t.map(function(c) {
+      return c[0];
+    }), n = p(function() {
+      var c = arguments[arguments.length - 1];
+      return u.forEach(function(f, r) {
+        c.indexOf(f) > -1 && (e = t[r][1](e, f()));
+      }), e;
+    }, u);
+    return n(e), n;
+  }
+  function _() {
+    var t = arguments[0], e = Array.prototype.slice.call(arguments, 1);
+    return g(e).map(function(u) {
+      return t.apply(void 0, u);
+    });
+  }
+  function s(t) {
+    return t._state === "pending" || t._state === "active" || t._state === "changing";
+  }
+  var i = function(t) {
+    var e = [], u = [];
+    function n(r) {
+      return arguments.length && r !== i.SKIP && (t = r, s(n) && (n._changing(), n._state = "active", e.slice().forEach(function(a, o) {
+        s(a) && a(this[o](t));
+      }, u.slice()))), t;
+    }
+    n.constructor = i, n._state = arguments.length && t !== i.SKIP ? "active" : "pending", n._parents = [], n._changing = function() {
+      s(n) && (n._state = "changing"), e.forEach(function(r) {
+        r._changing();
+      });
+    }, n._map = function(r, a) {
+      var o = a ? i() : i(r(t));
+      return o._parents.push(n), e.push(o), u.push(r), o;
+    }, n.map = function(r) {
+      return n._map(r, n._state !== "active");
+    };
+    var c;
+    function f() {
+      return c = i(), c.map(function(r) {
+        return r === true && (n._parents.forEach(function(a) {
+          a._unregisterChild(n);
+        }), n._state = "ended", n._parents.length = e.length = u.length = 0), r;
+      }), c;
+    }
+    return n.toJSON = function() {
+      return t != null && typeof t.toJSON == "function" ? t.toJSON() : t;
+    }, n["fantasy-land/map"] = n.map, n["fantasy-land/ap"] = function(r) {
+      return p(
+        function(a, o) {
+          return a()(o());
+        },
+        [r, n]
+      );
+    }, n._unregisterChild = function(r) {
+      var a = e.indexOf(r);
+      a !== -1 && (e.splice(a, 1), u.splice(a, 1));
+    }, Object.defineProperty(n, "end", {
+      get: function() {
+        return c || f();
+      }
+    }), n;
+  };
+  function p(t, e) {
+    var u = e.every(function(a) {
+      if (a.constructor !== i)
+        throw new Error(
+          "Ensure that each item passed to stream.combine/stream.merge/lift is a stream."
+        );
+      return a._state === "active";
+    }), n = u ? i(t.apply(null, e.concat([e]))) : i(), c = [], f = e.map(function(a) {
+      return a._map(function(o) {
+        return c.push(a), (u || e.every(function(m) {
+          return m._state !== "pending";
+        })) && (u = true, n(t.apply(null, e.concat([c]))), c = []), o;
+      }, true);
+    }), r = n.end.map(function(a) {
+      a === true && (f.forEach(function(o) {
+        o.end(true);
+      }), r.end(true));
+    });
+    return n;
+  }
+  i.SKIP = {};
+  i.lift = _;
+  i.scan = h;
+  i.merge = g;
+  i.combine = p;
+  i.scanMerge = l;
+  i["fantasy-land/of"] = i;
+  var d = false;
+  Object.defineProperty(i, "HALT", {
+    get: function() {
+      return d || console.log("HALT is deprecated and has been renamed to SKIP"), d = true, i.SKIP;
+    }
+  });
+  const calculateNewIndex = (state, index) => {
+    if (index === void 0 || Number.isNaN(index)) {
+      return {
+        newIndex: state.index,
+        shouldUpdate: false
+      };
+    }
+    const newIndex = Math.min(index, state.count - 1);
+    const isValid = newIndex >= 0 && newIndex < state.count;
+    const shouldUpdate = isValid && newIndex !== state.index;
+    return {
+      newIndex,
+      shouldUpdate
+    };
+  };
+  const setIndex = (state) => (change) => {
+    const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+    return shouldUpdate ? {
+      ...state,
+      ...change.animate ? void 0 : { index: newIndex },
+      targetIndex: newIndex,
+      isAnimating: !!change.animate
+    } : state;
+  };
+  const setLocation = (state) => (change) => {
+    if (!state.locations || state.locations.length === 0) {
+      return state;
+    }
+    let locationStr = change.location.toString();
+    let index = state.locations.indexOf(locationStr);
+    if (index === -1) {
+      index = 0;
+      locationStr = state.locations[index];
+    }
+    const shouldAnimate = state.location === void 0 ? false : change.animate !== false;
+    const newState = {
+      ...state,
+      location: locationStr
+    };
+    const indexChange = {
+      index,
+      animate: shouldAnimate
+    };
+    return setIndex(newState)(indexChange);
+  };
+  const lookupLocation = (state) => (changeFn) => {
+    if (!state.locations || !state.location) {
+      return void 0;
+    }
+    const index = state.locations.indexOf(state.location);
+    if (index === -1) {
+      return void 0;
+    }
+    return state.locations[changeFn(index)];
+  };
+  const getInitialState = ({
+    index = 0,
+    count = 0,
+    sideViews = 1,
+    location,
+    locations
+  } = {}) => {
+    const slots = Array.from({ length: 1 + sideViews * 2 }, (_2, i2) => i2).map(
+      (_2, i2) => i2 - sideViews
+    );
+    const initialState = {
+      targetIndex: index,
+      index,
+      count,
+      ...Array.isArray(locations) ? {
+        locations,
+        count: locations ? locations.length : 0,
+        location: locations[0]
+      } : void 0,
+      ...location ? {
+        location,
+        index: Array.isArray(locations) ? locations.indexOf(location) || index : index
+      } : void 0,
+      isAnimating: false,
+      direction: "ltr",
+      // set by libs glissando-mithril etc
+      slots,
+      sideViews
+    };
+    initialState.targetIndex = initialState.index;
+    return initialState;
+  };
+  const GlissandoModel = (props = {}) => {
+    const initialState = getInitialState(props);
+    const glissandoState = {
+      initialState,
+      actions: (update2) => ({
+        previous: ({ animate } = { animate: true }) => {
+          update2(
+            (state) => setIndex(state)({
+              index: state.index - 1,
+              animate: animate !== false
+            })
+          );
+        },
+        next: ({ animate } = { animate: true }) => {
+          update2(
+            (state) => setIndex(state)({
+              index: state.index + 1,
+              animate: animate !== false
+            })
+          );
+        },
+        goTo: ({
+          index,
+          location,
+          animate
+        }) => {
+          update2((state) => {
+            if (location) {
+              const change2 = {
+                location,
+                animate
+              };
+              return setLocation(state)(change2);
+            }
+            if (index === void 0) {
+              return state;
+            }
+            const change = {
+              index,
+              animate
+            };
+            return setIndex(state)(change);
+          });
+        },
+        finalize: (index) => {
+          update2(
+            (state) => setIndex(state)({
+              index,
+              animate: false
+            })
+          );
+        },
+        setCount: (count) => {
+          update2(
+            (state) => setIndex({
+              ...state,
+              count
+            })({ index: state.index })
+          );
+        },
+        setDirection: (direction) => {
+          update2((state) => ({
+            ...state,
+            direction
+          }));
+        },
+        setLocations: (locations) => {
+          update2((state) => ({
+            ...state,
+            locations,
+            count: locations.length
+          }));
+        }
+      }),
+      selectors: (states2) => ({
+        hasNext: () => {
+          const state = states2();
+          return state.index < state.count - 1;
+        },
+        hasPrevious: () => {
+          const state = states2();
+          return state.index > 0;
+        },
+        isAnimating: () => {
+          const state = states2();
+          return state.isAnimating;
+        },
+        getViewIndices: () => {
+          const state = states2();
+          return state.slots.map((slotIndex) => {
+            let index = slotIndex + state.index + 0;
+            if (slotIndex < 0 && state.targetIndex < state.index) {
+              index = slotIndex + state.targetIndex + 1;
+            } else if (slotIndex > 0 && state.targetIndex > state.index) {
+              index = slotIndex + state.targetIndex - 1;
+            }
+            return index;
+          });
+        },
+        getLocation: () => {
+          const state = states2();
+          return lookupLocation(state)((index) => index);
+        },
+        getNextLocation: () => {
+          const state = states2();
+          return lookupLocation(state)((index) => index + 1);
+        },
+        getPreviousLocation: () => {
+          const state = states2();
+          return lookupLocation(state)((index) => index - 1);
+        }
+      })
+    };
+    const update = i();
+    const states = i.scan(
+      (state, patch) => patch(state),
+      {
+        ...glissandoState.initialState
+      },
+      update
+    );
+    const actions = {
+      ...glissandoState.actions(update)
+    };
+    const selectors = {
+      ...glissandoState.selectors(states)
+    };
+    const changedStates = i.scan(
+      (state, value) => JSON.stringify(state, null, 2) === JSON.stringify(value, null, 2) ? i.SKIP : value,
+      i.SKIP,
+      states
+    );
+    const getChanges = i.lift(
+      (value) => value,
+      changedStates
+    );
+    return {
+      getState: states,
+      getChanges,
+      ...actions,
+      ...selectors
+    };
+  };
+  const getSliderStyle = (state) => {
+    const slotCount = 2 * state.sideViews + 1;
+    const slotWidth = 100 / slotCount;
+    const direction = state.direction === "rtl" ? 1 : -1;
+    let sliderTranslateX = direction * slotWidth * (state.sideViews + 0);
+    if (state.targetIndex > state.index) {
+      sliderTranslateX = direction * slotWidth * (state.sideViews + 1);
+    } else if (state.targetIndex < state.index) {
+      sliderTranslateX = direction * slotWidth * (state.sideViews - 1);
+    }
+    const style = {
+      width: `calc(${slotCount} * calc(100%))`,
+      transform: `translateX(${sliderTranslateX}%)`,
+      ...!state.isAnimating ? {
+        transitionDuration: "0ms"
+      } : void 0
+    };
+    const className = state.isAnimating ? "glissando-animating" : "";
+    return { style, className };
+  };
   const GlissandoSlider = (props) => {
     const {
       model,
@@ -964,7 +1324,7 @@
       location,
       className: sliderClassName
     } = props;
-    const [sliderNode, setSliderNode] = require$$0.useState();
+    const [sliderNode, setSliderNode] = React.useState();
     const {
       getState,
       finalize,
@@ -974,23 +1334,23 @@
       setLocations,
       goTo
     } = model;
-    require$$0.useEffect(() => {
+    React.useEffect(() => {
       const count = (children || []).length;
       if (count !== getState().count) {
         setCount(count);
       }
     }, [children, getState, setCount]);
-    require$$0.useEffect(() => {
+    React.useEffect(() => {
       if (locations && JSON.stringify(locations) !== JSON.stringify(getState().locations)) {
         setLocations(locations);
       }
     }, [locations]);
-    require$$0.useEffect(() => {
+    React.useEffect(() => {
       if (location && location !== getState().location) {
         goTo({ location });
       }
     }, [location]);
-    const observeTransitionEnd = require$$0.useCallback(
+    const observeTransitionEnd = React.useCallback(
       (node) => {
         if (node === null) {
           return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
@@ -1007,7 +1367,7 @@
       // eslint-disable-next-line react-hooks/exhaustive-deps
       []
     );
-    require$$0.useEffect(() => {
+    React.useEffect(() => {
       if (!sliderNode) {
         return;
       }
@@ -1022,7 +1382,7 @@
     if (!children) {
       return /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, {});
     }
-    const { className, style } = glissando.getSliderStyle(getState());
+    const { className, style } = getSliderStyle(getState());
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: ["glissando", sliderClassName].join(" "), children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "div",
       {
@@ -1033,9 +1393,92 @@
       }
     ) });
   };
+  const useStream = ({ model, onMount, onDestroy, onUpdate, deps = [], defer, debug }) => {
+    const [streamValues, setStreamValues] = React.useState({});
+    const isInitedRef = React.useRef(false);
+    const subsRef = React.useRef([]);
+    const subscribe = (memo2) => {
+      if (debug) {
+        debug("Subscribe");
+      }
+      subsRef.current = Object.keys(memo2).map((key) => {
+        const stream = memo2[key];
+        if (stream.map && typeof stream.map === "function") {
+          return stream.map((value) => {
+            if (debug) {
+              debug("Will update %s", key);
+            }
+            setStreamValues({
+              ...streamValues,
+              [key]: value
+            });
+            return null;
+          });
+        }
+        return false;
+      }).filter(Boolean);
+    };
+    const unsubscribe = () => {
+      if (subsRef.current.length) {
+        if (debug) {
+          debug("Unsubscribe");
+        }
+        subsRef.current.forEach((s2) => s2.end(true));
+        subsRef.current = [];
+      }
+    };
+    const createMemo = () => {
+      if (debug) {
+        debug("createMemo");
+      }
+      unsubscribe();
+      const modelFn = typeof model === "function" ? model : () => model;
+      const memo2 = modelFn();
+      subscribe(memo2);
+      return memo2;
+    };
+    const [memo, setMemo] = React.useState(defer ? { ...model, isDeferred: true } : createMemo);
+    React.useEffect(() => {
+      if (!isInitedRef.current) {
+        return;
+      }
+      if (debug) {
+        debug("Updating");
+      }
+      if (onUpdate) {
+        const localMemo = createMemo();
+        setMemo(localMemo);
+        onUpdate(localMemo);
+      }
+    }, deps);
+    React.useEffect(() => {
+      if (debug) {
+        debug("Mounting");
+      }
+      let localMemo = memo;
+      if (defer) {
+        localMemo = createMemo();
+        setMemo(localMemo);
+      }
+      if (onMount && localMemo) {
+        onMount(localMemo);
+      }
+      isInitedRef.current = true;
+      return () => {
+        if (debug) {
+          debug("Unmounting");
+        }
+        unsubscribe();
+        if (onDestroy) {
+          onDestroy(memo);
+        }
+      };
+    }, []);
+    return memo;
+  };
   const useGlissandoModel = (initialState) => {
-    const [model] = require$$0.useState(glissando.GlissandoModel(initialState));
-    useStream.useStream({
+    const [model] = React.useState(GlissandoModel(initialState));
+    useStream({
       model: () => ({
         _: model.getState
       }),
@@ -1043,15 +1486,9 @@
     });
     return model;
   };
-  Object.defineProperty(exports2, "GlissandoModel", {
-    enumerable: true,
-    get: () => glissando.GlissandoModel
-  });
-  Object.defineProperty(exports2, "getSliderStyle", {
-    enumerable: true,
-    get: () => glissando.getSliderStyle
-  });
+  exports2.GlissandoModel = GlissandoModel;
   exports2.GlissandoSlider = GlissandoSlider;
+  exports2.getSliderStyle = getSliderStyle;
   exports2.useGlissandoModel = useGlissandoModel;
   Object.defineProperty(exports2, Symbol.toStringTag, { value: "Module" });
 });

@@ -30,11 +30,10 @@
   "homepage": "https://github.com/ArthurClemens/glissando",
   "license": "MIT",
   "dependencies": {
-    "mithril": "^2.2.2"
+    "mithril-stream-standalone": "0.1.6"
   },
   "devDependencies": {
     "cssnano": "^5.1.15",
-    "mithril-stream-standalone": "0.1.6",
     "postcss": "^8.4.21",
     "typescript": "^4.9.5",
     "vite": "^4.1.4"

@@ -5,10 +5,10 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspaces --if-present",
-    "test": "npm run test --workspaces --if-present",
-    "test:prepare": "cd packages/test-glissando && npm install && cd - && cd packages/test-glissando-helpers && npm install",
     "deps": "npm run deps --workspaces --if-present && npm install",
+    "build": "npm run build --workspaces --if-present",
+    "test:prepare": "cd packages/test-glissando && npm install && cd - && cd packages/test-glissando-helpers && npm install",
+    "test": "npm run test --workspaces --if-present",
     "prepare:patch": "npm version patch && npm version patch --workspaces"
   },
   "devDependencies": {

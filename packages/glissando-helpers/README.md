@@ -10,4 +10,4 @@ This package contains helper functions for Glissando.
 
 ## Size
 
-388 B with all dependencies, minified and gzipped
+0.5 Kb with all dependencies, minified and gzipped
