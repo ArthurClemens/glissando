@@ -9,8 +9,8 @@ export const Page = ({ index }: Props) => {
   const imageName = `${imageId < 10 ? '0' : ''}${imageId}`;
   const imageUrl = `https://arthurclemens.github.io/assets/mithril-slider/img/${imageName}.jpg`;
   return (
-    <div className="demo-page">
-      <img src={imageUrl} alt="" />
+    <div className='demo-page'>
+      <img src={imageUrl} alt='' />
     </div>
   );
 };
