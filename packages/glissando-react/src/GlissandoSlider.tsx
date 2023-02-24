@@ -136,7 +136,7 @@ export const GlissandoSlider = (props: Props) => {
         ref={sliderRef}
       >
         {getViewIndices().map(viewIndex => (
-          <div key={viewIndex} className="glissando-page">
+          <div key={viewIndex} className='glissando-page'>
             {children[viewIndex]}
           </div>
         ))}

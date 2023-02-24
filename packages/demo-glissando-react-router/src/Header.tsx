@@ -9,34 +9,30 @@ type HeaderProps = {
 export const Header = ({ model }: HeaderProps) => {
   const navigate = useNavigate();
 
-  const {
-    isAnimating,
-    getLocation,
-    getNextLocation,
-    getPreviousLocation,
-  } = model;
+  const { isAnimating, getLocation, getNextLocation, getPreviousLocation } =
+    model;
   const location = getLocation();
   const previousLocation = getPreviousLocation();
   const nextLocation = getNextLocation();
 
   return (
-    <header className="bar bar-nav">
+    <header className='bar bar-nav'>
       <button
-        type="button"
-        className="btn btn-link btn-nav pull-left"
+        type='button'
+        className='btn btn-link btn-nav pull-left'
         onClick={() => previousLocation && navigate(previousLocation)}
         onKeyUp={() => previousLocation && navigate(previousLocation)}
         tabIndex={0}
         disabled={!previousLocation || isAnimating()}
       >
         <>
-          <span className="icon icon-left-nav" />
+          <span className='icon icon-left-nav' />
           <span>Previous</span>
         </>
       </button>
       <button
-        type="button"
-        className="btn btn-link btn-nav pull-right"
+        type='button'
+        className='btn btn-link btn-nav pull-right'
         onClick={() => nextLocation && navigate(nextLocation)}
         onKeyUp={() => nextLocation && navigate(nextLocation)}
         tabIndex={0}
@@ -44,10 +40,10 @@ export const Header = ({ model }: HeaderProps) => {
       >
         <>
           <span>Next</span>
-          <span className="icon icon-right-nav" />
+          <span className='icon icon-right-nav' />
         </>
       </button>
-      <h1 className="title">{location}</h1>
+      <h1 className='title'>{location}</h1>
     </header>
   );
 };

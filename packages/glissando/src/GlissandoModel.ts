@@ -23,62 +23,59 @@ const calculateNewIndex = (
   };
 };
 
-const setIndex = (state: Glissando.State) => (
-  change: Glissando.IndexChange,
-) => {
-  const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
-  return shouldUpdate
-    ? {
-        ...state,
-        ...(change.animate ? undefined : { index: newIndex }),
-        targetIndex: newIndex,
-        isAnimating: !!change.animate,
-      }
-    : state;
-};
+const setIndex =
+  (state: Glissando.State) => (change: Glissando.IndexChange) => {
+    const { newIndex, shouldUpdate } = calculateNewIndex(state, change.index);
+    return shouldUpdate
+      ? {
+          ...state,
+          ...(change.animate ? undefined : { index: newIndex }),
+          targetIndex: newIndex,
+          isAnimating: !!change.animate,
+        }
+      : state;
+  };
 
-const setLocation = (state: Glissando.State) => (
-  change: Glissando.LocationChange,
-) => {
-  if (!state.locations || state.locations.length === 0) {
-    return state;
-  }
-  let locationStr = change.location.toString();
-  let index = state.locations.indexOf(locationStr);
-  if (index === -1) {
-    // Location does not exist; default to first index
-    index = 0;
-    locationStr = state.locations[index];
-  }
-  const shouldAnimate =
-    state.location === undefined
-      ? false // don't animate if we are setting the first location
-      : change.animate !== false;
-  const newState = {
-    ...state,
-    location: locationStr,
+const setLocation =
+  (state: Glissando.State) => (change: Glissando.LocationChange) => {
+    if (!state.locations || state.locations.length === 0) {
+      return state;
+    }
+    let locationStr = change.location.toString();
+    let index = state.locations.indexOf(locationStr);
+    if (index === -1) {
+      // Location does not exist; default to first index
+      index = 0;
+      locationStr = state.locations[index];
+    }
+    const shouldAnimate =
+      state.location === undefined
+        ? false // don't animate if we are setting the first location
+        : change.animate !== false;
+    const newState = {
+      ...state,
+      location: locationStr,
+    };
+    const indexChange: Glissando.IndexChange = {
+      index,
+      animate: shouldAnimate,
+    };
+    return setIndex(newState)(indexChange);
   };
-  const indexChange: Glissando.IndexChange = {
-    index,
-    animate: shouldAnimate,
-  };
-  return setIndex(newState)(indexChange);
-};
 
 type IndexLocationChange = (index: number) => number;
 
-const lookupLocation = (state: Glissando.State) => (
-  changeFn: IndexLocationChange,
-) => {
-  if (!state.locations || !state.location) {
-    return undefined;
-  }
-  const index = state.locations.indexOf(state.location);
-  if (index === -1) {
-    return undefined;
-  }
-  return state.locations[changeFn(index)];
-};
+const lookupLocation =
+  (state: Glissando.State) => (changeFn: IndexLocationChange) => {
+    if (!state.locations || !state.location) {
+      return undefined;
+    }
+    const index = state.locations.indexOf(state.location);
+    if (index === -1) {
+      return undefined;
+    }
+    return state.locations[changeFn(index)];
+  };
 
 const getInitialState = (
   {

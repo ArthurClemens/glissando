@@ -48,53 +48,53 @@ export const App = () => {
   const pagesList = [...Array(pageCount)].map((_, i) => i);
 
   return (
-    <div className="demo-container">
-      <div className="demo-meta-controls">
+    <div className='demo-container'>
+      <div className='demo-meta-controls'>
         <div>
           <input
-            id="visible"
-            type="checkbox"
-            value="1"
+            id='visible'
+            type='checkbox'
+            value='1'
             checked={appModel.getState().isVisible}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.persist();
               appModel.setIsVisible(e.target.checked);
             }}
           />
-          <label htmlFor="visible">Show</label>
+          <label htmlFor='visible'>Show</label>
         </div>
         <div>
           <input
-            id="rtl"
-            type="checkbox"
-            value="1"
+            id='rtl'
+            type='checkbox'
+            value='1'
             checked={appModel.getState().isRtl}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.persist();
               appModel.setIsRtl(e.target.checked);
             }}
           />
-          <label htmlFor="rtl">Right to left</label>
+          <label htmlFor='rtl'>Right to left</label>
         </div>
         <div>
           <input
-            id="animate"
-            type="checkbox"
-            value="1"
+            id='animate'
+            type='checkbox'
+            value='1'
             checked={appModel.getState().isAnimated}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.persist();
               appModel.setIsAnimated(e.target.checked);
             }}
           />
-          <label htmlFor="animate">Animate</label>
+          <label htmlFor='animate'>Animate</label>
         </div>
       </div>
       {appModel.getState().isVisible && (
         <div dir={appModel.getState().isRtl ? 'rtl' : ''}>
-          <div className="demo-controls">
+          <div className='demo-controls'>
             <button
-              type="button"
+              type='button'
               onClick={() =>
                 previous({ animate: appModel.getState().isAnimated })
               }
@@ -103,7 +103,7 @@ export const App = () => {
               Previous
             </button>
             <button
-              type="button"
+              type='button'
               onClick={() => next({ animate: appModel.getState().isAnimated })}
               disabled={!hasNext() || isAnimating()}
             >
@@ -130,14 +130,14 @@ export const App = () => {
               ))}
             </select>
             <button
-              type="button"
+              type='button'
               onClick={() => appModel.setCount(appModel.getState().count - 1)}
               disabled={appModel.getState().count === 1 || isAnimating()}
             >
               Remove page
             </button>
             <button
-              type="button"
+              type='button'
               onClick={() => appModel.setCount(appModel.getState().count + 1)}
               disabled={appModel.getState().count === 10 || isAnimating()}
             >

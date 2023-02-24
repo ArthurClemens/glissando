@@ -2,6 +2,7 @@ import 'glissando-react/glissando.css';
 import './styles.css';
 
 import { Glissando, GlissandoSlider, useGlissandoModel } from 'glissando-react';
+import React from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -11,7 +12,6 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import React from 'react';
 import { Header } from './Header';
 import { Page } from './Page';
 
@@ -24,9 +24,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout model={model} />}>
-          <Route path="/:page" element={<RoutedSlider model={model} />} />
-          <Route path="/" element={<Navigate to="/1" />} />
+        <Route path='/' element={<Layout model={model} />}>
+          <Route path='/:page' element={<RoutedSlider model={model} />} />
+          <Route path='/' element={<Navigate to='/1' />} />
         </Route>
       </Routes>
     </BrowserRouter>

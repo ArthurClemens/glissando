@@ -8,12 +8,8 @@ type TProps = {
 export const Header: m.Component<TProps> = {
   view: ({ attrs }) => {
     const { model } = attrs;
-    const {
-      isAnimating,
-      getLocation,
-      getNextLocation,
-      getPreviousLocation,
-    } = model;
+    const { isAnimating, getLocation, getNextLocation, getPreviousLocation } =
+      model;
     const location = getLocation();
     const previousLocation = getPreviousLocation();
     const nextLocation = getNextLocation();
