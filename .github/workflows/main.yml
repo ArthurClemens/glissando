@@ -28,7 +28,6 @@ jobs:
       - name: Dependencies
         run: |
           npm install
-          npm run test:prepare
       
       # Run tests
       - name: Mocha
