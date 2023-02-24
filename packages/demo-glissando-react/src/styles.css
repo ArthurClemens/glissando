@@ -1,44 +1,73 @@
-body,
-html {
-  margin: 0;
+*:focus {
+  outline: none;
 }
 
-body {
-  font-family: sans-serif;
-}
-
-.demo-container {
-  width: 375px;
-  margin: 0 auto;
-}
-
-.demo-meta-controls {
+.bar {
   display: flex;
-  gap: 15px;
-  padding: 20px 0;
+  align-items: center;
   border-bottom: 1px solid #ddd;
+  padding: 6px;
 }
 
-.demo-controls {
-  display: flex;
-  padding: 20px 0;
+.bar .ui.button {
+  margin: 0;
+  background-color: #e0e1e2;
 }
 
-.demo-controls > * + * {
-  margin-left: 5px;
+.bar .ui.button + .button {
+  margin-left: 6px;
 }
 
-.demo-page {
-  background: #efefef;
-  max-height: 300px; /* demonstrate scrolling */
-  overflow: auto;
-  font-size: 18px;
+.bar .toggle {
+  margin-right: 30px;
 }
 
-.demo-page .top {
-  padding: 15px;
+[dir="rtl"] .bar .toggle {
+  margin-left: 20px;
 }
 
+[dir="rtl"] .bar .ui.button + .button {
+  margin-right: 6px;
+  margin-left: 0;
+}
+
+[dir="rtl"] .ui.menu .item > i.dropdown.icon {
+  float: left;
+  margin: 0 1em 0 0;
+}
+
+.nav-bar {
+  position: fixed;
+  height: 48px;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.page-controls {
+  top: 48px;
+  justify-content: space-between;
+}
+
+.page-controls .button {
+  width: 9em;
+}
+
+.nav-bar .menu {
+  z-index: 2;
+  box-shadow: none;
+}
+
+.nav-bar .spacer {
+  flex-grow: 1;
+}
+
+.content {
+  width: 100%;
+  padding-top: calc(2 * 48px);
+}
 .demo-page img {
   width: 100%;
 }
