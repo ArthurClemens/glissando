@@ -64,6 +64,8 @@ module.exports = {
       { varsIgnorePattern: '^_', argsIgnorePattern: '^_' },
     ],
     '@typescript-eslint/explicit-function-return-type': OFF,
+    '@typescript-eslint/no-explicit-any': OFF,
+    'no-redeclare': OFF,
 
     // React rules
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
