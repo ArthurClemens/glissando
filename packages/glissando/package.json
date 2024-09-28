@@ -35,6 +35,6 @@
   "devDependencies": {
     "cssnano": "^6.0.0",
     "postcss": "^8.4.21",
-    "vite": "^4.1.4"
+    "vite": "^5.0.0"
   }
 }
