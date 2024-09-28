@@ -9,7 +9,7 @@ jobs:
     name: Unit test
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # install a specific version of Node using
       # https://github.com/actions/setup-node
