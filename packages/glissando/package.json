@@ -33,7 +33,7 @@
     "mithril-stream-standalone": "0.1.6"
   },
   "devDependencies": {
-    "cssnano": "^6.0.0",
+    "cssnano": "^7.0.0",
     "postcss": "^8.4.21",
     "vite": "^4.1.4"
   }
